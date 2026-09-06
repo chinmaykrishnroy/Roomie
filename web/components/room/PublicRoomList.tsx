@@ -23,7 +23,7 @@ import {
   IconSofa,
 } from "@/components/icons/Icons";
 
-const CATEGORIES = [
+export const CATEGORIES = [
   { id: "all", label: "All Rooms", Icon: IconSparkles },
   { id: "gaming", label: "Gaming", Icon: IconGamepad },
   { id: "music", label: "Music", Icon: IconMusic },
@@ -33,15 +33,25 @@ const CATEGORIES = [
   { id: "science", label: "Science", Icon: IconFlask },
   { id: "chill", label: "Chill", Icon: IconCoffee },
   { id: "creative", label: "Creative", Icon: IconPalette },
-  { id: "custom", label: "Custom Search", Icon: IconEdit },
+  { id: "custom", label: "Custom", Icon: IconEdit },
 ];
 
-export function PublicRoomList() {
+interface PublicRoomListProps {
+  selectedCategory: string;
+  onSelectCategory: (cat: string) => void;
+  searchQuery: string;
+  onSearchChange: (q: string) => void;
+}
+
+export function PublicRoomList({
+  selectedCategory,
+  onSelectCategory,
+  searchQuery,
+  onSearchChange,
+}: PublicRoomListProps) {
   const router = useRouter();
   const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
   const [location, setLocation] = useState<GeoCoords | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -54,18 +64,18 @@ export function PublicRoomList() {
 
   useEffect(() => {
     fetchRooms();
-  }, [selectedCategory, page, location]);
+  }, [selectedCategory, page, location, searchQuery]);
 
   const fetchRooms = async () => {
     try {
       setLoading(true);
       const res = await listPublicRooms({
-        category: selectedCategory === "custom" ? undefined : selectedCategory,
+        category: selectedCategory === "custom" || selectedCategory === "all" ? undefined : selectedCategory,
         query: searchQuery.trim() || (selectedCategory === "custom" ? "custom" : undefined),
         lat: location?.latitude,
         lon: location?.longitude,
         page,
-        limit: 8,
+        limit: 12,
       });
       setRooms(res.rooms);
       setTotalPages(res.totalPages);
@@ -76,55 +86,10 @@ export function PublicRoomList() {
     }
   };
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setPage(1);
-    fetchRooms();
-  };
-
   return (
-    <div style={{ marginTop: "12px" }}>
-      {/* Header with Title & Location Status */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: "10px",
-          marginBottom: "14px",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <h2 style={{ fontSize: "1.35rem", color: "var(--clay-ink)" }}>Public Sound Stages</h2>
-          <span
-            className="badge"
-            style={{
-              background: "var(--clay-peach-soft)",
-              color: "var(--clay-peach-soft-dark)",
-              fontSize: "0.72rem",
-            }}
-          >
-            Live Directory
-          </span>
-        </div>
-
-        {location && (
-          <span
-            className="badge"
-            style={{
-              background: "var(--clay-sage)",
-              color: "var(--clay-sage-dark)",
-            }}
-          >
-            <IconMapPin size={13} />
-            <span>Ranked near you</span>
-          </span>
-        )}
-      </div>
-
-      {/* Horizontally Scrollable Smooth Category Track (Zero mobile clipping) */}
-      <div className="pill-track" style={{ marginBottom: "18px" }}>
+    <div>
+      {/* Category Pills Strip (Quick Switcher) */}
+      <div className="pill-track" style={{ marginBottom: "20px" }}>
         {CATEGORIES.map((cat) => {
           const CatIcon = cat.Icon;
           const isActive = selectedCategory === cat.id;
@@ -132,68 +97,76 @@ export function PublicRoomList() {
             <div
               key={cat.id}
               onClick={() => {
-                setSelectedCategory(cat.id);
+                onSelectCategory(cat.id);
                 setPage(1);
               }}
               className={`chip ${isActive ? "active" : ""}`}
             >
-              <CatIcon size={16} />
+              <CatIcon size={15} />
               <span>{cat.label}</span>
             </div>
           );
         })}
       </div>
 
-      {/* Semantic Vector Search Box (Mobile Friendly) */}
-      <form
-        onSubmit={handleSearchSubmit}
+      {/* Grid Subheader */}
+      <div
         style={{
           display: "flex",
-          gap: "10px",
-          marginBottom: "24px",
+          justifyContent: "space-between",
           alignItems: "center",
           flexWrap: "wrap",
+          gap: "10px",
+          marginBottom: "16px",
         }}
       >
-        <div style={{ flex: "1 1 240px", position: "relative" }}>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by vibe, topic or tag via vector search..."
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <h2 style={{ fontSize: "1.25rem", color: "var(--clay-ink)" }}>
+            {selectedCategory === "all"
+              ? "All Live Sound Stages"
+              : `${CATEGORIES.find((c) => c.id === selectedCategory)?.label || selectedCategory} Stages`}
+          </h2>
+          <span
+            className="badge"
             style={{
-              width: "100%",
-              padding: "11px 18px",
-              fontSize: "0.9rem",
-              background: "#ffffff",
+              background: "var(--clay-peach-soft)",
+              color: "var(--clay-peach-soft-dark)",
+              fontSize: "0.75rem",
             }}
-          />
+          >
+            {rooms.length} Active
+          </span>
         </div>
-        <button
-          type="submit"
-          className="peach-soft"
-          style={{
-            padding: "11px 20px",
-            fontSize: "0.88rem",
-          }}
-        >
-          <IconSearch size={16} />
-          <span>Search</span>
-        </button>
-      </form>
 
-      {/* Rooms Cartridges Grid */}
+        {location && (
+          <span
+            className="badge"
+            style={{
+              background: "#ffffff",
+              color: "var(--clay-sage-dark)",
+              border: "1px solid rgba(225, 175, 155, 0.3)",
+            }}
+          >
+            <IconMapPin size={13} color="var(--clay-primary)" />
+            <span>Ranked near your location</span>
+          </span>
+        )}
+      </div>
+
+      {/* Fluid Multi-Column Grid */}
       {loading ? (
-        <div style={{ textAlign: "center", padding: "48px 16px", color: "var(--clay-muted)", fontWeight: 700 }}>
+        <div style={{ textAlign: "center", padding: "60px 16px", color: "var(--clay-muted)", fontWeight: 700 }}>
           Finding active sound stages...
         </div>
       ) : rooms.length === 0 ? (
         <div
-          className="card"
           style={{
             textAlign: "center",
-            padding: "48px 24px",
+            padding: "54px 24px",
             background: "#ffffff",
+            borderRadius: "24px",
+            border: "1px solid rgba(225, 175, 155, 0.25)",
+            boxShadow: "var(--clay-shadow-card)",
           }}
         >
           <div
@@ -207,19 +180,19 @@ export function PublicRoomList() {
           >
             <IconSofa size={36} color="var(--clay-primary)" />
           </div>
-          <h3 style={{ marginBottom: "8px", color: "var(--clay-ink)" }}>No public rooms found</h3>
-          <p style={{ maxWidth: "420px", margin: "0 auto", fontSize: "0.92rem" }}>
+          <h3 style={{ marginBottom: "8px", color: "var(--clay-ink)" }}>No sound stages found</h3>
+          <p style={{ maxWidth: "440px", margin: "0 auto", fontSize: "0.92rem", color: "var(--clay-muted)" }}>
             {searchQuery
-              ? `No active rooms matched "${searchQuery}". Try another keyword or create your own room!`
-              : "No public rooms are active right now. Be the first to start the vibe by creating a room!"}
+              ? `No active rooms matched "${searchQuery}". Try clearing your search or host a new room!`
+              : "No public stages are active under this category right now. Host one to get the hangout started!"}
           </p>
         </div>
       ) : (
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))",
-            gap: "18px",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 310px), 1fr))",
+            gap: "20px",
           }}
         >
           {rooms.map((room) => {
@@ -227,7 +200,7 @@ export function PublicRoomList() {
             return (
               <div key={room.id} className="room-cartridge">
                 <div>
-                  {/* Top Category and Occupancy Indicators */}
+                  {/* Top Metadata Row */}
                   <div
                     style={{
                       display: "flex",
@@ -243,6 +216,7 @@ export function PublicRoomList() {
                         background: "var(--clay-peach-soft)",
                         color: "var(--clay-peach-soft-dark)",
                         fontSize: "0.76rem",
+                        border: "none",
                       }}
                     >
                       #{room.category}
@@ -251,16 +225,24 @@ export function PublicRoomList() {
                     <span
                       className="badge"
                       style={{
-                        background: isFull ? "var(--clay-danger)" : "var(--clay-sage)",
-                        color: isFull ? "var(--clay-danger-dark)" : "var(--clay-sage-dark)",
+                        background: isFull ? "var(--clay-danger)" : "#ffffff",
+                        color: isFull ? "#ffffff" : "var(--clay-ink)",
+                        border: isFull ? "none" : "1px solid rgba(225, 175, 155, 0.3)",
                       }}
                     >
-                      <IconUsers size={13} />
+                      <span
+                        style={{
+                          width: "7px",
+                          height: "7px",
+                          borderRadius: "50%",
+                          background: isFull ? "#ffffff" : "#10b981",
+                        }}
+                      />
                       <span>{room.participantCount} / {room.maxParticipants || 16}</span>
                     </span>
                   </div>
 
-                  <h3 style={{ fontSize: "1.15rem", marginBottom: "6px", color: "var(--clay-ink)", lineHeight: 1.25 }}>
+                  <h3 style={{ fontSize: "1.2rem", marginBottom: "6px", color: "var(--clay-ink)", lineHeight: 1.25 }}>
                     {room.name}
                   </h3>
 
@@ -268,12 +250,12 @@ export function PublicRoomList() {
                     style={{
                       fontSize: "0.86rem",
                       marginBottom: "14px",
-                      minHeight: "36px",
-                      lineHeight: 1.4,
+                      minHeight: "38px",
+                      lineHeight: 1.45,
                       color: "var(--clay-muted)",
                     }}
                   >
-                    {room.description || "Casual room. Drop in to hang out and talk!"}
+                    {room.description || "Casual stage. Drop in to hang out, listen, and talk!"}
                   </p>
 
                   {room.distanceKm !== undefined && room.distanceKm > 0 && (
@@ -303,7 +285,7 @@ export function PublicRoomList() {
                     fontSize: "0.9rem",
                   }}
                 >
-                  <span>{isFull ? "Room Full" : "Hop In Room"}</span>
+                  <span>{isFull ? "Stage Full" : "Hop In Stage"}</span>
                   <IconArrowRight size={16} />
                 </button>
               </div>

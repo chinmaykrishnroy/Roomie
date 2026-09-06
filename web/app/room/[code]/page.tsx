@@ -169,17 +169,17 @@ export default function RoomCallPage({ params }: PageProps) {
         height: "100dvh",
         maxHeight: "100dvh",
         overflow: "hidden",
-        background: "#191412",
+        background: "#140f0d",
         color: "#f8fafc",
       }}
     >
-      {/* Top Header with Responsive Non-clipping Layout */}
+      {/* Top Header with Dark Studio Theme */}
       <header
         style={{
-          background: "rgba(25, 20, 18, 0.88)",
-          backdropFilter: "blur(14px)",
+          background: "rgba(22, 17, 15, 0.95)",
+          backdropFilter: "blur(16px)",
           borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-          padding: "10px 16px",
+          padding: "10px 20px",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -187,16 +187,23 @@ export default function RoomCallPage({ params }: PageProps) {
           zIndex: 30,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", minWidth: 0 }}>
           <button
             type="button"
             onClick={handleLeave}
-            className="secondary"
-            style={{ padding: "7px 12px", fontSize: "0.82rem", borderRadius: "999px" }}
+            style={{
+              padding: "7px 14px",
+              fontSize: "0.82rem",
+              borderRadius: "999px",
+              background: "rgba(255, 255, 255, 0.08)",
+              color: "#f8fafc",
+              border: "1px solid rgba(255, 255, 255, 0.12)",
+              boxShadow: "none",
+            }}
             title="Leave Room"
           >
             <IconArrowLeft size={16} />
-            <span className="call-dock-label">Leave</span>
+            <span className="call-dock-label">Back</span>
           </button>
 
           <div style={{ minWidth: 0 }}>
@@ -209,7 +216,7 @@ export default function RoomCallPage({ params }: PageProps) {
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
-                  maxWidth: "clamp(130px, 35vw, 340px)",
+                  maxWidth: "clamp(130px, 35vw, 360px)",
                 }}
               >
                 {room?.name || roomCode}
@@ -220,9 +227,11 @@ export default function RoomCallPage({ params }: PageProps) {
                   style={{
                     padding: "2px 8px",
                     fontSize: "0.72rem",
-                    background: "var(--clay-peach-soft)",
-                    color: "var(--clay-peach-soft-dark)",
+                    background: "rgba(255, 158, 125, 0.15)",
+                    color: "#ff9e7d",
+                    border: "1px solid rgba(255, 158, 125, 0.25)",
                     flexShrink: 0,
+                    boxShadow: "none",
                   }}
                 >
                   #{room.category}
@@ -235,28 +244,37 @@ export default function RoomCallPage({ params }: PageProps) {
           </div>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", flexShrink: 0 }}>
           <span
             className="badge"
             style={{
-              background: participants.length >= 16 ? "var(--clay-danger)" : "var(--clay-sage)",
-              color: participants.length >= 16 ? "var(--clay-danger-dark)" : "var(--clay-sage-dark)",
-              padding: "5px 10px",
+              background: participants.length >= 16 ? "var(--clay-danger)" : "rgba(16, 185, 129, 0.15)",
+              color: participants.length >= 16 ? "#ffffff" : "#34d399",
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+              padding: "5px 12px",
               fontSize: "0.76rem",
+              boxShadow: "none",
             }}
           >
             <IconUsers size={13} />
-            <span>{participants.length}/16</span>
+            <span>{participants.length}/16 Live</span>
           </span>
 
           <button
             type="button"
             onClick={handleCopyLink}
-            className="secondary"
-            style={{ padding: "7px 12px", fontSize: "0.82rem", borderRadius: "999px" }}
+            style={{
+              padding: "7px 14px",
+              fontSize: "0.82rem",
+              borderRadius: "999px",
+              background: "rgba(255, 255, 255, 0.08)",
+              color: "#f8fafc",
+              border: "1px solid rgba(255, 255, 255, 0.12)",
+              boxShadow: "none",
+            }}
             title="Share Room Code"
           >
-            {copied ? <IconCheck size={15} /> : <IconCopy size={15} />}
+            {copied ? <IconCheck size={15} color="#34d399" /> : <IconCopy size={15} />}
             <span className="call-dock-label">{copied ? "Copied!" : "Share"}</span>
           </button>
         </div>
@@ -266,8 +284,8 @@ export default function RoomCallPage({ params }: PageProps) {
       {participants.length > 8 && !bandwidthSaver && (
         <div
           style={{
-            background: "linear-gradient(135deg, #fed7aa, #fdba74)",
-            color: "#7c2d12",
+            background: "linear-gradient(135deg, #7c2d12, #9a3412)",
+            color: "#ffedd5",
             padding: "8px 16px",
             display: "flex",
             justifyContent: "space-between",
@@ -275,8 +293,8 @@ export default function RoomCallPage({ params }: PageProps) {
             fontSize: "0.82rem",
             fontWeight: 700,
             zIndex: 20,
-            boxShadow: "0 4px 12px rgba(0,0,0,0.18)",
             gap: "10px",
+            borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
@@ -288,19 +306,19 @@ export default function RoomCallPage({ params }: PageProps) {
           <button
             type="button"
             onClick={handleToggleBandwidthSaver}
-            style={{ padding: "5px 12px", fontSize: "0.75rem", background: "#ffffff", color: "#7c2d12", flexShrink: 0 }}
+            style={{ padding: "4px 12px", fontSize: "0.75rem", background: "#ffffff", color: "#7c2d12", flexShrink: 0, border: "none" }}
           >
             Enable Saver
           </button>
         </div>
       )}
 
-      {/* Main Call Viewport (Responsive, No Overflow Clipping) */}
+      {/* Main Call Viewport (Full Screen Studio Stage) */}
       <div
         style={{
           flex: 1,
           padding: "16px",
-          paddingBottom: "max(90px, calc(74px + env(safe-area-inset-bottom)))",
+          paddingBottom: "max(84px, calc(70px + env(safe-area-inset-bottom)))",
           overflow: "auto",
           display: "flex",
           flexDirection: "column",
@@ -323,58 +341,89 @@ export default function RoomCallPage({ params }: PageProps) {
             >
               <IconSparkles size={32} color="var(--clay-primary)" />
             </div>
-            <h3 style={{ color: "#ffffff" }}>Connecting to Roomie...</h3>
+            <h3 style={{ color: "#ffffff" }}>Connecting to Sound Stage...</h3>
           </div>
         ) : connState === "error" ? (
-          <div className="card" style={{ color: "var(--clay-ink)", maxWidth: "420px", textAlign: "center", padding: "32px 24px" }}>
+          <div
+            style={{
+              background: "#ffffff",
+              color: "var(--clay-ink)",
+              maxWidth: "420px",
+              textAlign: "center",
+              padding: "32px 24px",
+              borderRadius: "24px",
+              boxShadow: "0 16px 40px rgba(0,0,0,0.5)",
+            }}
+          >
             <h3>Connection Error</h3>
-            <p style={{ margin: "12px 0 20px" }}>
-              Could not join room &quot;{roomCode}&quot;. Please verify the code and check your connection.
+            <p style={{ margin: "12px 0 20px", color: "var(--clay-muted)" }}>
+              Could not join stage &quot;{roomCode}&quot;. Please check the code and try again.
             </p>
             <button type="button" onClick={handleLeave} style={{ width: "100%" }}>
-              Return to Home
+              Return to Lobby
             </button>
           </div>
         ) : participants.length === 1 ? (
-          /* Single user connected like Discord */
-          <div style={{ width: "100%", maxWidth: "760px", height: "100%", display: "flex", flexDirection: "column", gap: "16px" }}>
-            <div style={{ flex: 1, minHeight: "260px" }}>
-              <VideoTile
-                participant={participants[0]}
-                isPinned={false}
-                onTogglePin={handleTogglePin}
-                mirrored={session?.videoMirrored}
-                quality="high"
-              />
-            </div>
+          /* Single user connected: video tile fills viewport gracefully with elegant overlaid pill */
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              maxWidth: "960px",
+              maxHeight: "calc(100vh - 180px)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+            }}
+          >
+            <VideoTile
+              participant={participants[0]}
+              isPinned={false}
+              onTogglePin={handleTogglePin}
+              mirrored={session?.videoMirrored}
+              quality="high"
+            />
+
+            {/* Subtle Overlaid Waiting Pill (No giant white card!) */}
             <div
-              className="card"
               style={{
-                background: "linear-gradient(135deg, #fff3eb, #ffe6d8)",
-                padding: "16px 20px",
+                position: "absolute",
+                top: "16px",
+                left: "50%",
+                transform: "translateX(-50%)",
+                background: "rgba(22, 17, 15, 0.85)",
+                backdropFilter: "blur(14px)",
+                border: "1px solid rgba(255, 158, 125, 0.35)",
+                borderRadius: "999px",
+                padding: "6px 14px 6px 16px",
                 display: "flex",
-                justifyContent: "space-between",
                 alignItems: "center",
-                flexWrap: "wrap",
-                gap: "12px",
+                gap: "10px",
+                zIndex: 20,
+                boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
               }}
             >
-              <div>
-                <div style={{ fontWeight: 800, fontSize: "1rem", color: "var(--clay-primary-dark)" }}>
-                  You are in the room!
-                </div>
-                <div style={{ fontSize: "0.85rem", color: "var(--clay-muted)" }}>
-                  Waiting for friends to join. Share code: <strong style={{ color: "var(--clay-ink)" }}>{roomCode}</strong>
-                </div>
-              </div>
+              <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981", flexShrink: 0 }} />
+              <span style={{ fontSize: "0.82rem", color: "#f8fafc", fontWeight: 700, whiteSpace: "nowrap" }}>
+                Stage Ready · Waiting for peers
+              </span>
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="secondary"
-                style={{ padding: "8px 16px", fontSize: "0.82rem" }}
+                style={{
+                  background: "var(--clay-primary)",
+                  color: "var(--clay-primary-dark)",
+                  border: "none",
+                  borderRadius: "999px",
+                  padding: "4px 10px",
+                  fontSize: "0.74rem",
+                  boxShadow: "none",
+                  cursor: "pointer",
+                }}
               >
-                {copied ? <IconCheck size={15} /> : <IconCopy size={15} />}
-                <span>{copied ? "Copied Link" : "Copy Link"}</span>
+                {copied ? "Copied!" : "Copy Link"}
               </button>
             </div>
           </div>
@@ -406,7 +455,7 @@ export default function RoomCallPage({ params }: PageProps) {
             </div>
           </div>
         ) : (
-          /* Standard Auto Grid (or 2-person mobile stacked) */
+          /* Standard Auto Grid */
           <div className={`video-grid ${getGridClass(participants.length)}`}>
             {orderedParticipants.map((p) => {
               const tileQuality = bandwidthSaver && !p.isLocal
@@ -430,7 +479,7 @@ export default function RoomCallPage({ params }: PageProps) {
         )}
       </div>
 
-      {/* Floating Bottom Media Dock */}
+      {/* Floating Dark Studio Media Dock (No white glow!) */}
       <MediaControls
         isMuted={isMuted}
         isCameraOff={isCameraOff}
