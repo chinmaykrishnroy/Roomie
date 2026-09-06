@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { UserSession, saveUserSession } from "@/lib/storage";
 import { fetchGeneratedUsername } from "@/lib/api";
+import { IconDice, IconArrowRight, IconSparkles } from "@/components/icons/Icons";
 
 interface Props {
   isOpen: boolean;
@@ -25,7 +26,6 @@ export function OnboardingModal({ isOpen, onComplete }: Props) {
       const name = await fetchGeneratedUsername();
       setUsername(name);
     } catch {
-      // Fallback
       const adjectives = ["Cosmic", "Swift", "Chill", "Neon", "Brave", "Vibrant"];
       const nouns = ["Otter", "Falcon", "Panda", "Tiger", "Penguin", "Cheetah"];
       const fallback =
@@ -55,8 +55,12 @@ export function OnboardingModal({ isOpen, onComplete }: Props) {
     <div className="modal-overlay">
       <div className="modal-content">
         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-          <div className="brand-badge">Roomie</div>
-          <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--muted)" }}>
+          <div className="brand-badge">
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+              <IconSparkles size={14} /> Roomie
+            </span>
+          </div>
+          <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--clay-muted)" }}>
             Instant Multi-Party Rooms
           </span>
         </div>
@@ -66,7 +70,7 @@ export function OnboardingModal({ isOpen, onComplete }: Props) {
           We generated a random name for you. You can keep it, roll another, or type your own.
         </p>
 
-        <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+        <div style={{ display: "flex", gap: "12px", marginBottom: "24px" }}>
           <input
             type="text"
             value={username}
@@ -83,7 +87,8 @@ export function OnboardingModal({ isOpen, onComplete }: Props) {
             className="secondary"
             title="Generate another random name"
           >
-            🎲 Roll
+            <IconDice size={18} />
+            <span>Roll</span>
           </button>
         </div>
 
@@ -91,9 +96,10 @@ export function OnboardingModal({ isOpen, onComplete }: Props) {
           type="button"
           onClick={handleConfirm}
           disabled={!username.trim()}
-          style={{ width: "100%", padding: "14px", fontSize: "1rem" }}
+          style={{ width: "100%", padding: "14px", fontSize: "1.05rem" }}
         >
-          Enter Roomie →
+          <span>Enter Roomie</span>
+          <IconArrowRight size={18} />
         </button>
       </div>
     </div>

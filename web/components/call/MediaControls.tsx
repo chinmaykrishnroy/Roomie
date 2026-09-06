@@ -1,6 +1,16 @@
 "use client";
 
 import React from "react";
+import {
+  IconMic,
+  IconMicOff,
+  IconVideo,
+  IconVideoOff,
+  IconBolt,
+  IconGrid,
+  IconMessage,
+  IconLogOut,
+} from "@/components/icons/Icons";
 
 interface Props {
   isMuted: boolean;
@@ -36,10 +46,10 @@ export function MediaControls({
         type="button"
         onClick={onToggleAudio}
         className={isMuted ? "danger" : "secondary"}
-        style={{ minWidth: "48px" }}
         title={isMuted ? "Unmute Microphone" : "Mute Microphone"}
       >
-        {isMuted ? "🔇 Unmute" : "🎙️ Mute"}
+        {isMuted ? <IconMicOff size={18} /> : <IconMic size={18} />}
+        <span>{isMuted ? "Unmute" : "Mute"}</span>
       </button>
 
       {/* Camera Button */}
@@ -47,10 +57,10 @@ export function MediaControls({
         type="button"
         onClick={onToggleVideo}
         className={isCameraOff ? "danger" : "secondary"}
-        style={{ minWidth: "48px" }}
         title={isCameraOff ? "Turn On Camera" : "Turn Off Camera"}
       >
-        {isCameraOff ? "📷 Start Video" : "📹 Stop Video"}
+        {isCameraOff ? <IconVideoOff size={18} /> : <IconVideo size={18} />}
+        <span>{isCameraOff ? "Start Video" : "Stop Video"}</span>
       </button>
 
       {/* Bandwidth Saver Button */}
@@ -60,7 +70,8 @@ export function MediaControls({
         className={bandwidthSaver ? "yellow" : "secondary"}
         title="Toggle Bandwidth Saver: pauses background video streams when room is large"
       >
-        ⚡ Saver: {bandwidthSaver ? "ON" : "OFF"}
+        <IconBolt size={18} />
+        <span>Saver: {bandwidthSaver ? "ON" : "OFF"}</span>
       </button>
 
       {/* Unpin Stage if Pinned */}
@@ -71,7 +82,8 @@ export function MediaControls({
           className="secondary"
           title="Reset to Grid Layout"
         >
-          🔲 Grid View
+          <IconGrid size={18} />
+          <span>Grid View</span>
         </button>
       )}
 
@@ -83,23 +95,25 @@ export function MediaControls({
         style={{ position: "relative" }}
         title="Open Room Chat"
       >
-        💬 Chat
+        <IconMessage size={18} />
+        <span>Chat</span>
         {unreadChatCount > 0 && (
           <span
             style={{
               position: "absolute",
               top: "-6px",
               right: "-6px",
-              background: "var(--danger)",
-              color: "var(--ink)",
-              border: "2px solid var(--ink)",
+              background: "var(--clay-danger)",
+              color: "var(--clay-danger-dark)",
+              border: "1px solid rgba(255, 255, 255, 0.9)",
               borderRadius: "50%",
-              width: "20px",
-              height: "20px",
+              width: "22px",
+              height: "22px",
               display: "grid",
               placeItems: "center",
               fontSize: "0.75rem",
               fontWeight: 900,
+              boxShadow: "var(--clay-shadow-button)",
             }}
           >
             {unreadChatCount}
@@ -115,7 +129,8 @@ export function MediaControls({
         style={{ fontWeight: 800 }}
         title="Leave Room"
       >
-        🚪 Leave
+        <IconLogOut size={18} />
+        <span>Leave</span>
       </button>
     </div>
   );

@@ -4,6 +4,22 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { fetchGeneratedRoomName, fetchGeneratedRoomCode, createRoom } from "@/lib/api";
 import { getBrowserLocation } from "@/lib/geo";
+import {
+  IconClose,
+  IconDice,
+  IconGlobe,
+  IconLock,
+  IconArrowRight,
+  IconGamepad,
+  IconMusic,
+  IconBook,
+  IconLaptop,
+  IconParty,
+  IconFlask,
+  IconCoffee,
+  IconPalette,
+  IconEdit,
+} from "@/components/icons/Icons";
 
 interface Props {
   isOpen: boolean;
@@ -11,15 +27,15 @@ interface Props {
 }
 
 const PRESET_CATEGORIES = [
-  { id: "gaming", label: "Gaming", emoji: "🎮" },
-  { id: "music", label: "Music", emoji: "🎵" },
-  { id: "study", label: "Study", emoji: "📚" },
-  { id: "tech", label: "Tech", emoji: "💻" },
-  { id: "fun", label: "Fun", emoji: "🎉" },
-  { id: "science", label: "Science", emoji: "🔬" },
-  { id: "chill", label: "Chill", emoji: "☕" },
-  { id: "creative", label: "Creative", emoji: "🎨" },
-  { id: "custom", label: "Custom", emoji: "✏️" },
+  { id: "gaming", label: "Gaming", Icon: IconGamepad },
+  { id: "music", label: "Music", Icon: IconMusic },
+  { id: "study", label: "Study", Icon: IconBook },
+  { id: "tech", label: "Tech", Icon: IconLaptop },
+  { id: "fun", label: "Fun", Icon: IconParty },
+  { id: "science", label: "Science", Icon: IconFlask },
+  { id: "chill", label: "Chill", Icon: IconCoffee },
+  { id: "creative", label: "Creative", Icon: IconPalette },
+  { id: "custom", label: "Custom", Icon: IconEdit },
 ];
 
 export function CreateRoomModal({ isOpen, onClose }: Props) {
@@ -69,7 +85,6 @@ export function CreateRoomModal({ isOpen, onClose }: Props) {
       const isCustom = category === "custom";
       const finalCategory = isCustom ? customCategory.trim() || "general" : category;
 
-      // Obtain location if available
       const loc = await getBrowserLocation();
 
       const created = await createRoom({
@@ -97,26 +112,36 @@ export function CreateRoomModal({ isOpen, onClose }: Props) {
   return (
     <div className="modal-overlay">
       <div className="modal-content" style={{ maxWidth: "560px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
           <h2>Create a Room</h2>
           <button type="button" onClick={onClose} className="secondary icon-btn">
-            ✕
+            <IconClose size={18} />
           </button>
         </div>
 
         {error && (
-          <div style={{ padding: "10px 14px", background: "var(--danger)", border: "2px solid var(--ink)", borderRadius: "10px", marginBottom: "16px", fontWeight: 700, fontSize: "0.9rem" }}>
+          <div
+            style={{
+              padding: "12px 16px",
+              background: "var(--clay-danger)",
+              color: "var(--clay-danger-dark)",
+              borderRadius: "16px",
+              marginBottom: "16px",
+              fontWeight: 700,
+              fontSize: "0.9rem",
+            }}
+          >
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           {/* Room Name */}
           <div>
             <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "6px" }}>
               Room Name
             </label>
-            <div style={{ display: "flex", gap: "8px" }}>
+            <div style={{ display: "flex", gap: "10px" }}>
               <input
                 type="text"
                 value={name}
@@ -126,7 +151,8 @@ export function CreateRoomModal({ isOpen, onClose }: Props) {
                 required
               />
               <button type="button" onClick={rollName} className="secondary" title="Randomize name">
-                🎲 Roll
+                <IconDice size={18} />
+                <span>Roll</span>
               </button>
             </div>
           </div>
@@ -134,12 +160,12 @@ export function CreateRoomModal({ isOpen, onClose }: Props) {
           {/* Description */}
           <div>
             <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "6px" }}>
-              Room Description (Topic)
+              Room Topic &amp; Description
             </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="What are we doing or discussing in this room? Used for semantic search matching..."
+              placeholder="What are we talking about or doing? Used for semantic search matching..."
               rows={2}
               style={{ width: "100%", resize: "vertical" }}
             />
@@ -147,29 +173,32 @@ export function CreateRoomModal({ isOpen, onClose }: Props) {
 
           {/* Category Chips */}
           <div>
-            <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "8px" }}>
+            <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 700, marginBottom: "10px" }}>
               Select Category
             </label>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-              {PRESET_CATEGORIES.map((cat) => (
-                <div
-                  key={cat.id}
-                  onClick={() => setCategory(cat.id)}
-                  className={`chip ${category === cat.id ? "active" : ""}`}
-                >
-                  <span>{cat.emoji}</span>
-                  <span>{cat.label}</span>
-                </div>
-              ))}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+              {PRESET_CATEGORIES.map((cat) => {
+                const CatIcon = cat.Icon;
+                return (
+                  <div
+                    key={cat.id}
+                    onClick={() => setCategory(cat.id)}
+                    className={`chip ${category === cat.id ? "active" : ""}`}
+                  >
+                    <CatIcon size={16} />
+                    <span>{cat.label}</span>
+                  </div>
+                );
+              })}
             </div>
 
             {category === "custom" && (
-              <div style={{ marginTop: "10px" }}>
+              <div style={{ marginTop: "12px" }}>
                 <input
                   type="text"
                   value={customCategory}
                   onChange={(e) => setCustomCategory(e.target.value)}
-                  placeholder="Enter your custom topic (e.g. indie game dev, lofi beats)..."
+                  placeholder="Enter custom category / tags (e.g. lo-fi study, gamedev)..."
                   style={{ width: "100%" }}
                   required
                 />
@@ -178,8 +207,15 @@ export function CreateRoomModal({ isOpen, onClose }: Props) {
           </div>
 
           {/* Room Privacy Choice */}
-          <div style={{ padding: "14px", background: "var(--surface-soft)", border: "2px solid var(--ink)", borderRadius: "14px" }}>
-            <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 800, marginBottom: "10px" }}>
+          <div
+            style={{
+              padding: "16px",
+              background: "var(--clay-bg)",
+              borderRadius: "20px",
+              boxShadow: "var(--clay-shadow-inset)",
+            }}
+          >
+            <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 800, marginBottom: "12px" }}>
               Room Access Type
             </label>
             <div style={{ display: "flex", gap: "12px" }}>
@@ -189,7 +225,8 @@ export function CreateRoomModal({ isOpen, onClose }: Props) {
                 className={!isPrivate ? "active" : "secondary"}
                 style={{ flex: 1, padding: "10px" }}
               >
-                🌐 Public Room
+                <IconGlobe size={18} />
+                <span>Public Room</span>
               </button>
               <button
                 type="button"
@@ -197,16 +234,17 @@ export function CreateRoomModal({ isOpen, onClose }: Props) {
                 className={isPrivate ? "active" : "secondary"}
                 style={{ flex: 1, padding: "10px" }}
               >
-                🔒 Private Room
+                <IconLock size={18} />
+                <span>Private Room</span>
               </button>
             </div>
 
             {isPrivate ? (
-              <div style={{ marginTop: "12px", fontSize: "0.85rem" }}>
-                <p style={{ marginBottom: "6px" }}>
+              <div style={{ marginTop: "14px", fontSize: "0.85rem" }}>
+                <p style={{ marginBottom: "8px" }}>
                   Only people with this secret room code can join.
                 </p>
-                <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                   <input
                     type="text"
                     value={privateCode}
@@ -214,19 +252,20 @@ export function CreateRoomModal({ isOpen, onClose }: Props) {
                     style={{ flex: 1, fontWeight: 700, fontFamily: "monospace" }}
                   />
                   <button type="button" onClick={rollCode} className="secondary icon-btn" title="Roll another code">
-                    🎲
+                    <IconDice size={18} />
                   </button>
                 </div>
               </div>
             ) : (
-              <p style={{ marginTop: "10px", fontSize: "0.85rem" }}>
+              <p style={{ marginTop: "12px", fontSize: "0.85rem" }}>
                 Visible in the public directory to anyone. Ranked automatically by category, semantic similarity, and nearby geography.
               </p>
             )}
           </div>
 
           <button type="submit" disabled={loading} style={{ width: "100%", padding: "14px", fontSize: "1.05rem" }}>
-            {loading ? "Creating..." : "Create Room & Enter →"}
+            <span>{loading ? "Creating..." : "Create Room & Enter"}</span>
+            <IconArrowRight size={18} />
           </button>
         </form>
       </div>

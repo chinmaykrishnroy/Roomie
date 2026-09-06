@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { ChatMessage } from "@/lib/webrtc";
+import { IconClose, IconMessage, IconArrowRight } from "@/components/icons/Icons";
 
 interface Props {
   isOpen: boolean;
@@ -43,11 +44,11 @@ export function ChatDrawer({
         right: 0,
         top: 0,
         bottom: 0,
-        width: "320px",
-        maxWidth: "90vw",
-        background: "var(--paper)",
-        borderLeft: "3px solid var(--ink)",
-        boxShadow: "-4px 0 0 var(--ink)",
+        width: "340px",
+        maxWidth: "92vw",
+        background: "var(--clay-card)",
+        borderLeft: "1px solid rgba(255, 255, 255, 0.8)",
+        boxShadow: "-12px 0 35px rgba(0, 0, 0, 0.2)",
         zIndex: 60,
         display: "flex",
         flexDirection: "column",
@@ -56,25 +57,28 @@ export function ChatDrawer({
       {/* Header */}
       <div
         style={{
-          padding: "16px",
-          borderBottom: "2px solid var(--ink)",
+          padding: "18px 20px",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.8)",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          background: "var(--lilac)",
+          background: "linear-gradient(135deg, #ede9fe, #ddd6fe)",
         }}
       >
-        <h3 style={{ fontSize: "1.1rem" }}>💬 Room Chat</h3>
-        <button type="button" onClick={onClose} className="secondary icon-btn" style={{ padding: "4px 8px" }}>
-          ✕
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 800, color: "var(--clay-lilac-dark)" }}>
+          <IconMessage size={20} />
+          <span>Room Chat</span>
+        </div>
+        <button type="button" onClick={onClose} className="secondary icon-btn" style={{ padding: "6px" }}>
+          <IconClose size={16} />
         </button>
       </div>
 
       {/* Messages */}
-      <div style={{ flex: 1, overflowY: "auto", padding: "16px", display: "flex", flexDirection: "column", gap: "12px" }}>
+      <div style={{ flex: 1, overflowY: "auto", padding: "18px", display: "flex", flexDirection: "column", gap: "14px" }}>
         {messages.length === 0 ? (
-          <div style={{ textAlign: "center", color: "var(--muted)", marginTop: "40px", fontSize: "0.85rem" }}>
-            No messages yet. Send a hello! 👋
+          <div style={{ textAlign: "center", color: "var(--clay-muted)", marginTop: "48px", fontSize: "0.88rem" }}>
+            No messages yet. Send a hello!
           </div>
         ) : (
           messages.map((m) => {
@@ -87,18 +91,21 @@ export function ChatDrawer({
                   maxWidth: "85%",
                 }}
               >
-                <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--muted)", marginBottom: "2px" }}>
+                <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "var(--clay-muted)", marginBottom: "3px" }}>
                   {m.sender} {isSelf && "(You)"}
                 </div>
                 <div
                   style={{
-                    padding: "8px 12px",
-                    borderRadius: "12px",
-                    border: "2px solid var(--ink)",
-                    background: isSelf ? "var(--accent)" : "var(--surface-soft)",
-                    boxShadow: "2px 2px 0 var(--ink)",
-                    fontSize: "0.9rem",
+                    padding: "10px 14px",
+                    borderRadius: "18px",
+                    background: isSelf ? "var(--clay-primary)" : "#ffffff",
+                    color: isSelf ? "var(--clay-primary-dark)" : "var(--clay-ink)",
+                    boxShadow: isSelf
+                      ? "4px 4px 10px rgba(167, 243, 208, 0.4)"
+                      : "4px 4px 10px rgba(166, 178, 198, 0.25)",
+                    fontSize: "0.92rem",
                     wordBreak: "break-word",
+                    border: "1px solid rgba(255, 255, 255, 0.8)",
                   }}
                 >
                   {m.text}
@@ -114,11 +121,11 @@ export function ChatDrawer({
       <form
         onSubmit={handleSubmit}
         style={{
-          padding: "12px",
-          borderTop: "2px solid var(--ink)",
+          padding: "16px",
+          borderTop: "1px solid rgba(255, 255, 255, 0.8)",
           display: "flex",
-          gap: "8px",
-          background: "var(--paper)",
+          gap: "10px",
+          background: "var(--clay-card)",
         }}
       >
         <input
@@ -126,10 +133,10 @@ export function ChatDrawer({
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Type message..."
-          style={{ flex: 1, padding: "8px 12px", fontSize: "0.9rem" }}
+          style={{ flex: 1, padding: "10px 16px", fontSize: "0.92rem" }}
         />
-        <button type="submit" style={{ padding: "8px 14px" }}>
-          Send
+        <button type="submit" style={{ padding: "10px 16px" }}>
+          <IconArrowRight size={18} />
         </button>
       </form>
     </div>

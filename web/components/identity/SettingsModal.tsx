@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { UserSession, saveUserSession, clearUserSession } from "@/lib/storage";
+import { IconClose, IconTrash } from "@/components/icons/Icons";
 
 interface Props {
   isOpen: boolean;
@@ -48,10 +49,10 @@ export function SettingsModal({ isOpen, session, onClose, onUpdate, onReset }: P
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
           <h2>Settings</h2>
           <button type="button" onClick={onClose} className="secondary icon-btn">
-            ✕
+            <IconClose size={18} />
           </button>
         </div>
 
@@ -67,20 +68,20 @@ export function SettingsModal({ isOpen, session, onClose, onUpdate, onReset }: P
           />
         </div>
 
-        <div style={{ marginBottom: "24px" }}>
-          <label style={{ display: "flex", alignItems: "center", gap: "10px", cursor: "pointer", fontWeight: 700 }}>
+        <div style={{ marginBottom: "28px" }}>
+          <label style={{ display: "flex", alignItems: "center", gap: "12px", cursor: "pointer", fontWeight: 700 }}>
             <input
               type="checkbox"
               checked={mirrored}
               onChange={(e) => setMirrored(e.target.checked)}
-              style={{ width: "18px", height: "18px" }}
+              style={{ width: "20px", height: "20px", accentColor: "var(--clay-primary-dark)" }}
             />
             Mirror my camera (selfie mode)
           </label>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          <button type="button" onClick={handleSave} style={{ width: "100%" }}>
+          <button type="button" onClick={handleSave} style={{ width: "100%", padding: "12px" }}>
             Save Changes
           </button>
 
@@ -88,9 +89,10 @@ export function SettingsModal({ isOpen, session, onClose, onUpdate, onReset }: P
             type="button"
             onClick={handleResetIdentity}
             className="danger"
-            style={{ width: "100%" }}
+            style={{ width: "100%", padding: "12px" }}
           >
-            🗑️ Reset Stored Identity
+            <IconTrash size={18} />
+            <span>Reset Stored Identity</span>
           </button>
         </div>
       </div>

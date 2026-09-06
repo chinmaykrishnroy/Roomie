@@ -1,27 +1,59 @@
 :root {
   color-scheme: light;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background: #f7f5ef;
-  color: #252822;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-  --ink: #252822;
-  --muted: #62655e;
-  --paper: #fffefb;
-  --canvas: #f7f5ef;
-  --surface-soft: #f0eee7;
-  --line: #c9cbbf;
-  --shadow-color: #252822;
+  /* Claymorphism Color Palette */
+  --clay-bg: #eef2f7;
+  --clay-card: #f9fbfe;
+  --clay-ink: #1e293b;
+  --clay-muted: #64748b;
+  --clay-line: rgba(255, 255, 255, 0.8);
 
-  /* Pastel Soft Neobrutalist Accents */
-  --accent: #d7edb7;      /* soft mint */
-  --accent-hover: #c4e599;
-  --lilac: #e8def8;       /* soft lilac */
-  --lilac-hover: #d7c5f3;
-  --yellow: #fef08a;      /* pale yellow */
-  --yellow-hover: #fde047;
-  --coral: #fed7aa;       /* soft peach/coral */
-  --danger: #f7d4c9;      /* soft red */
-  --danger-hover: #f4beaf;
+  /* Clay Pastel Themes */
+  --clay-primary: #a7f3d0;       /* mint clay */
+  --clay-primary-dark: #065f46;
+  --clay-lilac: #ddd6fe;         /* lilac clay */
+  --clay-lilac-dark: #5b21b6;
+  --clay-yellow: #fef08a;        /* butter yellow clay */
+  --clay-yellow-dark: #854d0e;
+  --clay-coral: #fed7aa;         /* peach clay */
+  --clay-danger: #fecdd3;        /* rose clay */
+  --clay-danger-dark: #9f1239;
+  --clay-blue: #bae6fd;          /* sky clay */
+  --clay-blue-dark: #075985;
+
+  /* 3D Clay Shadows (Dual Drop Shadow + Inset Bevels) */
+  --clay-shadow-card:
+    12px 12px 28px rgba(166, 178, 198, 0.4),
+    -12px -12px 28px rgba(255, 255, 255, 0.95),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.9),
+    inset -2px -2px 4px rgba(166, 178, 198, 0.15);
+
+  --clay-shadow-button:
+    6px 6px 14px rgba(166, 178, 198, 0.45),
+    -6px -6px 14px rgba(255, 255, 255, 0.95),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.8),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.06);
+
+  --clay-shadow-button-hover:
+    8px 8px 18px rgba(166, 178, 198, 0.55),
+    -8px -8px 18px rgba(255, 255, 255, 1),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.9),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.08);
+
+  --clay-shadow-button-pressed:
+    inset 4px 4px 8px rgba(166, 178, 198, 0.45),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+
+  --clay-shadow-inset:
+    inset 4px 4px 8px rgba(166, 178, 198, 0.35),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.95);
+
+  --clay-shadow-floating:
+    0 16px 36px rgba(30, 41, 59, 0.12),
+    0 4px 12px rgba(30, 41, 59, 0.06),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.8),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.05);
 }
 
 * {
@@ -31,22 +63,24 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--canvas);
-  color: var(--ink);
+  background-color: var(--clay-bg);
+  color: var(--clay-ink);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Typography & Links */
+/* Typography */
 h1, h2, h3, h4 {
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.025em;
   margin: 0;
+  color: var(--clay-ink);
 }
 
 p {
   margin: 0;
-  line-height: 1.5;
-  color: var(--muted);
+  line-height: 1.55;
+  color: var(--clay-muted);
 }
 
 a {
@@ -54,93 +88,105 @@ a {
   text-decoration: none;
 }
 
-/* Soft Neobrutalist Button & Input Styles */
-button, input, select, textarea {
-  font: inherit;
-  border: 2px solid var(--ink);
-  border-radius: 12px;
-  padding: 10px 16px;
-  outline: none;
-  transition: all 120ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
+/* Claymorphic Buttons */
 button {
-  cursor: pointer;
+  font: inherit;
   font-weight: 700;
-  background: var(--accent);
-  color: var(--ink);
-  box-shadow: 3px 3px 0 var(--ink);
+  border-radius: 18px;
+  border: 1px solid var(--clay-line);
+  padding: 11px 20px;
+  outline: none;
+  cursor: pointer;
+  background: var(--clay-primary);
+  color: var(--clay-primary-dark);
+  box-shadow: var(--clay-shadow-button);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   user-select: none;
+  transition: all 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 button:hover:not(:disabled) {
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 var(--ink);
+  transform: translateY(-2px);
+  box-shadow: var(--clay-shadow-button-hover);
 }
 
 button:active:not(:disabled) {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--ink);
+  transform: translateY(1px);
+  box-shadow: var(--clay-shadow-button-pressed);
 }
 
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  box-shadow: none;
   transform: none;
 }
 
 button.secondary {
-  background: var(--paper);
+  background: #ffffff;
+  color: var(--clay-ink);
 }
 
 button.lilac {
-  background: var(--lilac);
+  background: var(--clay-lilac);
+  color: var(--clay-lilac-dark);
 }
 
 button.yellow {
-  background: var(--yellow);
+  background: var(--clay-yellow);
+  color: var(--clay-yellow-dark);
 }
 
 button.danger {
-  background: var(--danger);
+  background: var(--clay-danger);
+  color: var(--clay-danger-dark);
 }
 
 button.icon-btn {
-  padding: 8px;
-  min-width: 42px;
-  min-height: 42px;
-  border-radius: 10px;
+  padding: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 14px;
 }
 
-input, textarea, select {
-  background: var(--paper);
-  color: var(--ink);
+/* Clay Inset Input Fields & Textareas */
+input, select, textarea {
+  font: inherit;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  padding: 12px 18px;
+  outline: none;
+  background: var(--clay-bg);
+  color: var(--clay-ink);
+  box-shadow: var(--clay-shadow-inset);
+  transition: all 160ms ease;
 }
 
-input:focus, textarea:focus, select:focus {
-  border-color: #7048b6;
-  box-shadow: 0 0 0 3px rgba(112, 72, 182, 0.2);
+input:focus, select:focus, textarea:focus {
+  background: #fdfefe;
+  box-shadow:
+    inset 2px 2px 4px rgba(166, 178, 198, 0.2),
+    0 0 0 3px rgba(167, 243, 208, 0.6);
 }
 
-/* Neobrutalist Cards */
+/* Clay Cards */
 .card {
-  background: var(--paper);
-  border: 2px solid var(--ink);
-  border-radius: 18px;
-  box-shadow: 4px 4px 0 var(--ink);
-  padding: 20px;
+  background: var(--clay-card);
+  border: 1px solid var(--clay-line);
+  border-radius: 28px;
+  box-shadow: var(--clay-shadow-card);
+  padding: 24px;
 }
 
-/* Header */
+/* App Header */
 .app-header {
-  border-bottom: 2px solid var(--ink);
-  background: var(--paper);
-  padding: 14px 24px;
+  background: rgba(249, 251, 254, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 20px rgba(166, 178, 198, 0.15);
+  padding: 16px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -153,54 +199,83 @@ input:focus, textarea:focus, select:focus {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   font-weight: 900;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.03em;
+  color: var(--clay-ink);
 }
 
 .brand-badge {
-  background: var(--accent);
-  border: 2px solid var(--ink);
-  border-radius: 8px;
-  padding: 2px 8px;
-  font-size: 0.75rem;
+  background: var(--clay-lilac);
+  color: var(--clay-lilac-dark);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 2px 10px;
+  font-size: 0.72rem;
   font-weight: 800;
-  box-shadow: 2px 2px 0 var(--ink);
+  box-shadow: var(--clay-shadow-button);
 }
 
-/* Pills & Chips */
+/* Tactile Clay Chips / Pills */
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
+  gap: 8px;
+  padding: 8px 16px;
   border-radius: 999px;
-  border: 2px solid var(--ink);
-  font-size: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  font-size: 0.86rem;
   font-weight: 700;
-  background: var(--paper);
+  background: #ffffff;
+  color: var(--clay-ink);
   cursor: pointer;
-  box-shadow: 2px 2px 0 var(--ink);
-  transition: all 120ms ease;
+  box-shadow:
+    4px 4px 10px rgba(166, 178, 198, 0.35),
+    -4px -4px 10px rgba(255, 255, 255, 0.95),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.9);
+  transition: all 150ms ease;
   user-select: none;
 }
 
 .chip:hover {
-  transform: translateY(-1px);
-  box-shadow: 3px 3px 0 var(--ink);
+  transform: translateY(-2px);
+  box-shadow:
+    6px 6px 14px rgba(166, 178, 198, 0.45),
+    -6px -6px 14px rgba(255, 255, 255, 1);
 }
 
 .chip.active {
-  background: var(--lilac);
-  border-color: var(--ink);
+  background: var(--clay-lilac);
+  color: var(--clay-lilac-dark);
+  box-shadow:
+    inset 3px 3px 6px rgba(109, 40, 217, 0.2),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.8);
 }
 
-/* Modal Overlay */
+/* Clay Badge */
+.badge {
+  background: #ffffff;
+  color: var(--clay-ink);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow:
+    3px 3px 8px rgba(166, 178, 198, 0.3),
+    -3px -3px 8px rgba(255, 255, 255, 0.9),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Modal Overlay & Clay Window */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(3px);
+  background: rgba(30, 41, 59, 0.35);
+  backdrop-filter: blur(8px);
   display: grid;
   place-items: center;
   padding: 20px;
@@ -208,13 +283,16 @@ input:focus, textarea:focus, select:focus {
 }
 
 .modal-content {
-  background: var(--paper);
-  border: 3px solid var(--ink);
-  border-radius: 24px;
-  box-shadow: 6px 6px 0 var(--ink);
+  background: var(--clay-card);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 32px;
+  box-shadow:
+    20px 20px 50px rgba(15, 23, 42, 0.25),
+    -12px -12px 35px rgba(255, 255, 255, 0.95),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.9);
   max-width: 520px;
   width: 100%;
-  padding: 28px;
+  padding: 32px;
   position: relative;
   max-height: 90vh;
   overflow-y: auto;
@@ -223,16 +301,15 @@ input:focus, textarea:focus, select:focus {
 /* Video Grid Layouts */
 .video-grid {
   display: grid;
-  gap: 16px;
+  gap: 20px;
   width: 100%;
   height: 100%;
   align-content: center;
   justify-content: center;
 }
 
-/* Grid auto-sizing according to participant counts */
 .grid-1 {
-  grid-template-columns: minmax(280px, 800px);
+  grid-template-columns: minmax(280px, 840px);
 }
 
 .grid-2 {
@@ -259,7 +336,6 @@ input:focus, textarea:focus, select:focus {
   grid-template-columns: repeat(4, minmax(130px, 1fr));
 }
 
-/* Special 2-person mobile view: top peer, bottom self */
 @media (max-width: 768px) {
   .grid-2.mobile-stacked {
     grid-template-columns: 1fr !important;
@@ -271,8 +347,8 @@ input:focus, textarea:focus, select:focus {
 /* Pinning Stage Layout */
 .pinned-layout {
   display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 16px;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
   width: 100%;
   height: 100%;
 }
@@ -292,22 +368,24 @@ input:focus, textarea:focus, select:focus {
 .pinned-stage {
   width: 100%;
   height: 100%;
-  min-height: 350px;
+  min-height: 360px;
 }
 
 .pinned-strip {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   overflow-y: auto;
 }
 
-/* Video Tile */
+/* Video Tile (Soft 3D Clay Frame) */
 .video-tile {
-  background: #1e211d;
-  border: 2px solid var(--ink);
-  border-radius: 16px;
-  box-shadow: 3px 3px 0 var(--ink);
+  background: #18202c;
+  border-radius: 24px;
+  box-shadow:
+    10px 10px 24px rgba(0, 0, 0, 0.25),
+    -6px -6px 20px rgba(255, 255, 255, 0.08),
+    inset 1px 1px 3px rgba(255, 255, 255, 0.15);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -334,7 +412,7 @@ input:focus, textarea:focus, select:focus {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 10px;
+  padding: 12px;
 }
 
 .tile-top-bar, .tile-bottom-bar {
@@ -344,59 +422,54 @@ input:focus, textarea:focus, select:focus {
   pointer-events: auto;
 }
 
-.badge {
-  background: rgba(37, 40, 34, 0.85);
-  color: #fffefb;
-  border: 1px solid var(--ink);
-  border-radius: 6px;
-  padding: 2px 8px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-/* Floating Media Controls */
+/* Floating Clay Call Dock */
 .call-dock {
   position: fixed;
-  bottom: 24px;
+  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--paper);
-  border: 3px solid var(--ink);
-  border-radius: 20px;
-  box-shadow: 4px 4px 0 var(--ink);
-  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 26px;
+  box-shadow: var(--clay-shadow-floating);
+  padding: 12px 22px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   z-index: 50;
 }
 
-/* Avatar Fallback */
+/* Clay 3D Avatar Fallback */
 .avatar-placeholder {
-  width: 72px;
-  height: 72px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  border: 2px solid var(--ink);
-  background: var(--lilac);
+  background: linear-gradient(135deg, #e9d5ff, #c084fc);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    8px 8px 18px rgba(0, 0, 0, 0.3),
+    inset 3px 3px 6px rgba(255, 255, 255, 0.9),
+    inset -3px -3px 6px rgba(109, 40, 217, 0.3);
   display: grid;
   place-items: center;
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: 900;
-  color: var(--ink);
-  box-shadow: 2px 2px 0 var(--ink);
+  color: #3b0764;
 }
 
 .avatar-sm {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  border: 2px solid var(--ink);
-  background: var(--accent);
+  background: linear-gradient(135deg, #d1fae5, #6ee7b7);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    3px 3px 8px rgba(166, 178, 198, 0.35),
+    inset 1px 1px 3px rgba(255, 255, 255, 0.8);
   display: grid;
   place-items: center;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 800;
+  color: #064e3b;
 }

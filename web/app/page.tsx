@@ -7,6 +7,13 @@ import { OnboardingModal } from "@/components/identity/OnboardingModal";
 import { SettingsModal } from "@/components/identity/SettingsModal";
 import { CreateRoomModal } from "@/components/room/CreateRoomModal";
 import { PublicRoomList } from "@/components/room/PublicRoomList";
+import {
+  IconSofa,
+  IconGear,
+  IconPlus,
+  IconArrowRight,
+  IconSparkles,
+} from "@/components/icons/Icons";
 
 export default function HomePage() {
   const router = useRouter();
@@ -42,7 +49,8 @@ export default function HomePage() {
       {/* App Header */}
       <header className="app-header">
         <div className="brand">
-          <span>🛋️ Roomie</span>
+          <IconSofa size={26} color="var(--clay-lilac-dark)" />
+          <span>Roomie</span>
           <span className="brand-badge">BETA</span>
         </div>
 
@@ -53,19 +61,18 @@ export default function HomePage() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "8px",
-                padding: "4px 12px 4px 6px",
-                border: "2px solid var(--ink)",
+                gap: "10px",
+                padding: "6px 14px 6px 8px",
                 borderRadius: "999px",
-                background: "var(--paper)",
-                boxShadow: "2px 2px 0 var(--ink)",
+                background: "#ffffff",
+                boxShadow: "var(--clay-shadow-button)",
                 cursor: "pointer",
               }}
               title="Click to open settings"
             >
               <div className="avatar-sm">{getInitials(session.username)}</div>
               <span style={{ fontWeight: 800, fontSize: "0.9rem" }}>{session.username}</span>
-              <span style={{ fontSize: "0.8rem" }}>⚙️</span>
+              <IconGear size={16} color="var(--clay-muted)" />
             </div>
           ) : (
             <button type="button" onClick={() => setShowOnboarding(true)} className="secondary">
@@ -76,30 +83,39 @@ export default function HomePage() {
       </header>
 
       {/* Main Content */}
-      <main style={{ maxWidth: "1040px", margin: "0 auto", padding: "32px 20px", width: "100%", flex: 1 }}>
-        {/* Hero Section */}
+      <main style={{ maxWidth: "1040px", margin: "0 auto", padding: "40px 20px", width: "100%", flex: 1 }}>
+        {/* Claymorphic Hero Section */}
         <section
           className="card"
           style={{
-            background: "var(--lilac)",
-            padding: "36px 28px",
-            marginBottom: "32px",
+            background: "linear-gradient(135deg, #ede9fe, #ddd6fe)",
+            padding: "40px 32px",
+            marginBottom: "36px",
             display: "flex",
             flexDirection: "column",
-            gap: "20px",
+            gap: "24px",
+            borderRadius: "32px",
           }}
         >
           <div>
-            <span
+            <div
               className="chip"
-              style={{ background: "var(--accent)", marginBottom: "12px", border: "2px solid var(--ink)" }}
+              style={{
+                background: "#ffffff",
+                marginBottom: "16px",
+                color: "var(--clay-lilac-dark)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
             >
-              🚀 WebRTC Multi-Party Rooms
-            </span>
-            <h1 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", marginBottom: "8px" }}>
+              <IconSparkles size={16} />
+              <span>WebRTC Multi-Party Rooms</span>
+            </div>
+            <h1 style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)", marginBottom: "12px", color: "#1e1b4b" }}>
               Meet the person before you judge the profile.
             </h1>
-            <p style={{ fontSize: "1.1rem", color: "var(--ink)", maxWidth: "680px" }}>
+            <p style={{ fontSize: "1.1rem", color: "#475569", maxWidth: "680px" }}>
               Join casual voice and video rooms with up to 16 people. Discover rooms by topic and nearby location, or create your own private or public space in one click.
             </p>
           </div>
@@ -108,24 +124,26 @@ export default function HomePage() {
             <button
               type="button"
               onClick={() => setShowCreateRoom(true)}
-              style={{ padding: "14px 24px", fontSize: "1.05rem" }}
+              style={{ padding: "14px 26px", fontSize: "1.05rem" }}
             >
-              ✨ Create Room
+              <IconPlus size={20} />
+              <span>Create Room</span>
             </button>
 
             <form
               onSubmit={handleJoinWithCode}
-              style={{ display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center" }}
+              style={{ display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "center" }}
             >
               <input
                 type="text"
                 value={joinCodeInput}
                 onChange={(e) => setJoinCodeInput(e.target.value)}
                 placeholder="Enter room code..."
-                style={{ padding: "12px 16px", minWidth: "220px", fontWeight: 700 }}
+                style={{ padding: "13px 18px", minWidth: "220px", fontWeight: 700 }}
               />
-              <button type="submit" className="secondary" style={{ padding: "12px 20px" }}>
-                Join Code →
+              <button type="submit" className="secondary" style={{ padding: "13px 22px" }}>
+                <span>Join Code</span>
+                <IconArrowRight size={18} />
               </button>
             </form>
           </div>
@@ -138,15 +156,15 @@ export default function HomePage() {
       {/* Footer */}
       <footer
         style={{
-          borderTop: "2px solid var(--line)",
-          padding: "20px",
+          borderTop: "1px solid rgba(255, 255, 255, 0.8)",
+          padding: "24px",
           textAlign: "center",
           fontSize: "0.85rem",
-          color: "var(--muted)",
+          color: "var(--clay-muted)",
           fontWeight: 700,
         }}
       >
-        Roomie · Multi-Party Video & Voice · 16 Participants · Adaptive Bandwidth
+        Roomie · Multi-Party Video &amp; Voice · 16 Participants · Adaptive Bandwidth
       </footer>
 
       {/* Modals */}

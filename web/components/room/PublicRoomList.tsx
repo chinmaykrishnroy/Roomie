@@ -4,18 +4,36 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Room, listPublicRooms } from "@/lib/api";
 import { getBrowserLocation, GeoCoords } from "@/lib/geo";
+import {
+  IconSparkles,
+  IconGamepad,
+  IconMusic,
+  IconBook,
+  IconLaptop,
+  IconParty,
+  IconFlask,
+  IconCoffee,
+  IconPalette,
+  IconEdit,
+  IconSearch,
+  IconMapPin,
+  IconUsers,
+  IconArrowLeft,
+  IconArrowRight,
+  IconSofa,
+} from "@/components/icons/Icons";
 
 const CATEGORIES = [
-  { id: "all", label: "All Rooms", emoji: "✨" },
-  { id: "gaming", label: "Gaming", emoji: "🎮" },
-  { id: "music", label: "Music", emoji: "🎵" },
-  { id: "study", label: "Study", emoji: "📚" },
-  { id: "tech", label: "Tech", emoji: "💻" },
-  { id: "fun", label: "Fun", emoji: "🎉" },
-  { id: "science", label: "Science", emoji: "🔬" },
-  { id: "chill", label: "Chill", emoji: "☕" },
-  { id: "creative", label: "Creative", emoji: "🎨" },
-  { id: "custom", label: "Custom Search", emoji: "✏️" },
+  { id: "all", label: "All Rooms", Icon: IconSparkles },
+  { id: "gaming", label: "Gaming", Icon: IconGamepad },
+  { id: "music", label: "Music", Icon: IconMusic },
+  { id: "study", label: "Study", Icon: IconBook },
+  { id: "tech", label: "Tech", Icon: IconLaptop },
+  { id: "fun", label: "Fun", Icon: IconParty },
+  { id: "science", label: "Science", Icon: IconFlask },
+  { id: "chill", label: "Chill", Icon: IconCoffee },
+  { id: "creative", label: "Creative", Icon: IconPalette },
+  { id: "custom", label: "Custom Search", Icon: IconEdit },
 ];
 
 export function PublicRoomList() {
@@ -27,7 +45,6 @@ export function PublicRoomList() {
   const [location, setLocation] = useState<GeoCoords | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [totalRooms, setTotalRooms] = useState(0);
 
   useEffect(() => {
     getBrowserLocation().then((coords) => {
@@ -52,7 +69,6 @@ export function PublicRoomList() {
       });
       setRooms(res.rooms);
       setTotalPages(res.totalPages);
-      setTotalRooms(res.total);
     } catch (err) {
       console.error("Failed to load rooms", err);
     } finally {
@@ -67,55 +83,62 @@ export function PublicRoomList() {
   };
 
   return (
-    <div style={{ marginTop: "32px" }}>
+    <div style={{ marginTop: "36px" }}>
       {/* Category Pills Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px", marginBottom: "16px" }}>
         <h2 style={{ fontSize: "1.5rem" }}>Browse Public Rooms</h2>
         {location && (
-          <span className="badge" style={{ background: "var(--accent)", color: "var(--ink)" }}>
-            📍 Location ranked (nearest first)
+          <span className="badge" style={{ background: "var(--clay-primary)", color: "var(--clay-primary-dark)" }}>
+            <IconMapPin size={14} />
+            <span>Location ranked</span>
           </span>
         )}
       </div>
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "18px" }}>
-        {CATEGORIES.map((cat) => (
-          <div
-            key={cat.id}
-            onClick={() => {
-              setSelectedCategory(cat.id);
-              setPage(1);
-            }}
-            className={`chip ${selectedCategory === cat.id ? "active" : ""}`}
-          >
-            <span>{cat.emoji}</span>
-            <span>{cat.label}</span>
-          </div>
-        ))}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "20px" }}>
+        {CATEGORIES.map((cat) => {
+          const CatIcon = cat.Icon;
+          return (
+            <div
+              key={cat.id}
+              onClick={() => {
+                setSelectedCategory(cat.id);
+                setPage(1);
+              }}
+              className={`chip ${selectedCategory === cat.id ? "active" : ""}`}
+            >
+              <CatIcon size={16} />
+              <span>{cat.label}</span>
+            </div>
+          );
+        })}
       </div>
 
       {/* Semantic Search Box */}
-      <form onSubmit={handleSearchSubmit} style={{ display: "flex", gap: "10px", marginBottom: "24px" }}>
+      <form onSubmit={handleSearchSubmit} style={{ display: "flex", gap: "12px", marginBottom: "28px" }}>
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search by topic, vibes or custom category using vector match..."
-          style={{ flex: 1, padding: "10px 14px", fontSize: "0.95rem" }}
+          style={{ flex: 1, padding: "12px 18px", fontSize: "0.95rem" }}
         />
-        <button type="submit" className="secondary">
-          🔍 Search
+        <button type="submit" className="secondary" style={{ padding: "12px 20px" }}>
+          <IconSearch size={18} />
+          <span>Search</span>
         </button>
       </form>
 
       {/* Rooms Grid */}
       {loading ? (
-        <div style={{ textAlign: "center", padding: "48px", color: "var(--muted)", fontWeight: 700 }}>
+        <div style={{ textAlign: "center", padding: "48px", color: "var(--clay-muted)", fontWeight: 700 }}>
           Loading active rooms...
         </div>
       ) : rooms.length === 0 ? (
-        <div className="card" style={{ textAlign: "center", padding: "40px" }}>
-          <div style={{ fontSize: "2.5rem", marginBottom: "12px" }}>🛋️</div>
+        <div className="card" style={{ textAlign: "center", padding: "48px" }}>
+          <div style={{ display: "inline-flex", padding: "16px", borderRadius: "50%", background: "var(--clay-lilac)", marginBottom: "16px" }}>
+            <IconSofa size={36} color="var(--clay-lilac-dark)" />
+          </div>
           <h3 style={{ marginBottom: "8px" }}>No public rooms found</h3>
           <p style={{ marginBottom: "20px" }}>
             {searchQuery
@@ -124,7 +147,7 @@ export function PublicRoomList() {
           </p>
         </div>
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "16px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "20px" }}>
           {rooms.map((room) => {
             const isFull = room.participantCount >= (room.maxParticipants || 16);
             return (
@@ -135,34 +158,35 @@ export function PublicRoomList() {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  transition: "transform 120ms ease",
                 }}
               >
                 <div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-                    <span className="chip" style={{ padding: "3px 10px", fontSize: "0.75rem", background: "var(--lilac)" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+                    <span className="chip" style={{ padding: "4px 12px", fontSize: "0.78rem", background: "var(--clay-lilac)", color: "var(--clay-lilac-dark)" }}>
                       #{room.category}
                     </span>
                     <span
                       className="badge"
                       style={{
-                        background: isFull ? "var(--danger)" : "var(--accent)",
-                        color: "var(--ink)",
+                        background: isFull ? "var(--clay-danger)" : "var(--clay-primary)",
+                        color: isFull ? "var(--clay-danger-dark)" : "var(--clay-primary-dark)",
                       }}
                     >
-                      👥 {room.participantCount} / {room.maxParticipants || 16}
+                      <IconUsers size={14} />
+                      <span>{room.participantCount} / {room.maxParticipants || 16}</span>
                     </span>
                   </div>
 
                   <h3 style={{ fontSize: "1.25rem", marginBottom: "6px" }}>{room.name}</h3>
 
-                  <p style={{ fontSize: "0.85rem", marginBottom: "12px", minHeight: "36px" }}>
+                  <p style={{ fontSize: "0.88rem", marginBottom: "14px", minHeight: "38px" }}>
                     {room.description || "Casual room. Come hang out and talk!"}
                   </p>
 
                   {room.distanceKm !== undefined && room.distanceKm > 0 && (
-                    <div style={{ fontSize: "0.75rem", color: "var(--muted)", marginBottom: "14px", fontWeight: 700 }}>
-                      📍 ~{Math.round(room.distanceKm)} km away from you
+                    <div style={{ fontSize: "0.78rem", color: "var(--clay-muted)", marginBottom: "16px", fontWeight: 700, display: "flex", alignItems: "center", gap: "4px" }}>
+                      <IconMapPin size={14} />
+                      <span>~{Math.round(room.distanceKm)} km away from you</span>
                     </div>
                   )}
                 </div>
@@ -171,9 +195,10 @@ export function PublicRoomList() {
                   type="button"
                   disabled={isFull}
                   onClick={() => router.push(`/room/${encodeURIComponent(room.code)}`)}
-                  style={{ width: "100%", padding: "10px" }}
+                  style={{ width: "100%", padding: "12px" }}
                 >
-                  {isFull ? "Room Full" : "Join Room →"}
+                  <span>{isFull ? "Room Full" : "Join Room"}</span>
+                  <IconArrowRight size={18} />
                 </button>
               </div>
             );
@@ -183,16 +208,17 @@ export function PublicRoomList() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "16px", marginTop: "28px" }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "16px", marginTop: "36px" }}>
           <button
             type="button"
             className="secondary"
             disabled={page <= 1}
             onClick={() => setPage((p) => Math.max(1, p - 1))}
           >
-            ← Previous
+            <IconArrowLeft size={18} />
+            <span>Previous</span>
           </button>
-          <span style={{ fontWeight: 800, fontSize: "0.9rem" }}>
+          <span style={{ fontWeight: 800, fontSize: "0.95rem" }}>
             Page {page} of {totalPages}
           </span>
           <button
@@ -201,7 +227,8 @@ export function PublicRoomList() {
             disabled={page >= totalPages}
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
           >
-            Next →
+            <span>Next</span>
+            <IconArrowRight size={18} />
           </button>
         </div>
       )}

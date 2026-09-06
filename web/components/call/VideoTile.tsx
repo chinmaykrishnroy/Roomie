@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect } from "react";
 import { ParticipantState } from "@/lib/webrtc";
+import { IconPin, IconMicOff, IconVideoOff } from "@/components/icons/Icons";
 
 interface Props {
   participant: ParticipantState;
@@ -34,8 +35,9 @@ export function VideoTile({
       style={{
         width: "100%",
         height: "100%",
-        borderColor: isPinned ? "var(--yellow)" : "var(--ink)",
-        boxShadow: isPinned ? "0 0 0 3px var(--yellow), 4px 4px 0 var(--ink)" : "3px 3px 0 var(--ink)",
+        boxShadow: isPinned
+          ? "0 0 0 3px var(--clay-yellow), 12px 12px 28px rgba(0,0,0,0.35)"
+          : undefined,
       }}
     >
       {participant.videoEnabled && quality !== "off" ? (
@@ -57,15 +59,15 @@ export function VideoTile({
         <div className="tile-top-bar">
           <div style={{ display: "flex", gap: "6px" }}>
             {quality === "off" ? (
-              <span className="badge" style={{ background: "var(--danger)", color: "var(--ink)" }}>
+              <span className="badge" style={{ background: "var(--clay-danger)", color: "var(--clay-danger-dark)" }}>
                 Video Paused
               </span>
             ) : quality === "low" ? (
-              <span className="badge" style={{ background: "var(--surface-soft)", color: "var(--ink)", fontSize: "0.7rem" }}>
+              <span className="badge" style={{ background: "rgba(255,255,255,0.85)", color: "var(--clay-ink)", fontSize: "0.72rem" }}>
                 144p
               </span>
             ) : (
-              <span className="badge" style={{ background: "rgba(0,0,0,0.6)", fontSize: "0.7rem" }}>
+              <span className="badge" style={{ background: "rgba(30, 41, 59, 0.75)", color: "#ffffff", fontSize: "0.72rem" }}>
                 HD
               </span>
             )}
@@ -75,15 +77,17 @@ export function VideoTile({
             type="button"
             onClick={() => onTogglePin(participant.userId)}
             style={{
-              padding: "4px 8px",
-              minHeight: "28px",
-              background: isPinned ? "var(--yellow)" : "var(--paper)",
+              padding: "4px 10px",
+              minHeight: "30px",
+              background: isPinned ? "var(--clay-yellow)" : "rgba(255, 255, 255, 0.9)",
+              color: isPinned ? "var(--clay-yellow-dark)" : "var(--clay-ink)",
               fontSize: "0.75rem",
-              boxShadow: "2px 2px 0 var(--ink)",
+              borderRadius: "12px",
             }}
-            title={isPinned ? "Unpin participant" : "Pin participant to make large"}
+            title={isPinned ? "Unpin participant" : "Pin participant"}
           >
-            {isPinned ? "📌 Pinned" : "📌 Pin"}
+            <IconPin size={13} />
+            <span>{isPinned ? "Pinned" : "Pin"}</span>
           </button>
         </div>
 
@@ -95,13 +99,13 @@ export function VideoTile({
 
           <div style={{ display: "flex", gap: "6px" }}>
             {!participant.audioEnabled && (
-              <span className="badge" style={{ background: "var(--danger)", color: "var(--ink)" }} title="Microphone muted">
-                🔇
+              <span className="badge" style={{ background: "var(--clay-danger)", color: "var(--clay-danger-dark)" }} title="Microphone muted">
+                <IconMicOff size={13} />
               </span>
             )}
             {!participant.videoEnabled && (
-              <span className="badge" style={{ background: "var(--danger)", color: "var(--ink)" }} title="Camera turned off">
-                📷✕
+              <span className="badge" style={{ background: "var(--clay-danger)", color: "var(--clay-danger-dark)" }} title="Camera turned off">
+                <IconVideoOff size={13} />
               </span>
             )}
           </div>
