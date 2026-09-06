@@ -9,6 +9,7 @@ import (
 	"math"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 	"unicode"
@@ -168,6 +169,26 @@ func (v Vector) ToPgVector() string {
 	}
 	sb.WriteString("]")
 	return sb.String()
+}
+
+// ParsePgVector parses a pgvector string '[0.1,0.2,...]' into a Vector
+func ParsePgVector(s string) (Vector, error) {
+	s = strings.TrimSpace(s)
+	s = strings.TrimPrefix(s, "[")
+	s = strings.TrimSuffix(s, "]")
+	if s == "" {
+		return nil, fmt.Errorf("empty pgvector string")
+	}
+	parts := strings.Split(s, ",")
+	vec := make(Vector, len(parts))
+	for i, p := range parts {
+		val, err := strconv.ParseFloat(strings.TrimSpace(p), 32)
+		if err != nil {
+			return nil, err
+		}
+		vec[i] = float32(val)
+	}
+	return vec, nil
 }
 
 func tokenize(s string) []string {

@@ -154,9 +154,16 @@ func (s *Store) ListPublicRooms(ctx context.Context, category, searchTxt string,
 			}
 		}
 		if searchTxt != "" {
-			roomEmbed := search.GenerateEmbedding(r.Category + " " + r.Name + " " + r.Description)
+			var roomEmbed search.Vector
+			if embedStr.Valid && embedStr.String != "" {
+				if parsed, err := search.ParsePgVector(embedStr.String); err == nil && len(parsed) == len(searchVec) {
+					roomEmbed = parsed
+				}
+			}
+			if len(roomEmbed) == 0 {
+				roomEmbed = search.GenerateEmbedding(r.Category + " " + r.Name + " " + r.Description)
+			}
 			sim := search.CosineSimilarity(searchVec, roomEmbed)
-			// combine explicit category and semantic search
 			catScore = math.Max(catScore, sim)
 		}
 		scored.CategoryMatch = catScore
