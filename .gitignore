@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+node_modules/
+.next/
+out/
+coverage/
+*.tsbuildinfo
+*.log
+*.exe
+*.tar.gz
+.cache/
+artifacts/
+.DS_Store

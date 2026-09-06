@@ -1,0 +1,402 @@
+:root {
+  color-scheme: light;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: #f7f5ef;
+  color: #252822;
+
+  --ink: #252822;
+  --muted: #62655e;
+  --paper: #fffefb;
+  --canvas: #f7f5ef;
+  --surface-soft: #f0eee7;
+  --line: #c9cbbf;
+  --shadow-color: #252822;
+
+  /* Pastel Soft Neobrutalist Accents */
+  --accent: #d7edb7;      /* soft mint */
+  --accent-hover: #c4e599;
+  --lilac: #e8def8;       /* soft lilac */
+  --lilac-hover: #d7c5f3;
+  --yellow: #fef08a;      /* pale yellow */
+  --yellow-hover: #fde047;
+  --coral: #fed7aa;       /* soft peach/coral */
+  --danger: #f7d4c9;      /* soft red */
+  --danger-hover: #f4beaf;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--canvas);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* Typography & Links */
+h1, h2, h3, h4 {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Soft Neobrutalist Button & Input Styles */
+button, input, select, textarea {
+  font: inherit;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  padding: 10px 16px;
+  outline: none;
+  transition: all 120ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button {
+  cursor: pointer;
+  font-weight: 700;
+  background: var(--accent);
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  user-select: none;
+}
+
+button:hover:not(:disabled) {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+button:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+button.secondary {
+  background: var(--paper);
+}
+
+button.lilac {
+  background: var(--lilac);
+}
+
+button.yellow {
+  background: var(--yellow);
+}
+
+button.danger {
+  background: var(--danger);
+}
+
+button.icon-btn {
+  padding: 8px;
+  min-width: 42px;
+  min-height: 42px;
+  border-radius: 10px;
+}
+
+input, textarea, select {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #7048b6;
+  box-shadow: 0 0 0 3px rgba(112, 72, 182, 0.2);
+}
+
+/* Neobrutalist Cards */
+.card {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  box-shadow: 4px 4px 0 var(--ink);
+  padding: 20px;
+}
+
+/* Header */
+.app-header {
+  border-bottom: 2px solid var(--ink);
+  background: var(--paper);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.brand-badge {
+  background: var(--accent);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* Pills & Chips */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: var(--paper);
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: all 120ms ease;
+  user-select: none;
+}
+
+.chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.chip.active {
+  background: var(--lilac);
+  border-color: var(--ink);
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  z-index: 100;
+}
+
+.modal-content {
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 24px;
+  box-shadow: 6px 6px 0 var(--ink);
+  max-width: 520px;
+  width: 100%;
+  padding: 28px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Video Grid Layouts */
+.video-grid {
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+  align-content: center;
+  justify-content: center;
+}
+
+/* Grid auto-sizing according to participant counts */
+.grid-1 {
+  grid-template-columns: minmax(280px, 800px);
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, minmax(240px, 1fr));
+}
+
+.grid-3, .grid-4 {
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
+}
+
+.grid-5, .grid-6 {
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+}
+
+.grid-7, .grid-8, .grid-9 {
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+}
+
+.grid-10, .grid-12 {
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
+}
+
+.grid-16 {
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+}
+
+/* Special 2-person mobile view: top peer, bottom self */
+@media (max-width: 768px) {
+  .grid-2.mobile-stacked {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr 1fr;
+    height: 100%;
+  }
+}
+
+/* Pinning Stage Layout */
+.pinned-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 900px) {
+  .pinned-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
+  .pinned-strip {
+    flex-direction: row !important;
+    max-height: 140px;
+    overflow-x: auto;
+  }
+}
+
+.pinned-stage {
+  width: 100%;
+  height: 100%;
+  min-height: 350px;
+}
+
+.pinned-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+/* Video Tile */
+.video-tile {
+  background: #1e211d;
+  border: 2px solid var(--ink);
+  border-radius: 16px;
+  box-shadow: 3px 3px 0 var(--ink);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  min-height: 140px;
+}
+
+.video-tile video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-tile.mirrored video {
+  transform: scaleX(-1);
+}
+
+.tile-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.tile-top-bar, .tile-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: auto;
+}
+
+.badge {
+  background: rgba(37, 40, 34, 0.85);
+  color: #fffefb;
+  border: 1px solid var(--ink);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Floating Media Controls */
+.call-dock {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 4px 4px 0 var(--ink);
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 50;
+}
+
+/* Avatar Fallback */
+.avatar-placeholder {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: var(--lilac);
+  display: grid;
+  place-items: center;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.avatar-sm {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: var(--accent);
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
