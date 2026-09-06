@@ -54,6 +54,15 @@ func main() {
 	// 3. Initialize Stores & SFU
 	st := store.New(db, rdb)
 
+	// Auto-destroy inactive rooms: runs every 5 minutes, deletes rooms empty for >= 1 hour
+	inactivityTimeout := 1 * time.Hour
+	if envTimeout := os.Getenv("ROOM_INACTIVITY_TIMEOUT"); envTimeout != "" {
+		if d, err := time.ParseDuration(envTimeout); err == nil {
+			inactivityTimeout = d
+		}
+	}
+	st.StartCleanupWorker(ctx, 5*time.Minute, inactivityTimeout)
+
 	turnURL := fmt.Sprintf("turn:%s:%s?transport=udp", turnHost, turnPort)
 	turnTCPURL := fmt.Sprintf("turn:%s:%s?transport=tcp", turnHost, turnPort)
 	stunURL := fmt.Sprintf("stun:%s:%s", turnHost, turnPort)

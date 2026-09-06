@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
 	"math"
 	"sort"
 	"time"
@@ -304,3 +305,65 @@ func (s *Store) RemoveParticipant(ctx context.Context, roomID, userID string) er
 
 	return nil
 }
+
+// CleanupInactiveRooms deletes rooms that have had 0 participants for longer than maxInactivity.
+func (s *Store) CleanupInactiveRooms(ctx context.Context, maxInactivity time.Duration) (int64, error) {
+	threshold := time.Now().Add(-maxInactivity)
+	query := `
+		DELETE FROM rooms
+		WHERE participant_count = 0
+		  AND updated_at < $1
+		RETURNING id
+	`
+	rows, err := s.DB.QueryContext(ctx, query, threshold)
+	if err != nil {
+		return 0, err
+	}
+	defer rows.Close()
+
+	var deletedCount int64
+	for rows.Next() {
+		var id string
+		if err := rows.Scan(&id); err == nil {
+			deletedCount++
+			if s.Redis != nil {
+				_ = s.Redis.Del(ctx, "room:"+id+":users").Err()
+			}
+		}
+	}
+	return deletedCount, rows.Err()
+}
+
+// StartCleanupWorker runs a periodic background task to purge inactive rooms.
+func (s *Store) StartCleanupWorker(ctx context.Context, interval, maxInactivity time.Duration) {
+	runCleanup := func() {
+		cleanCtx, cancel := context.WithTimeout(ctx, 30*time.Second)
+		defer cancel()
+
+		deleted, err := s.CleanupInactiveRooms(cleanCtx, maxInactivity)
+		if err != nil {
+			log.Printf("[cleaner] error purging inactive rooms: %v", err)
+		} else if deleted > 0 {
+			log.Printf("[cleaner] purged %d inactive room(s) (empty for > %v)", deleted, maxInactivity)
+		}
+	}
+
+	// Initial cleanup on boot
+	go runCleanup()
+
+	// Periodic ticker
+	go func() {
+		ticker := time.NewTicker(interval)
+		defer ticker.Stop()
+
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case <-ticker.C:
+				runCleanup()
+			}
+		}
+	}()
+}
+
