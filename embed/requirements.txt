@@ -1,0 +1,8 @@
+torch
+transformers>=4.40.0,<4.46.0
+sentence-transformers>=3.0.0
+einops
+accelerate
+fastapi
+uvicorn[standard]
+pydantic

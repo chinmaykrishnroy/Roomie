@@ -1,28 +1,93 @@
 package search
 
 import (
+	"bytes"
 	"crypto/sha256"
 	"encoding/binary"
+	"encoding/json"
 	"fmt"
 	"math"
+	"net/http"
+	"os"
 	"strings"
+	"time"
 	"unicode"
 )
 
-const VectorDimension = 384
+// VectorDimension matches Alibaba-NLP/gte-Qwen2-1.5B-instruct (1536 dimensions)
+const VectorDimension = 1536
 
 // Vector represents a normalized embedding vector
 type Vector []float32
 
-// GenerateEmbedding creates a 384-dimensional normalized semantic feature vector
-// using character/word n-gram hashing and TF-IDF weighting.
+var (
+	httpClient = &http.Client{Timeout: 4 * time.Second}
+)
+
+type embedRequest struct {
+	Text string `json:"text"`
+}
+
+type embedResponse struct {
+	Embeddings [][]float32 `json:"embeddings"`
+	Dim        int         `json:"dim"`
+}
+
+// GenerateEmbedding calls the Qwen2 embedding service if available,
+// falling back gracefully to 1536d n-gram semantic hashing if unreachable.
 func GenerateEmbedding(text string) Vector {
+	serviceURL := os.Getenv("EMBEDDING_SERVICE_URL")
+	if serviceURL != "" {
+		if vec, err := fetchFromService(serviceURL, text); err == nil && len(vec) == VectorDimension {
+			return vec
+		}
+	}
+
+	return generateHashEmbedding(text)
+}
+
+func fetchFromService(url, text string) (Vector, error) {
+	reqBody, err := json.Marshal(embedRequest{Text: text})
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(reqBody))
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	resp, err := httpClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("embedding service returned status %d", resp.StatusCode)
+	}
+
+	var res embedResponse
+	if err := json.NewDecoder(resp.Body).Decode(&res); err != nil {
+		return nil, err
+	}
+
+	if len(res.Embeddings) > 0 && len(res.Embeddings[0]) == VectorDimension {
+		return Vector(res.Embeddings[0]), nil
+	}
+
+	return nil, fmt.Errorf("invalid embedding response")
+}
+
+// generateHashEmbedding creates a 1536-dimensional normalized semantic feature vector
+// using character/word n-gram hashing and TF-IDF weighting.
+func generateHashEmbedding(text string) Vector {
 	vec := make([]float32, VectorDimension)
 	text = strings.ToLower(text)
 
 	tokens := tokenize(text)
 	if len(tokens) == 0 {
-		// Return unit vector along first dimension if empty
 		vec[0] = 1.0
 		return vec
 	}
@@ -44,7 +109,7 @@ func GenerateEmbedding(text string) Vector {
 		}
 	}
 
-	// 3. Hash into 384 dimensions
+	// 3. Hash into 1536 dimensions
 	for term, freq := range termFreq {
 		h := sha256.Sum256([]byte(term))
 		dim := int(binary.BigEndian.Uint32(h[0:4])) % VectorDimension
@@ -82,7 +147,6 @@ func CosineSimilarity(a, b Vector) float64 {
 	for i := range a {
 		dot += float64(a[i] * b[i])
 	}
-	// Clamp to [0, 1] range for scoring
 	if dot < 0 {
 		return 0
 	}

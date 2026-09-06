@@ -312,12 +312,13 @@ export class RoomieCallClient {
   }
 
   toggleAudio(enabled?: boolean): boolean {
-    if (!this.localStream) return false;
-    const audioTrack = this.localStream.getAudioTracks()[0];
-    if (!audioTrack) return false;
+    this.isMuted = enabled !== undefined ? !enabled : !this.isMuted;
 
-    this.isMuted = enabled !== undefined ? !enabled : !audioTrack.enabled;
-    audioTrack.enabled = !this.isMuted;
+    if (this.localStream) {
+      for (const track of this.localStream.getAudioTracks()) {
+        track.enabled = !this.isMuted;
+      }
+    }
 
     // Update local state
     const local = this.participants.get(this.currentUserId);
@@ -337,12 +338,13 @@ export class RoomieCallClient {
   }
 
   toggleVideo(enabled?: boolean): boolean {
-    if (!this.localStream) return false;
-    const videoTrack = this.localStream.getVideoTracks()[0];
-    if (!videoTrack) return false;
+    this.isCameraOff = enabled !== undefined ? !enabled : !this.isCameraOff;
 
-    this.isCameraOff = enabled !== undefined ? !enabled : videoTrack.enabled;
-    videoTrack.enabled = !this.isCameraOff;
+    if (this.localStream) {
+      for (const track of this.localStream.getVideoTracks()) {
+        track.enabled = !this.isCameraOff;
+      }
+    }
 
     // Update local state
     const local = this.participants.get(this.currentUserId);
