@@ -36,7 +36,7 @@ export function VideoTile({
         width: "100%",
         height: "100%",
         boxShadow: isPinned
-          ? "0 0 0 3px var(--clay-yellow), 12px 12px 28px rgba(0,0,0,0.35)"
+          ? "0 0 0 3px var(--clay-primary), 12px 14px 28px rgba(0,0,0,0.4)"
           : undefined,
       }}
     >
@@ -67,7 +67,7 @@ export function VideoTile({
                 144p
               </span>
             ) : (
-              <span className="badge" style={{ background: "rgba(30, 41, 59, 0.75)", color: "#ffffff", fontSize: "0.72rem" }}>
+              <span className="badge" style={{ background: "rgba(35, 25, 20, 0.75)", color: "#ffffff", fontSize: "0.72rem" }}>
                 HD
               </span>
             )}
@@ -79,10 +79,10 @@ export function VideoTile({
             style={{
               padding: "4px 10px",
               minHeight: "30px",
-              background: isPinned ? "var(--clay-yellow)" : "rgba(255, 255, 255, 0.9)",
-              color: isPinned ? "var(--clay-yellow-dark)" : "var(--clay-ink)",
+              background: isPinned ? "var(--clay-primary)" : "rgba(255, 255, 255, 0.9)",
+              color: isPinned ? "var(--clay-primary-dark)" : "var(--clay-ink)",
               fontSize: "0.75rem",
-              borderRadius: "12px",
+              borderRadius: "999px",
             }}
             title={isPinned ? "Unpin participant" : "Pin participant"}
           >
@@ -93,7 +93,7 @@ export function VideoTile({
 
         {/* Bottom Bar */}
         <div className="tile-bottom-bar">
-          <span className="badge">
+          <span className="badge" style={{ background: "rgba(255, 255, 255, 0.9)", color: "var(--clay-ink)" }}>
             {participant.username} {participant.isLocal && "(You)"}
           </span>
 

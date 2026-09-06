@@ -2,58 +2,73 @@
   color-scheme: light;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
-  /* Claymorphism Color Palette */
-  --clay-bg: #eef2f7;
-  --clay-card: #f9fbfe;
-  --clay-ink: #1e293b;
-  --clay-muted: #64748b;
-  --clay-line: rgba(255, 255, 255, 0.8);
+  /* Warm Peach Claymorphism Palette */
+  --clay-bg: #fdf6f0;            /* Warm creamy light peach */
+  --clay-bg-subtle: #f8ebe0;     /* Soft peach contour */
+  --clay-card: #ffffff;          /* Pure warm white */
+  --clay-card-peach: #fff5ee;    /* Seashell peach card tint */
+  --clay-ink: #33231e;           /* Rich espresso warm chocolate */
+  --clay-muted: #846f67;         /* Warm cocoa muted */
+  --clay-line: rgba(255, 255, 255, 0.95);
 
-  /* Clay Pastel Themes */
-  --clay-primary: #a7f3d0;       /* mint clay */
-  --clay-primary-dark: #065f46;
-  --clay-lilac: #ddd6fe;         /* lilac clay */
-  --clay-lilac-dark: #5b21b6;
-  --clay-yellow: #fef08a;        /* butter yellow clay */
-  --clay-yellow-dark: #854d0e;
-  --clay-coral: #fed7aa;         /* peach clay */
-  --clay-danger: #fecdd3;        /* rose clay */
-  --clay-danger-dark: #9f1239;
-  --clay-blue: #bae6fd;          /* sky clay */
+  /* Peach Button Tints & Clay Accents */
+  --clay-primary: #ff9e7d;        /* Vibrant soft peach */
+  --clay-primary-hover: #f78b66;  /* Warm apricot hover */
+  --clay-primary-dark: #5c2414;   /* Deep mahogany text for peach buttons */
+  
+  --clay-peach-soft: #ffe6db;     /* Delicate milky peach pill */
+  --clay-peach-soft-dark: #8c432b;
+
+  --clay-sage: #a7d7c5;           /* Fresh warm sage green for active/online */
+  --clay-sage-dark: #1b4332;
+
+  --clay-yellow: #fed7aa;         /* Butter peach */
+  --clay-yellow-dark: #7c2d12;
+
+  --clay-danger: #fca5a5;         /* Soft rose coral */
+  --clay-danger-dark: #7f1d1d;
+
+  --clay-blue: #bae6fd;           /* Soft pastel sky */
   --clay-blue-dark: #075985;
 
-  /* 3D Clay Shadows (Dual Drop Shadow + Inset Bevels) */
+  /* Warm 3D Clay Shadows (Terracotta/Peach Ambient Diffusion) */
   --clay-shadow-card:
-    12px 12px 28px rgba(166, 178, 198, 0.4),
-    -12px -12px 28px rgba(255, 255, 255, 0.95),
-    inset 2px 2px 4px rgba(255, 255, 255, 0.9),
-    inset -2px -2px 4px rgba(166, 178, 198, 0.15);
+    10px 14px 28px rgba(210, 155, 135, 0.22),
+    -8px -8px 24px rgba(255, 255, 255, 0.95),
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.95),
+    inset -1.5px -1.5px 3px rgba(210, 155, 135, 0.1);
+
+  --clay-shadow-card-hover:
+    14px 20px 36px rgba(210, 155, 135, 0.3),
+    -10px -10px 28px rgba(255, 255, 255, 1),
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.95),
+    inset -1.5px -1.5px 3px rgba(210, 155, 135, 0.12);
 
   --clay-shadow-button:
-    6px 6px 14px rgba(166, 178, 198, 0.45),
-    -6px -6px 14px rgba(255, 255, 255, 0.95),
-    inset 2px 2px 4px rgba(255, 255, 255, 0.8),
-    inset -2px -2px 4px rgba(0, 0, 0, 0.06);
+    5px 7px 16px rgba(217, 130, 99, 0.32),
+    -4px -4px 12px rgba(255, 255, 255, 0.95),
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.7),
+    inset -1.5px -1.5px 3px rgba(180, 80, 50, 0.15);
 
   --clay-shadow-button-hover:
-    8px 8px 18px rgba(166, 178, 198, 0.55),
-    -8px -8px 18px rgba(255, 255, 255, 1),
-    inset 2px 2px 4px rgba(255, 255, 255, 0.9),
-    inset -2px -2px 4px rgba(0, 0, 0, 0.08);
+    7px 10px 20px rgba(217, 130, 99, 0.42),
+    -5px -5px 14px rgba(255, 255, 255, 1),
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.85),
+    inset -1.5px -1.5px 3px rgba(180, 80, 50, 0.18);
 
   --clay-shadow-button-pressed:
-    inset 4px 4px 8px rgba(166, 178, 198, 0.45),
-    inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+    inset 3px 3px 6px rgba(190, 90, 60, 0.38),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.85);
 
   --clay-shadow-inset:
-    inset 4px 4px 8px rgba(166, 178, 198, 0.35),
-    inset -4px -4px 8px rgba(255, 255, 255, 0.95);
+    inset 3px 3px 6px rgba(205, 155, 135, 0.22),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.95);
 
   --clay-shadow-floating:
-    0 16px 36px rgba(30, 41, 59, 0.12),
-    0 4px 12px rgba(30, 41, 59, 0.06),
-    inset 2px 2px 4px rgba(255, 255, 255, 0.8),
-    inset -2px -2px 4px rgba(0, 0, 0, 0.05);
+    0 16px 36px rgba(160, 95, 75, 0.18),
+    0 4px 14px rgba(160, 95, 75, 0.08),
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.9),
+    inset -1.5px -1.5px 3px rgba(200, 140, 120, 0.1);
 }
 
 * {
@@ -66,7 +81,9 @@ body {
   background-color: var(--clay-bg);
   color: var(--clay-ink);
   min-height: 100vh;
+  min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* Typography */
@@ -88,13 +105,13 @@ a {
   text-decoration: none;
 }
 
-/* Claymorphic Buttons */
+/* Tactile Clay Buttons */
 button {
   font: inherit;
   font-weight: 700;
-  border-radius: 18px;
+  border-radius: 999px;
   border: 1px solid var(--clay-line);
-  padding: 11px 20px;
+  padding: 11px 22px;
   outline: none;
   cursor: pointer;
   background: var(--clay-primary);
@@ -106,10 +123,12 @@ button {
   gap: 8px;
   user-select: none;
   transition: all 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  white-space: nowrap;
 }
 
 button:hover:not(:disabled) {
   transform: translateY(-2px);
+  background: var(--clay-primary-hover);
   box-shadow: var(--clay-shadow-button-hover);
 }
 
@@ -119,7 +138,7 @@ button:active:not(:disabled) {
 }
 
 button:disabled {
-  opacity: 0.5;
+  opacity: 0.55;
   cursor: not-allowed;
   transform: none;
 }
@@ -127,11 +146,28 @@ button:disabled {
 button.secondary {
   background: #ffffff;
   color: var(--clay-ink);
+  box-shadow:
+    5px 7px 16px rgba(210, 160, 140, 0.22),
+    -4px -4px 12px rgba(255, 255, 255, 0.95),
+    inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.9);
 }
 
-button.lilac {
-  background: var(--clay-lilac);
-  color: var(--clay-lilac-dark);
+button.secondary:hover:not(:disabled) {
+  background: #fffbf8;
+  box-shadow:
+    6px 9px 18px rgba(210, 160, 140, 0.28),
+    -5px -5px 14px rgba(255, 255, 255, 1);
+}
+
+button.secondary:active:not(:disabled) {
+  box-shadow:
+    inset 2px 2px 5px rgba(200, 150, 130, 0.25),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.9);
+}
+
+button.peach-soft {
+  background: var(--clay-peach-soft);
+  color: var(--clay-peach-soft-dark);
 }
 
 button.yellow {
@@ -148,45 +184,41 @@ button.icon-btn {
   padding: 10px;
   min-width: 44px;
   min-height: 44px;
-  border-radius: 14px;
+  border-radius: 50%;
 }
 
 /* Clay Inset Input Fields & Textareas */
 input, select, textarea {
   font: inherit;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  padding: 12px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  padding: 12px 20px;
   outline: none;
-  background: var(--clay-bg);
+  background: var(--clay-bg-subtle);
   color: var(--clay-ink);
   box-shadow: var(--clay-shadow-inset);
   transition: all 160ms ease;
+  max-width: 100%;
+}
+
+textarea {
+  border-radius: 20px;
 }
 
 input:focus, select:focus, textarea:focus {
-  background: #fdfefe;
+  background: #ffffff;
   box-shadow:
-    inset 2px 2px 4px rgba(166, 178, 198, 0.2),
-    0 0 0 3px rgba(167, 243, 208, 0.6);
+    inset 2px 2px 4px rgba(210, 155, 135, 0.15),
+    0 0 0 3px rgba(255, 158, 125, 0.45);
 }
 
-/* Clay Cards */
-.card {
-  background: var(--clay-card);
-  border: 1px solid var(--clay-line);
-  border-radius: 28px;
-  box-shadow: var(--clay-shadow-card);
-  padding: 24px;
-}
-
-/* App Header */
+/* Desktop App Shell Header */
 .app-header {
-  background: rgba(249, 251, 254, 0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
-  box-shadow: 0 4px 20px rgba(166, 178, 198, 0.15);
-  padding: 16px 28px;
+  background: rgba(253, 246, 240, 0.85);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 20px rgba(210, 155, 135, 0.1);
+  padding: 14px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -199,21 +231,64 @@ input:focus, select:focus, textarea:focus {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   font-weight: 900;
   letter-spacing: -0.03em;
   color: var(--clay-ink);
 }
 
 .brand-badge {
-  background: var(--clay-lilac);
-  color: var(--clay-lilac-dark);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 10px;
-  padding: 2px 10px;
-  font-size: 0.72rem;
+  background: var(--clay-peach-soft);
+  color: var(--clay-peach-soft-dark);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 8px;
+  padding: 2px 8px;
+  font-size: 0.7rem;
   font-weight: 800;
-  box-shadow: var(--clay-shadow-button);
+  box-shadow: 2px 3px 6px rgba(210, 150, 130, 0.15);
+}
+
+/* Tactile Clay Cards & Cartridges */
+.card {
+  background: var(--clay-card);
+  border: 1px solid var(--clay-line);
+  border-radius: 26px;
+  box-shadow: var(--clay-shadow-card);
+  padding: 24px;
+  transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.room-cartridge {
+  background: var(--clay-card);
+  border: 1px solid var(--clay-line);
+  border-radius: 24px;
+  box-shadow: var(--clay-shadow-card);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.room-cartridge:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--clay-shadow-card-hover);
+}
+
+/* Horizontal Smooth Category Pill Track (No clipping, smooth scroll) */
+.pill-track {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 6px 4px 12px 4px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.pill-track::-webkit-scrollbar {
+  display: none;
 }
 
 /* Tactile Clay Chips / Pills */
@@ -221,7 +296,7 @@ input:focus, select:focus, textarea:focus {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
+  padding: 9px 18px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.9);
   font-size: 0.86rem;
@@ -230,26 +305,28 @@ input:focus, select:focus, textarea:focus {
   color: var(--clay-ink);
   cursor: pointer;
   box-shadow:
-    4px 4px 10px rgba(166, 178, 198, 0.35),
-    -4px -4px 10px rgba(255, 255, 255, 0.95),
+    4px 5px 12px rgba(210, 155, 135, 0.2),
+    -3px -3px 8px rgba(255, 255, 255, 0.95),
     inset 1px 1px 2px rgba(255, 255, 255, 0.9);
   transition: all 150ms ease;
   user-select: none;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .chip:hover {
   transform: translateY(-2px);
   box-shadow:
-    6px 6px 14px rgba(166, 178, 198, 0.45),
-    -6px -6px 14px rgba(255, 255, 255, 1);
+    5px 8px 16px rgba(210, 155, 135, 0.28),
+    -4px -4px 10px rgba(255, 255, 255, 1);
 }
 
 .chip.active {
-  background: var(--clay-lilac);
-  color: var(--clay-lilac-dark);
+  background: var(--clay-primary);
+  color: var(--clay-primary-dark);
   box-shadow:
-    inset 3px 3px 6px rgba(109, 40, 217, 0.2),
-    inset -2px -2px 5px rgba(255, 255, 255, 0.8);
+    inset 2.5px 2.5px 5px rgba(180, 80, 50, 0.28),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.7);
 }
 
 /* Clay Badge */
@@ -257,28 +334,29 @@ input:focus, select:focus, textarea:focus {
   background: #ffffff;
   color: var(--clay-ink);
   border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 12px;
-  padding: 4px 10px;
+  border-radius: 999px;
+  padding: 4px 12px;
   font-size: 0.76rem;
   font-weight: 800;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   box-shadow:
-    3px 3px 8px rgba(166, 178, 198, 0.3),
-    -3px -3px 8px rgba(255, 255, 255, 0.9),
+    3px 4px 10px rgba(210, 155, 135, 0.18),
+    -2px -2px 6px rgba(255, 255, 255, 0.9),
     inset 1px 1px 2px rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
 }
 
 /* Modal Overlay & Clay Window */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(30, 41, 59, 0.35);
+  background: rgba(51, 35, 30, 0.4);
   backdrop-filter: blur(8px);
   display: grid;
   place-items: center;
-  padding: 20px;
+  padding: 16px;
   z-index: 100;
 }
 
@@ -287,21 +365,22 @@ input:focus, select:focus, textarea:focus {
   border: 1px solid rgba(255, 255, 255, 0.95);
   border-radius: 32px;
   box-shadow:
-    20px 20px 50px rgba(15, 23, 42, 0.25),
-    -12px -12px 35px rgba(255, 255, 255, 0.95),
-    inset 2px 2px 5px rgba(255, 255, 255, 0.9);
+    18px 24px 60px rgba(51, 35, 30, 0.22),
+    -10px -10px 40px rgba(255, 255, 255, 0.95),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.95);
   max-width: 520px;
   width: 100%;
   padding: 32px;
   position: relative;
   max-height: 90vh;
+  max-height: 90dvh;
   overflow-y: auto;
 }
 
 /* Video Grid Layouts */
 .video-grid {
   display: grid;
-  gap: 20px;
+  gap: 16px;
   width: 100%;
   height: 100%;
   align-content: center;
@@ -336,39 +415,19 @@ input:focus, select:focus, textarea:focus {
   grid-template-columns: repeat(4, minmax(130px, 1fr));
 }
 
-@media (max-width: 768px) {
-  .grid-2.mobile-stacked {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: 1fr 1fr;
-    height: 100%;
-  }
-}
-
 /* Pinning Stage Layout */
 .pinned-layout {
   display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 20px;
+  grid-template-columns: 1fr 280px;
+  gap: 16px;
   width: 100%;
   height: 100%;
-}
-
-@media (max-width: 900px) {
-  .pinned-layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto;
-  }
-  .pinned-strip {
-    flex-direction: row !important;
-    max-height: 140px;
-    overflow-x: auto;
-  }
 }
 
 .pinned-stage {
   width: 100%;
   height: 100%;
-  min-height: 360px;
+  min-height: 320px;
 }
 
 .pinned-strip {
@@ -378,21 +437,21 @@ input:focus, select:focus, textarea:focus {
   overflow-y: auto;
 }
 
-/* Video Tile (Soft 3D Clay Frame) */
+/* Video Tile (Soft 3D Warm Frame) */
 .video-tile {
-  background: #18202c;
-  border-radius: 24px;
+  background: #1e1917;
+  border-radius: 22px;
   box-shadow:
-    10px 10px 24px rgba(0, 0, 0, 0.25),
-    -6px -6px 20px rgba(255, 255, 255, 0.08),
-    inset 1px 1px 3px rgba(255, 255, 255, 0.15);
+    8px 10px 24px rgba(0, 0, 0, 0.3),
+    -4px -4px 16px rgba(255, 255, 255, 0.06),
+    inset 1px 1px 3px rgba(255, 255, 255, 0.12);
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   aspect-ratio: 16 / 9;
-  min-height: 140px;
+  min-height: 130px;
 }
 
 .video-tile video {
@@ -425,51 +484,107 @@ input:focus, select:focus, textarea:focus {
 /* Floating Clay Call Dock */
 .call-dock {
   position: fixed;
-  bottom: 28px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.95);
-  border-radius: 26px;
+  border-radius: 999px;
   box-shadow: var(--clay-shadow-floating);
-  padding: 12px 22px;
+  padding: 10px 18px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   z-index: 50;
+  max-width: calc(100vw - 24px);
 }
 
-/* Clay 3D Avatar Fallback */
+/* Clay 3D Avatar */
 .avatar-placeholder {
-  width: 80px;
-  height: 80px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #e9d5ff, #c084fc);
-  border: 2px solid rgba(255, 255, 255, 0.9);
+  background: linear-gradient(135deg, #ffe6db, #ff9e7d);
+  border: 2px solid rgba(255, 255, 255, 0.95);
   box-shadow:
-    8px 8px 18px rgba(0, 0, 0, 0.3),
-    inset 3px 3px 6px rgba(255, 255, 255, 0.9),
-    inset -3px -3px 6px rgba(109, 40, 217, 0.3);
+    6px 8px 18px rgba(0, 0, 0, 0.28),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.9),
+    inset -2px -2px 4px rgba(180, 80, 50, 0.25);
   display: grid;
   place-items: center;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   font-weight: 900;
-  color: #3b0764;
+  color: #5c2414;
 }
 
 .avatar-sm {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #d1fae5, #6ee7b7);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: linear-gradient(135deg, #ffe6db, #ff9e7d);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
   box-shadow:
-    3px 3px 8px rgba(166, 178, 198, 0.35),
-    inset 1px 1px 3px rgba(255, 255, 255, 0.8);
+    3px 4px 8px rgba(210, 150, 130, 0.25),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.8);
   display: grid;
   place-items: center;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   font-weight: 800;
-  color: #064e3b;
+  color: #5c2414;
+  flex-shrink: 0;
+}
+
+/* Responsive Mobile Rules (Strictly No Clipping) */
+@media (max-width: 640px) {
+  .app-header {
+    padding: 12px 16px;
+  }
+
+  .brand {
+    font-size: 1.2rem;
+  }
+
+  .modal-content {
+    padding: 22px 18px;
+    border-radius: 26px;
+  }
+
+  /* Call Dock: Compact icon-only pills so it never clips */
+  .call-dock {
+    bottom: max(14px, env(safe-area-inset-bottom));
+    padding: 8px 10px;
+    gap: 6px;
+  }
+
+  .call-dock button {
+    padding: 10px;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 50%;
+    gap: 0;
+  }
+
+  .call-dock-label {
+    display: none !important;
+  }
+
+  /* 2-Person stacked mobile */
+  .grid-2.mobile-stacked {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr 1fr;
+    height: 100%;
+  }
+
+  /* Pinned layout mobile */
+  .pinned-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
+
+  .pinned-strip {
+    flex-direction: row !important;
+    max-height: 120px;
+    overflow-x: auto;
+  }
 }

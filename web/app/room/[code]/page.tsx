@@ -167,73 +167,98 @@ export default function RoomCallPage({ params }: PageProps) {
         display: "flex",
         flexDirection: "column",
         height: "100vh",
-        maxHeight: "100vh",
+        height: "100dvh",
+        maxHeight: "100dvh",
         overflow: "hidden",
-        background: "#0f172a",
+        background: "#191412",
         color: "#f8fafc",
       }}
     >
-      {/* Top Header */}
+      {/* Top Header with Responsive Non-clipping Layout */}
       <header
         style={{
-          background: "rgba(15, 23, 42, 0.85)",
-          backdropFilter: "blur(12px)",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-          padding: "12px 24px",
+          background: "rgba(25, 20, 18, 0.88)",
+          backdropFilter: "blur(14px)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+          padding: "10px 16px",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          gap: "10px",
           zIndex: 30,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0 }}>
           <button
             type="button"
             onClick={handleLeave}
             className="secondary"
-            style={{ padding: "8px 14px", fontSize: "0.85rem" }}
+            style={{ padding: "7px 12px", fontSize: "0.82rem", borderRadius: "999px" }}
+            title="Leave Room"
           >
             <IconArrowLeft size={16} />
-            <span>Leave</span>
+            <span className="call-dock-label">Leave</span>
           </button>
 
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <h2 style={{ fontSize: "1.25rem", margin: 0, color: "#ffffff" }}>{room?.name || roomCode}</h2>
+          <div style={{ minWidth: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
+              <h2
+                style={{
+                  fontSize: "1.1rem",
+                  margin: 0,
+                  color: "#ffffff",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  maxWidth: "clamp(130px, 35vw, 340px)",
+                }}
+              >
+                {room?.name || roomCode}
+              </h2>
               {room?.category && (
-                <span className="chip" style={{ padding: "2px 10px", fontSize: "0.75rem", background: "var(--clay-lilac)", color: "var(--clay-lilac-dark)" }}>
+                <span
+                  className="chip"
+                  style={{
+                    padding: "2px 8px",
+                    fontSize: "0.72rem",
+                    background: "var(--clay-peach-soft)",
+                    color: "var(--clay-peach-soft-dark)",
+                    flexShrink: 0,
+                  }}
+                >
                   #{room.category}
                 </span>
               )}
             </div>
-            <div style={{ fontSize: "0.75rem", color: "#94a3b8", fontWeight: 700 }}>
-              Code: <span style={{ fontFamily: "monospace", color: "#ffffff" }}>{roomCode}</span>
+            <div style={{ fontSize: "0.72rem", color: "#a89b94", fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              Code: <span style={{ fontFamily: "monospace", color: "#ffe6db" }}>{roomCode}</span>
             </div>
           </div>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
           <span
             className="badge"
             style={{
-              background: participants.length >= 16 ? "var(--clay-danger)" : "var(--clay-primary)",
-              color: participants.length >= 16 ? "var(--clay-danger-dark)" : "var(--clay-primary-dark)",
-              padding: "6px 12px",
-              fontSize: "0.82rem",
+              background: participants.length >= 16 ? "var(--clay-danger)" : "var(--clay-sage)",
+              color: participants.length >= 16 ? "var(--clay-danger-dark)" : "var(--clay-sage-dark)",
+              padding: "5px 10px",
+              fontSize: "0.76rem",
             }}
           >
-            <IconUsers size={14} />
-            <span>{participants.length} / 16</span>
+            <IconUsers size={13} />
+            <span>{participants.length}/16</span>
           </span>
 
           <button
             type="button"
             onClick={handleCopyLink}
             className="secondary"
-            style={{ padding: "8px 14px", fontSize: "0.85rem" }}
+            style={{ padding: "7px 12px", fontSize: "0.82rem", borderRadius: "999px" }}
+            title="Share Room Code"
           >
-            {copied ? <IconCheck size={16} /> : <IconCopy size={16} />}
-            <span>{copied ? "Copied!" : "Share Code"}</span>
+            {copied ? <IconCheck size={15} /> : <IconCopy size={15} />}
+            <span className="call-dock-label">{copied ? "Copied!" : "Share"}</span>
           </button>
         </div>
       </header>
@@ -242,57 +267,69 @@ export default function RoomCallPage({ params }: PageProps) {
       {participants.length > 8 && !bandwidthSaver && (
         <div
           style={{
-            background: "linear-gradient(135deg, #fef08a, #fde047)",
-            color: "#854d0e",
-            padding: "10px 20px",
+            background: "linear-gradient(135deg, #fed7aa, #fdba74)",
+            color: "#7c2d12",
+            padding: "8px 16px",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            fontSize: "0.86rem",
+            fontSize: "0.82rem",
             fontWeight: 700,
             zIndex: 20,
-            boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.18)",
+            gap: "10px",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <IconBolt size={18} />
-            <span>Over 8 participants active. Turn on Bandwidth Saver to conserve video data (Discord style).</span>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
+            <IconBolt size={16} />
+            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              Over 8 participants active. Enable Bandwidth Saver to conserve video data.
+            </span>
           </div>
           <button
             type="button"
             onClick={handleToggleBandwidthSaver}
-            style={{ padding: "6px 14px", fontSize: "0.8rem", background: "#ffffff", color: "#854d0e" }}
+            style={{ padding: "5px 12px", fontSize: "0.75rem", background: "#ffffff", color: "#7c2d12", flexShrink: 0 }}
           >
-            Turn On Saver
+            Enable Saver
           </button>
         </div>
       )}
 
-      {/* Main Call Viewport */}
+      {/* Main Call Viewport (Responsive, No Overflow Clipping) */}
       <div
         style={{
           flex: 1,
-          padding: "20px",
-          paddingBottom: "110px",
+          padding: "16px",
+          paddingBottom: "max(90px, calc(74px + env(safe-area-inset-bottom)))",
           overflow: "auto",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
+          width: "100%",
         }}
       >
         {connState === "connecting" && participants.length === 0 ? (
-          <div style={{ textAlign: "center", color: "#94a3b8" }}>
-            <div style={{ display: "inline-flex", padding: "16px", borderRadius: "50%", background: "rgba(255,255,255,0.1)", marginBottom: "14px" }}>
-              <IconSparkles size={32} color="#bae6fd" />
+          <div style={{ textAlign: "center", color: "#d6c7c0" }}>
+            <div
+              style={{
+                display: "inline-flex",
+                padding: "16px",
+                borderRadius: "50%",
+                background: "rgba(255, 158, 125, 0.15)",
+                marginBottom: "14px",
+              }}
+            >
+              <IconSparkles size={32} color="var(--clay-primary)" />
             </div>
-            <h3>Connecting to Roomie...</h3>
+            <h3 style={{ color: "#ffffff" }}>Connecting to Roomie...</h3>
           </div>
         ) : connState === "error" ? (
-          <div className="card" style={{ color: "var(--clay-ink)", maxWidth: "440px", textAlign: "center", padding: "36px" }}>
+          <div className="card" style={{ color: "var(--clay-ink)", maxWidth: "420px", textAlign: "center", padding: "32px 24px" }}>
             <h3>Connection Error</h3>
-            <p style={{ margin: "14px 0 24px" }}>
+            <p style={{ margin: "12px 0 20px" }}>
               Could not join room &quot;{roomCode}&quot;. Please verify the code and check your connection.
             </p>
             <button type="button" onClick={handleLeave} style={{ width: "100%" }}>
@@ -301,8 +338,8 @@ export default function RoomCallPage({ params }: PageProps) {
           </div>
         ) : participants.length === 1 ? (
           /* Single user connected like Discord */
-          <div style={{ width: "100%", maxWidth: "760px", height: "100%", display: "flex", flexDirection: "column", gap: "20px" }}>
-            <div style={{ flex: 1, minHeight: "280px" }}>
+          <div style={{ width: "100%", maxWidth: "760px", height: "100%", display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div style={{ flex: 1, minHeight: "260px" }}>
               <VideoTile
                 participant={participants[0]}
                 isPinned={false}
@@ -314,26 +351,31 @@ export default function RoomCallPage({ params }: PageProps) {
             <div
               className="card"
               style={{
-                background: "linear-gradient(135deg, #ede9fe, #ddd6fe)",
-                padding: "20px 24px",
+                background: "linear-gradient(135deg, #fff3eb, #ffe6d8)",
+                padding: "16px 20px",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
                 flexWrap: "wrap",
-                gap: "14px",
+                gap: "12px",
               }}
             >
               <div>
-                <div style={{ fontWeight: 800, fontSize: "1.05rem", color: "var(--clay-lilac-dark)" }}>
+                <div style={{ fontWeight: 800, fontSize: "1rem", color: "var(--clay-primary-dark)" }}>
                   You are in the room!
                 </div>
-                <div style={{ fontSize: "0.88rem", color: "#475569" }}>
-                  Waiting for friends to join. Share your room code: <strong style={{ color: "#1e1b4b" }}>{roomCode}</strong>
+                <div style={{ fontSize: "0.85rem", color: "var(--clay-muted)" }}>
+                  Waiting for friends to join. Share code: <strong style={{ color: "var(--clay-ink)" }}>{roomCode}</strong>
                 </div>
               </div>
-              <button type="button" onClick={handleCopyLink} className="secondary" style={{ padding: "10px 18px" }}>
-                {copied ? <IconCheck size={16} /> : <IconCopy size={16} />}
-                <span>{copied ? "Copied Link" : "Copy Invite Link"}</span>
+              <button
+                type="button"
+                onClick={handleCopyLink}
+                className="secondary"
+                style={{ padding: "8px 16px", fontSize: "0.82rem" }}
+              >
+                {copied ? <IconCheck size={15} /> : <IconCopy size={15} />}
+                <span>{copied ? "Copied Link" : "Copy Link"}</span>
               </button>
             </div>
           </div>
@@ -352,7 +394,7 @@ export default function RoomCallPage({ params }: PageProps) {
 
             <div className="pinned-strip">
               {unpinnedParticipants.map((p) => (
-                <div key={p.userId} style={{ minHeight: "140px" }}>
+                <div key={p.userId} style={{ minHeight: "130px" }}>
                   <VideoTile
                     participant={p}
                     isPinned={false}

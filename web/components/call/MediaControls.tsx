@@ -49,7 +49,7 @@ export function MediaControls({
         title={isMuted ? "Unmute Microphone" : "Mute Microphone"}
       >
         {isMuted ? <IconMicOff size={18} /> : <IconMic size={18} />}
-        <span>{isMuted ? "Unmute" : "Mute"}</span>
+        <span className="call-dock-label">{isMuted ? "Unmute" : "Mute"}</span>
       </button>
 
       {/* Camera Button */}
@@ -60,18 +60,18 @@ export function MediaControls({
         title={isCameraOff ? "Turn On Camera" : "Turn Off Camera"}
       >
         {isCameraOff ? <IconVideoOff size={18} /> : <IconVideo size={18} />}
-        <span>{isCameraOff ? "Start Video" : "Stop Video"}</span>
+        <span className="call-dock-label">{isCameraOff ? "Start Video" : "Stop Video"}</span>
       </button>
 
       {/* Bandwidth Saver Button */}
       <button
         type="button"
         onClick={onToggleBandwidthSaver}
-        className={bandwidthSaver ? "yellow" : "secondary"}
+        className={bandwidthSaver ? "peach-soft" : "secondary"}
         title="Toggle Bandwidth Saver: pauses background video streams when room is large"
       >
-        <IconBolt size={18} />
-        <span>Saver: {bandwidthSaver ? "ON" : "OFF"}</span>
+        <IconBolt size={18} color={bandwidthSaver ? "var(--clay-primary)" : "currentColor"} />
+        <span className="call-dock-label">Saver: {bandwidthSaver ? "ON" : "OFF"}</span>
       </button>
 
       {/* Unpin Stage if Pinned */}
@@ -83,7 +83,7 @@ export function MediaControls({
           title="Reset to Grid Layout"
         >
           <IconGrid size={18} />
-          <span>Grid View</span>
+          <span className="call-dock-label">Grid</span>
         </button>
       )}
 
@@ -96,24 +96,24 @@ export function MediaControls({
         title="Open Room Chat"
       >
         <IconMessage size={18} />
-        <span>Chat</span>
+        <span className="call-dock-label">Chat</span>
         {unreadChatCount > 0 && (
           <span
             style={{
               position: "absolute",
-              top: "-6px",
-              right: "-6px",
+              top: "-5px",
+              right: "-5px",
               background: "var(--clay-danger)",
               color: "var(--clay-danger-dark)",
-              border: "1px solid rgba(255, 255, 255, 0.9)",
+              border: "1.5px solid #ffffff",
               borderRadius: "50%",
-              width: "22px",
-              height: "22px",
+              width: "20px",
+              height: "20px",
               display: "grid",
               placeItems: "center",
-              fontSize: "0.75rem",
+              fontSize: "0.72rem",
               fontWeight: 900,
-              boxShadow: "var(--clay-shadow-button)",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
             }}
           >
             {unreadChatCount}
@@ -130,7 +130,7 @@ export function MediaControls({
         title="Leave Room"
       >
         <IconLogOut size={18} />
-        <span>Leave</span>
+        <span className="call-dock-label">Leave</span>
       </button>
     </div>
   );
