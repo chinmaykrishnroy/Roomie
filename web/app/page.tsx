@@ -46,7 +46,7 @@ export default function HomePage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
+    <div style={{ minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
       {/* Desktop App Shell Navigation Bar */}
       <header className="app-header">
         <div className="brand">

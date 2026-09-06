@@ -166,7 +166,6 @@ export default function RoomCallPage({ params }: PageProps) {
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "100vh",
         height: "100dvh",
         maxHeight: "100dvh",
         overflow: "hidden",
