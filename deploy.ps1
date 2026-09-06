@@ -10,7 +10,7 @@ Write-Host "==> Deploying Roomie to ${TargetHost}:${RemoteDir}..."
 $localDir = "c:\Users\morph\Documents\antigravity\oneminute\roomie"
 $archive = Join-Path $env:TEMP "roomie_deploy.tar.gz"
 
-tar --exclude="node_modules" --exclude=".next" --exclude=".git" --exclude="*.log" -czf $archive -C $localDir .
+tar --exclude="node_modules" --exclude=".next" --exclude=".git" --exclude="*.log" --exclude=".env*" -czf $archive -C $localDir .
 scp $archive "${TargetHost}:/tmp/roomie_deploy.tar.gz"
 Remove-Item $archive -Force
 
