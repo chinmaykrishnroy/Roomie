@@ -6,15 +6,16 @@ import { UserSession, loadUserSession } from "@/lib/storage";
 import { OnboardingModal } from "@/components/identity/OnboardingModal";
 import { SettingsModal } from "@/components/identity/SettingsModal";
 import { CreateRoomModal } from "@/components/room/CreateRoomModal";
-import { PublicRoomList, CATEGORIES } from "@/components/room/PublicRoomList";
+import { PublicRoomList } from "@/components/room/PublicRoomList";
 import {
   IconSofa,
-  IconGear,
+  IconHome,
+  IconCompass,
   IconPlus,
-  IconArrowRight,
+  IconUser,
   IconSearch,
-  IconUsers,
-  IconSparkles,
+  IconArrowRight,
+  IconLink,
 } from "@/components/icons/Icons";
 
 export default function HomePage() {
@@ -50,299 +51,128 @@ export default function HomePage() {
 
   return (
     <div className="app-shell">
-      {/* Left Navigation Sidebar (Desktop Application Feel) */}
-      <aside className="app-sidebar">
-        <div>
-          {/* Brand Header */}
-          <div className="sidebar-header">
-            <div
-              style={{
-                width: "36px",
-                height: "36px",
-                borderRadius: "12px",
-                background: "linear-gradient(135deg, #ffe6db, #ff9e7d)",
-                display: "grid",
-                placeItems: "center",
-                border: "1px solid rgba(255, 255, 255, 0.9)",
-                boxShadow: "0 2px 6px rgba(195, 130, 105, 0.25)",
-                flexShrink: 0,
-              }}
-            >
-              <IconSofa size={20} color="var(--clay-primary-dark)" />
-            </div>
-            <div>
-              <div style={{ fontWeight: 900, fontSize: "1.15rem", color: "var(--clay-ink)", lineHeight: 1.1 }}>
-                Roomie
-              </div>
-              <div style={{ fontSize: "0.68rem", fontWeight: 800, color: "var(--clay-muted)", letterSpacing: "0.05em" }}>
-                LIVE AUDIO &amp; VIDEO
-              </div>
-            </div>
+      {/* Desktop Navigation Rail */}
+      <nav className="nav-rail">
+        <div className="nav-rail-top">
+          <div className="rail-logo">
+            <IconSofa size={20} color="var(--clay-primary-dark)" />
           </div>
-
-          {/* Quick Host Button */}
-          <div style={{ padding: "16px 4px 6px" }}>
-            <button
-              type="button"
-              onClick={() => setShowCreateRoom(true)}
-              style={{
-                width: "100%",
-                padding: "11px 16px",
-                fontSize: "0.88rem",
-                borderRadius: "14px",
-              }}
-            >
-              <IconPlus size={16} />
-              <span>Host New Stage</span>
-            </button>
-          </div>
-
-          {/* Channels / Categories Navigation */}
-          <div className="sidebar-nav">
-            <div style={{ fontSize: "0.72rem", fontWeight: 800, color: "var(--clay-muted)", padding: "8px 10px 4px" }}>
-              CHANNELS &amp; TOPICS
-            </div>
-
-            {CATEGORIES.map((cat) => {
-              const CatIcon = cat.Icon;
-              const isActive = selectedCategory === cat.id;
-              return (
-                <div
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`sidebar-item ${isActive ? "active" : ""}`}
-                >
-                  <CatIcon size={16} color={isActive ? "var(--clay-primary)" : "var(--clay-muted)"} />
-                  <span>{cat.label}</span>
-                </div>
-              );
-            })}
-          </div>
+          <button type="button" className="rail-btn active" title="Home">
+            <IconHome size={22} />
+          </button>
+          <button type="button" className="rail-btn" title="Explore">
+            <IconCompass size={22} />
+          </button>
+          <button
+            type="button"
+            className="rail-btn create-btn"
+            title="Create Room"
+            onClick={() => setShowCreateRoom(true)}
+          >
+            <IconPlus size={22} />
+          </button>
         </div>
-
-        {/* Sidebar Footer / User Capsule */}
-        <div className="sidebar-footer">
+        <div className="nav-rail-bottom">
           {session ? (
             <div
+              className="avatar-sm"
               onClick={() => setShowSettings(true)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: "8px 10px",
-                borderRadius: "16px",
-                background: "#ffffff",
-                border: "1px solid rgba(225, 175, 155, 0.3)",
-                cursor: "pointer",
-                transition: "all 150ms ease",
-              }}
-              title="Manage Settings & Profile"
+              title={session.username}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0 }}>
-                <div className="avatar-sm">{getInitials(session.username)}</div>
-                <div style={{ minWidth: 0 }}>
-                  <div
-                    style={{
-                      fontWeight: 800,
-                      fontSize: "0.86rem",
-                      color: "var(--clay-ink)",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {session.username}
-                  </div>
-                  <div style={{ fontSize: "0.7rem", color: "#10b981", fontWeight: 700 }}>Online</div>
-                </div>
-              </div>
-              <IconGear size={16} color="var(--clay-muted)" />
+              {getInitials(session.username)}
             </div>
           ) : (
             <button
               type="button"
+              className="rail-btn"
               onClick={() => setShowOnboarding(true)}
-              className="secondary"
-              style={{ width: "100%", padding: "9px" }}
+              title="Sign in"
             >
-              Set Username
+              <IconUser size={22} />
             </button>
           )}
         </div>
-      </aside>
+      </nav>
 
-      {/* Main Fluid Canvas */}
-      <main className="app-main-canvas">
-        {/* Top Application Bar */}
-        <header className="app-topbar">
-          {/* Mobile Brand Mark (Visible only on mobile/tablet when sidebar is hidden) */}
-          <div className="mobile-only" style={{ alignItems: "center", gap: "8px", flexShrink: 0 }}>
-            <div
-              style={{
-                width: "32px",
-                height: "32px",
-                borderRadius: "10px",
-                background: "linear-gradient(135deg, #ffe6db, #ff9e7d)",
-                display: "grid",
-                placeItems: "center",
-                border: "1px solid rgba(255, 255, 255, 0.9)",
-                boxShadow: "0 2px 6px rgba(195, 130, 105, 0.2)",
-              }}
-            >
-              <IconSofa size={18} color="var(--clay-primary-dark)" />
-            </div>
-            <span style={{ fontWeight: 900, fontSize: "1.05rem", color: "var(--clay-ink)" }}>Roomie</span>
-          </div>
+      {/* Main Canvas */}
+      <main className="app-canvas">
+        {/* Clean Header */}
+        <header className="app-header">
+          <span className="brand-text">Roomie</span>
 
-          {/* Integrated Search Pill */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              background: "#ffffff",
-              borderRadius: "999px",
-              padding: "2px 14px",
-              border: "1px solid rgba(225, 175, 155, 0.35)",
-              flex: "1 1 240px",
-              maxWidth: "520px",
-            }}
-          >
+          <div className="search-bar">
             <IconSearch size={16} color="var(--clay-muted)" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search stages by topic, vibes or vector keywords..."
-              style={{
-                border: "none",
-                background: "transparent",
-                boxShadow: "none",
-                padding: "8px 0",
-                fontSize: "0.88rem",
-                flex: 1,
-                minWidth: 0,
-              }}
+              placeholder="Search rooms..."
             />
           </div>
 
-          {/* Quick Room Code Input & Actions */}
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            {session && (
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            {session ? (
               <div
-                className="mobile-only"
+                className="avatar-sm"
                 onClick={() => setShowSettings(true)}
-                style={{ cursor: "pointer", flexShrink: 0 }}
-                title="Settings"
+                title={session.username}
               >
-                <div className="avatar-sm">{getInitials(session.username)}</div>
+                {getInitials(session.username)}
               </div>
-            )}
-            <form
-              onSubmit={handleJoinWithCode}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                background: "#ffffff",
-                borderRadius: "999px",
-                padding: "2px 2px 2px 12px",
-                border: "1px solid rgba(225, 175, 155, 0.35)",
-                width: "220px",
-              }}
-            >
-              <input
-                type="text"
-                value={joinCodeInput}
-                onChange={(e) => setJoinCodeInput(e.target.value)}
-                placeholder="Code..."
-                style={{
-                  border: "none",
-                  background: "transparent",
-                  boxShadow: "none",
-                  padding: "6px 0",
-                  fontSize: "0.84rem",
-                  fontWeight: 700,
-                  flex: 1,
-                  minWidth: 0,
-                }}
-              />
+            ) : (
               <button
-                type="submit"
-                className="peach-soft"
-                style={{
-                  padding: "6px 12px",
-                  fontSize: "0.78rem",
-                  borderRadius: "999px",
-                }}
+                type="button"
+                className="secondary"
+                onClick={() => setShowOnboarding(true)}
+                style={{ padding: "8px 14px", fontSize: "0.84rem" }}
               >
-                <span>Join</span>
-                <IconArrowRight size={12} />
+                Sign in
               </button>
-            </form>
-
-            <button
-              type="button"
-              onClick={() => setShowCreateRoom(true)}
-              style={{
-                padding: "9px 18px",
-                fontSize: "0.85rem",
-              }}
-            >
-              <IconPlus size={15} />
-              <span>Host</span>
-            </button>
+            )}
           </div>
         </header>
 
-        {/* Content Viewport */}
+        {/* Content */}
         <div className="app-content">
-          {/* Wide Hero Deck Banner */}
-          <section
-            style={{
-              background: "linear-gradient(135deg, #fff3eb 0%, #ffe4d6 100%)",
-              border: "1px solid rgba(225, 175, 155, 0.35)",
-              borderRadius: "24px",
-              boxShadow: "var(--clay-shadow-card)",
-              padding: "24px 28px",
-              marginBottom: "24px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexWrap: "wrap",
-              gap: "16px",
-            }}
-          >
-            <div style={{ maxWidth: "680px" }}>
-              <div
-                className="chip"
-                style={{
-                  background: "#ffffff",
-                  marginBottom: "10px",
-                  color: "var(--clay-peach-soft-dark)",
-                  fontSize: "0.78rem",
-                  padding: "5px 12px",
-                }}
-              >
-                <IconSparkles size={14} color="var(--clay-primary)" />
-                <span>WebRTC Mesh &amp; Pion SFU Engine</span>
+          {/* Action Deck — two large gradient cards */}
+          <div className="action-deck">
+            <div
+              className="action-card create"
+              onClick={() => setShowCreateRoom(true)}
+            >
+              <div className="card-icon">
+                <IconPlus size={24} color="var(--clay-primary-dark)" />
               </div>
-              <h1 style={{ fontSize: "clamp(1.5rem, 3.2vw, 2.2rem)", marginBottom: "8px", color: "var(--clay-ink)", lineHeight: 1.2 }}>
-                Meet the person before you judge the profile.
-              </h1>
-              <p style={{ fontSize: "0.92rem", color: "var(--clay-muted)", lineHeight: 1.45 }}>
-                Casual multi-party rooms for up to 16 participants. Zero waiting rooms, adaptive bitrate scaling, and location-ranked discovery.
-              </p>
+              <div className="card-title">Create a Room</div>
+              <div className="card-sub">Host a stage for up to 16 people</div>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px", alignItems: "flex-start" }}>
-              <span className="badge" style={{ background: "#ffffff", color: "var(--clay-sage-dark)" }}>
-                <IconUsers size={14} color="#10b981" />
-                <span>16 Cameras Concurrent</span>
-              </span>
+            <div className="action-card join">
+              <div className="card-icon">
+                <IconLink size={24} color="var(--clay-sage-dark)" />
+              </div>
+              <div className="card-title">Join with Code</div>
+              <form
+                onSubmit={handleJoinWithCode}
+                className="join-input-row"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <input
+                  type="text"
+                  value={joinCodeInput}
+                  onChange={(e) => setJoinCodeInput(e.target.value)}
+                  placeholder="Enter code..."
+                />
+                <button type="submit">
+                  <IconArrowRight size={14} />
+                </button>
+              </form>
             </div>
-          </section>
+          </div>
 
-          {/* Fluid Sound Stages Grid */}
+          {/* Live Rooms */}
+          <h2 className="section-title">Live Now</h2>
+
           <PublicRoomList
             selectedCategory={selectedCategory}
             onSelectCategory={setSelectedCategory}
@@ -352,7 +182,37 @@ export default function HomePage() {
         </div>
       </main>
 
-      {/* Identity & Room Modals */}
+      {/* Mobile Bottom Tab Bar */}
+      <nav className="bottom-tabs">
+        <button type="button" className="tab-btn active">
+          <IconHome size={22} />
+          <span className="tab-label">Home</span>
+        </button>
+        <button type="button" className="tab-btn">
+          <IconCompass size={22} />
+          <span className="tab-label">Explore</span>
+        </button>
+        <button
+          type="button"
+          className="tab-btn"
+          onClick={() => setShowCreateRoom(true)}
+        >
+          <IconPlus size={22} />
+          <span className="tab-label">Create</span>
+        </button>
+        <button
+          type="button"
+          className="tab-btn"
+          onClick={() =>
+            session ? setShowSettings(true) : setShowOnboarding(true)
+          }
+        >
+          <IconUser size={22} />
+          <span className="tab-label">Profile</span>
+        </button>
+      </nav>
+
+      {/* Modals */}
       <OnboardingModal
         isOpen={showOnboarding}
         onComplete={(sess) => {

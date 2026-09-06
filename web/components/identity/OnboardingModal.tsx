@@ -55,13 +55,11 @@ export function OnboardingModal({ isOpen, onComplete }: Props) {
     <div className="modal-overlay">
       <div className="modal-content">
         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-          <div className="brand-badge">
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
-              <IconSparkles size={14} /> Roomie
-            </span>
-          </div>
-          <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--clay-muted)" }}>
-            Instant Multi-Party Rooms
+          <span
+            className="badge"
+            style={{ background: "var(--clay-peach-soft)", color: "var(--clay-peach-soft-dark)", padding: "5px 12px", fontSize: "0.8rem" }}
+          >
+            <IconSparkles size={14} /> Roomie
           </span>
         </div>
 
