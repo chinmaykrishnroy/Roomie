@@ -613,7 +613,14 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* Responsive Rules */
+.mobile-only {
+  display: none !important;
+}
+
 @media (max-width: 860px) {
+  .mobile-only {
+    display: flex !important;
+  }
   .app-sidebar {
     display: none;
   }

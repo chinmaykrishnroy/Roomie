@@ -75,7 +75,7 @@ export default function HomePage() {
                 Roomie
               </div>
               <div style={{ fontSize: "0.68rem", fontWeight: 800, color: "var(--clay-muted)", letterSpacing: "0.05em" }}>
-                DESKTOP APP
+                LIVE AUDIO &amp; VIDEO
               </div>
             </div>
           </div>
@@ -175,6 +175,25 @@ export default function HomePage() {
       <main className="app-main-canvas">
         {/* Top Application Bar */}
         <header className="app-topbar">
+          {/* Mobile Brand Mark (Visible only on mobile/tablet when sidebar is hidden) */}
+          <div className="mobile-only" style={{ alignItems: "center", gap: "8px", flexShrink: 0 }}>
+            <div
+              style={{
+                width: "32px",
+                height: "32px",
+                borderRadius: "10px",
+                background: "linear-gradient(135deg, #ffe6db, #ff9e7d)",
+                display: "grid",
+                placeItems: "center",
+                border: "1px solid rgba(255, 255, 255, 0.9)",
+                boxShadow: "0 2px 6px rgba(195, 130, 105, 0.2)",
+              }}
+            >
+              <IconSofa size={18} color="var(--clay-primary-dark)" />
+            </div>
+            <span style={{ fontWeight: 900, fontSize: "1.05rem", color: "var(--clay-ink)" }}>Roomie</span>
+          </div>
+
           {/* Integrated Search Pill */}
           <div
             style={{
@@ -185,7 +204,7 @@ export default function HomePage() {
               borderRadius: "999px",
               padding: "2px 14px",
               border: "1px solid rgba(225, 175, 155, 0.35)",
-              flex: "1 1 280px",
+              flex: "1 1 240px",
               maxWidth: "520px",
             }}
           >
@@ -208,7 +227,17 @@ export default function HomePage() {
           </div>
 
           {/* Quick Room Code Input & Actions */}
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            {session && (
+              <div
+                className="mobile-only"
+                onClick={() => setShowSettings(true)}
+                style={{ cursor: "pointer", flexShrink: 0 }}
+                title="Settings"
+              >
+                <div className="avatar-sm">{getInitials(session.username)}</div>
+              </div>
+            )}
             <form
               onSubmit={handleJoinWithCode}
               style={{
