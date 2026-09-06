@@ -144,15 +144,8 @@ func (s *Store) ListPublicRooms(ctx context.Context, category, searchTxt string,
 
 		scored := &RoomWithScore{Room: *r}
 
-		// 1. Category / Vector match (weight 0.40)
-		var catScore float64 = 0.5 // baseline
-		if category != "" && category != "all" {
-			if r.Category == category {
-				catScore = 1.0
-			} else {
-				catScore = 0.1
-			}
-		}
+		// 1. Relevance / Vector Match
+		var relevanceScore float64
 		if searchTxt != "" {
 			var roomEmbed search.Vector
 			if embedStr.Valid && embedStr.String != "" {
@@ -164,9 +157,29 @@ func (s *Store) ListPublicRooms(ctx context.Context, category, searchTxt string,
 				roomEmbed = search.GenerateEmbedding(r.Category + " " + r.Name + " " + r.Description)
 			}
 			sim := search.CosineSimilarity(searchVec, roomEmbed)
-			catScore = math.Max(catScore, sim)
+			relevanceScore = sim
+
+			// Category boost/penalty if user also selected a category
+			if category != "" && category != "all" {
+				if r.Category == category {
+					relevanceScore = math.Min(1.0, relevanceScore*1.2)
+				} else {
+					relevanceScore = relevanceScore * 0.4
+				}
+			}
+		} else {
+			// Browse mode without search query
+			if category != "" && category != "all" {
+				if r.Category == category {
+					relevanceScore = 1.0
+				} else {
+					relevanceScore = 0.1
+				}
+			} else {
+				relevanceScore = 0.5 // neutral baseline for unfiltered browse
+			}
 		}
-		scored.CategoryMatch = catScore
+		scored.CategoryMatch = relevanceScore
 
 		// 2. Geolocation proximity (weight 0.30)
 		var geoScore float64 = 0.5
@@ -192,8 +205,14 @@ func (s *Store) ListPublicRooms(ctx context.Context, category, searchTxt string,
 		hoursAgo := time.Since(r.CreatedAt).Hours()
 		recScore := 1.0 / (1.0 + (hoursAgo / 24.0))
 
-		// Composite Score: 40% Category/Search + 30% Geo + 20% Occupancy + 10% Recency
-		scored.Score = 0.40*catScore + 0.30*geoScore + 0.20*occScore + 0.10*recScore
+		// Composite Score:
+		// When user is searching, semantic match is the primary ranking factor (85%).
+		// In browse mode, use the balanced formula (40% category + 30% geo + 20% occupancy + 10% recency).
+		if searchTxt != "" {
+			scored.Score = 0.85*relevanceScore + 0.05*geoScore + 0.05*occScore + 0.05*recScore
+		} else {
+			scored.Score = 0.40*relevanceScore + 0.30*geoScore + 0.20*occScore + 0.10*recScore
+		}
 
 		allScored = append(allScored, scored)
 	}
