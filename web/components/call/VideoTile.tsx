@@ -20,12 +20,32 @@ export function VideoTile({
   quality = "high",
 }: Props) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  // Bind video stream
   useEffect(() => {
     if (videoRef.current && participant.stream) {
-      videoRef.current.srcObject = participant.stream;
+      if (videoRef.current.srcObject !== participant.stream) {
+        videoRef.current.srcObject = participant.stream;
+      }
+      videoRef.current.play().catch((err) => {
+        // Autoplay may be restricted until user interacts with document
+        console.warn("Video autoplay prevented:", err);
+      });
     }
-  }, [participant.stream, participant.videoEnabled]);
+  }, [participant.stream, participant.videoEnabled, quality]);
+
+  // Bind dedicated audio stream for remote peers (ensures audio never cuts out when video is toggled off)
+  useEffect(() => {
+    if (audioRef.current && participant.stream && !participant.isLocal) {
+      if (audioRef.current.srcObject !== participant.stream) {
+        audioRef.current.srcObject = participant.stream;
+      }
+      audioRef.current.play().catch((err) => {
+        console.warn("Audio autoplay prevented:", err);
+      });
+    }
+  }, [participant.stream, participant.isLocal]);
 
   const initials = participant.username ? participant.username.slice(0, 2).toUpperCase() : "??";
 
@@ -40,12 +60,22 @@ export function VideoTile({
           : undefined,
       }}
     >
+      {/* Persistent audio element for remote participant */}
+      {!participant.isLocal && participant.stream && (
+        <audio
+          ref={audioRef}
+          autoPlay
+          playsInline
+          style={{ display: "none" }}
+        />
+      )}
+
       {participant.videoEnabled && quality !== "off" ? (
         <video
           ref={videoRef}
           autoPlay
           playsInline
-          muted={participant.isLocal}
+          muted={participant.isLocal || true} /* Remote audio is routed reliably through persistent <audio> tag */
         />
       ) : (
         <div className="avatar-placeholder">

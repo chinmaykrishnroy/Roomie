@@ -270,7 +270,10 @@ func (s *Store) AddParticipant(ctx context.Context, roomID, userID, username str
 
 	updateRoom := `
 		UPDATE rooms
-		SET participant_count = $1, centroid_lat = $2, centroid_lon = $3, updated_at = NOW()
+		SET participant_count = $1,
+		    centroid_lat = CASE WHEN $2 != 0 OR $3 != 0 THEN $2 ELSE centroid_lat END,
+		    centroid_lon = CASE WHEN $2 != 0 OR $3 != 0 THEN $3 ELSE centroid_lon END,
+		    updated_at = NOW()
 		WHERE id = $4
 	`
 	if _, err := tx.ExecContext(ctx, updateRoom, count, avgLat, avgLon, roomID); err != nil {
@@ -283,6 +286,7 @@ func (s *Store) AddParticipant(ctx context.Context, roomID, userID, username str
 
 	if s.Redis != nil {
 		_ = s.Redis.SAdd(ctx, "room:"+roomID+":users", userID).Err()
+		_ = s.Redis.Expire(ctx, "room:"+roomID+":users", 2*time.Hour).Err()
 	}
 
 	return nil
@@ -312,9 +316,13 @@ func (s *Store) RemoveParticipant(ctx context.Context, roomID, userID string) er
 		return err
 	}
 
+	// Bug 9 Fix: Preserve centroid coordinates if count == 0 or avg is 0
 	updateRoom := `
 		UPDATE rooms
-		SET participant_count = $1, centroid_lat = $2, centroid_lon = $3, updated_at = NOW()
+		SET participant_count = $1,
+		    centroid_lat = CASE WHEN $1 > 0 AND ($2 != 0 OR $3 != 0) THEN $2 ELSE centroid_lat END,
+		    centroid_lon = CASE WHEN $1 > 0 AND ($2 != 0 OR $3 != 0) THEN $3 ELSE centroid_lon END,
+		    updated_at = NOW()
 		WHERE id = $4
 	`
 	if _, err := tx.ExecContext(ctx, updateRoom, count, avgLat, avgLon, roomID); err != nil {
@@ -327,6 +335,7 @@ func (s *Store) RemoveParticipant(ctx context.Context, roomID, userID string) er
 
 	if s.Redis != nil {
 		_ = s.Redis.SRem(ctx, "room:"+roomID+":users", userID).Err()
+		_ = s.Redis.Expire(ctx, "room:"+roomID+":users", 2*time.Hour).Err()
 	}
 
 	return nil

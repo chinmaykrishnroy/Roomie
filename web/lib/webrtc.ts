@@ -21,6 +21,7 @@ export class RoomieCallClient {
   private localStream: MediaStream | null = null;
   private peerConnections = new Map<string, RTCPeerConnection>();
   private remoteStreams = new Map<string, MediaStream>();
+  private pendingCandidates = new Map<string, RTCIceCandidateInit[]>();
   private iceServers: RTCIceServer[] = [];
   private currentUserId = "";
   private currentRoomCode = "";
@@ -36,7 +37,7 @@ export class RoomieCallClient {
 
   constructor(private apiBaseWs: string = "") {}
 
-  async initLocalMedia(video = true, audio = true): Promise<MediaStream> {
+  async initLocalMedia(video = true, audio = true): Promise<MediaStream | null> {
     try {
       this.localStream = await navigator.mediaDevices.getUserMedia({
         video: video
@@ -56,13 +57,22 @@ export class RoomieCallClient {
       });
       return this.localStream;
     } catch (err) {
-      console.warn("Could not acquire media with requested constraints, falling back", err);
-      // Fallback: audio only or default
-      this.localStream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
-      return this.localStream;
+      console.warn("Could not acquire media with requested constraints, falling back to audio only:", err);
+      try {
+        // Fallback: user may not have webcam or denied video permission
+        this.localStream = await navigator.mediaDevices.getUserMedia({
+          video: false,
+          audio: true,
+        });
+        this.isCameraOff = true;
+        return this.localStream;
+      } catch (audioErr) {
+        console.warn("Could not acquire audio either, proceeding in listen/spectator mode:", audioErr);
+        this.localStream = null;
+        this.isMuted = true;
+        this.isCameraOff = true;
+        return null;
+      }
     }
   }
 
@@ -233,10 +243,16 @@ export class RoomieCallClient {
       });
     }
 
-    // Handle remote tracks
+    // Handle remote tracks (Bug 8: accumulate both audio & video into one MediaStream)
     pc.ontrack = (event) => {
-      const stream = event.streams[0] || new MediaStream([event.track]);
-      this.remoteStreams.set(remoteUserId, stream);
+      let stream = this.remoteStreams.get(remoteUserId);
+      if (!stream) {
+        stream = event.streams[0] || new MediaStream();
+        this.remoteStreams.set(remoteUserId, stream);
+      }
+      if (!stream.getTracks().some((t) => t.id === event.track.id)) {
+        stream.addTrack(event.track);
+      }
 
       const p = this.participants.get(remoteUserId);
       if (p) {
@@ -281,6 +297,19 @@ export class RoomieCallClient {
     return pc;
   }
 
+  private async drainCandidateQueue(userId: string, pc: RTCPeerConnection) {
+    const queue = this.pendingCandidates.get(userId);
+    if (!queue || queue.length === 0) return;
+    this.pendingCandidates.delete(userId);
+    for (const cand of queue) {
+      try {
+        await pc.addIceCandidate(new RTCIceCandidate(cand));
+      } catch (err) {
+        console.warn("Error adding queued ice candidate", err);
+      }
+    }
+  }
+
   private async handleSignal(msg: any) {
     const fromUserId = msg.userId;
     if (!fromUserId) return;
@@ -292,6 +321,7 @@ export class RoomieCallClient {
 
     if (msg.signalType === "offer") {
       await pc.setRemoteDescription(new RTCSessionDescription(msg.data));
+      await this.drainCandidateQueue(fromUserId, pc);
       const answer = await pc.createAnswer();
       await pc.setLocalDescription(answer);
       this.send({
@@ -302,11 +332,19 @@ export class RoomieCallClient {
       });
     } else if (msg.signalType === "answer") {
       await pc.setRemoteDescription(new RTCSessionDescription(msg.data));
+      await this.drainCandidateQueue(fromUserId, pc);
     } else if (msg.signalType === "candidate") {
-      try {
-        await pc.addIceCandidate(new RTCIceCandidate(msg.data));
-      } catch (err) {
-        console.error("Error adding ice candidate", err);
+      // Bug 3 Fix: Buffer candidate if remoteDescription is not yet set
+      if (!pc.remoteDescription) {
+        const queue = this.pendingCandidates.get(fromUserId) || [];
+        queue.push(msg.data);
+        this.pendingCandidates.set(fromUserId, queue);
+      } else {
+        try {
+          await pc.addIceCandidate(new RTCIceCandidate(msg.data));
+        } catch (err) {
+          console.error("Error adding ice candidate", err);
+        }
       }
     }
   }
@@ -422,6 +460,7 @@ export class RoomieCallClient {
   }
 
   private closePeerConnection(userId: string) {
+    this.pendingCandidates.delete(userId);
     const pc = this.peerConnections.get(userId);
     if (pc) {
       pc.close();
@@ -442,8 +481,12 @@ export class RoomieCallClient {
     this.peerConnections.clear();
     this.remoteStreams.clear();
     this.participants.clear();
+    this.pendingCandidates.clear();
 
     if (this.ws) {
+      // Bug 12 Fix: Detach event listeners so closing does not re-trigger cleanup
+      this.ws.onclose = null;
+      this.ws.onerror = null;
       this.ws.close();
       this.ws = null;
     }

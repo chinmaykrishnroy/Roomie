@@ -33,6 +33,8 @@ type Message struct {
 	Timestamp    int64            `json:"timestamp,omitempty"`
 	Error        string           `json:"error,omitempty"`
 	ICEServers   any              `json:"iceServers,omitempty"`
+	Lat          *float64         `json:"lat,omitempty"`
+	Lon          *float64         `json:"lon,omitempty"`
 }
 
 func DecodeMessage(data []byte) (*Message, error) {

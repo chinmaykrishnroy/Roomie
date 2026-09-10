@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"net/http"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -111,8 +112,23 @@ func (s *Server) createRoom(w http.ResponseWriter, r *http.Request) {
 		if req.IsPrivate {
 			code = names.GeneratePrivateRoomCode()
 		} else {
-			code = strings.ToLower(strings.ReplaceAll(req.Name, " ", "-")) + "-" + names.GeneratePrivateRoomCode()[len(names.GeneratePrivateRoomCode())-4:]
+			// Bug 5 & 11 Fix: Sanitize room name to safe URL characters and avoid duplicate random code call
+			slug := regexp.MustCompile(`[^a-z0-9]+`).ReplaceAllString(strings.ToLower(req.Name), "-")
+			slug = strings.Trim(slug, "-")
+			if slug == "" {
+				slug = "room"
+			}
+			rnd := names.GeneratePrivateRoomCode()
+			suffix := rnd
+			if len(rnd) >= 4 {
+				suffix = rnd[len(rnd)-4:]
+			}
+			code = slug + "-" + suffix
 		}
+	} else {
+		// Sanitize custom code to prevent path traversal or invalid URL routes
+		code = regexp.MustCompile(`[^a-zA-Z0-9_-]+`).ReplaceAllString(code, "-")
+		code = strings.Trim(code, "-")
 	}
 	// normalize code
 	code = strings.ToLower(strings.TrimSpace(code))

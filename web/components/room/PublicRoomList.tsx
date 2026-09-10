@@ -63,28 +63,40 @@ export function PublicRoomList({
   }, []);
 
   useEffect(() => {
-    fetchRooms();
-  }, [selectedCategory, page, location, searchQuery]);
+    let isCurrent = true;
+    const debounceDelay = searchQuery.trim() ? 300 : 0;
 
-  const fetchRooms = async () => {
-    try {
-      setLoading(true);
-      const res = await listPublicRooms({
-        category: selectedCategory === "custom" || selectedCategory === "all" ? undefined : selectedCategory,
-        query: searchQuery.trim() || (selectedCategory === "custom" ? "custom" : undefined),
-        lat: location?.latitude,
-        lon: location?.longitude,
-        page,
-        limit: 12,
-      });
-      setRooms(res.rooms);
-      setTotalPages(res.totalPages);
-    } catch (err) {
-      console.error("Failed to load rooms", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const timer = setTimeout(async () => {
+      try {
+        setLoading(true);
+        const res = await listPublicRooms({
+          category: selectedCategory === "custom" || selectedCategory === "all" ? undefined : selectedCategory,
+          query: searchQuery.trim() || (selectedCategory === "custom" ? "custom" : undefined),
+          lat: location?.latitude,
+          lon: location?.longitude,
+          page,
+          limit: 12,
+        });
+        if (isCurrent) {
+          setRooms(res.rooms);
+          setTotalPages(res.totalPages);
+        }
+      } catch (err) {
+        if (isCurrent) {
+          console.error("Failed to load rooms", err);
+        }
+      } finally {
+        if (isCurrent) {
+          setLoading(false);
+        }
+      }
+    }, debounceDelay);
+
+    return () => {
+      isCurrent = false;
+      clearTimeout(timer);
+    };
+  }, [selectedCategory, page, location, searchQuery]);
 
   const getInitials = (name: string) => name.slice(0, 2).toUpperCase();
 

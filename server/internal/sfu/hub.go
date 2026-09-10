@@ -169,7 +169,14 @@ func (h *Hub) HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 	// Register in PostgreSQL & Redis
 	if h.Store != nil && storeRoomID != "" {
-		_ = h.Store.AddParticipant(ctx, storeRoomID, userID, username, 0, 0)
+		var lat, lon float64
+		if firstMsg.Lat != nil {
+			lat = *firstMsg.Lat
+		}
+		if firstMsg.Lon != nil {
+			lon = *firstMsg.Lon
+		}
+		_ = h.Store.AddParticipant(ctx, storeRoomID, userID, username, lat, lon)
 	}
 
 	// Defer cleanup on exit
