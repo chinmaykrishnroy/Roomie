@@ -437,26 +437,33 @@ export function RoomieAppIcon({
       className={className}
       style={{ display: "inline-block", verticalAlign: "middle", flexShrink: 0 }}
     >
-      {/* Main Camera Talk Bubble Body */}
+      {/* Outer Visor Frame */}
       <path
-        d="M30 34H68C74.6274 34 80 39.3726 80 46V74C80 80.6274 74.6274 86 68 86H42L24 100V86C20.6863 86 18 83.3137 18 80V46C18 39.3726 23.3726 34 30 34Z"
+        d="M28 42 L44 32 H84 L100 42 L114 58 L114 76 L98 94 H78 L64 80 L50 94 H30 L14 76 L14 58 Z"
         fill={color || "var(--app-icon-main, currentColor)"}
       />
 
-      {/* Camera Lens Cone */}
+      {/* Inner Visor Cutout */}
       <path
-        d="M84 48L106 34C108.5 32.5 112 34.3 112 37.3V80.7C112 83.7 108.5 85.5 106 84L84 70V48Z"
-        fill={color || "var(--app-icon-main, currentColor)"}
+        d="M32 46 L46 38 H82 L96 46 L106 60 L106 72 L94 88 H76 L64 76 L52 88 H34 L22 72 L22 60 Z"
+        fill="var(--app-icon-cutout, var(--clay-bg, #07080b))"
       />
 
-      {/* Center Aperture Cutout */}
-      <circle cx="49" cy="60" r="13" fill="var(--app-icon-cutout, var(--clay-bg, #07080b))" />
+      {/* Top Brow Status Light */}
+      <rect x="50" y="42" width="28" height="4" rx="2" fill="var(--app-icon-accent, #ff0055)" />
 
-      {/* Inner Iris Accent */}
-      <circle cx="49" cy="60" r="6.5" fill="var(--app-icon-accent, #ff0055)" />
+      {/* Left Camera Eye */}
+      <circle cx="44" cy="63" r="13" fill={color || "var(--app-icon-main, currentColor)"} />
+      <circle cx="44" cy="63" r="7" fill="var(--app-icon-cutout, var(--clay-bg, #07080b))" />
+      <circle cx="44" cy="63" r="3.5" fill="var(--app-icon-accent, #ff0055)" />
 
-      {/* Live Broadcast Beacon */}
-      <circle cx="106" cy="22" r="5" fill="var(--app-icon-beacon, #00ff66)" />
+      {/* Right Camera Eye */}
+      <circle cx="84" cy="63" r="13" fill={color || "var(--app-icon-main, currentColor)"} />
+      <circle cx="84" cy="63" r="7" fill="var(--app-icon-cutout, var(--clay-bg, #07080b))" />
+      <circle cx="84" cy="63" r="3.5" fill="var(--app-icon-accent, #ff0055)" />
+
+      {/* Connection Bridge / Beam */}
+      <rect x="58" y="60.5" width="12" height="5" rx="2.5" fill="var(--app-icon-beacon, #00ff66)" />
     </svg>
   );
 }
