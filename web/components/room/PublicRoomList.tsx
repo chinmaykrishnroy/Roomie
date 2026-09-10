@@ -41,6 +41,8 @@ interface PublicRoomListProps {
   onSelectCategory: (cat: string) => void;
   searchQuery: string;
   onSearchChange: (q: string) => void;
+  filterMode?: "all" | "live" | "near";
+  onRoomsLoaded?: (rooms: Room[]) => void;
 }
 
 export function PublicRoomList({
@@ -48,6 +50,8 @@ export function PublicRoomList({
   onSelectCategory,
   searchQuery,
   onSearchChange,
+  filterMode = "all",
+  onRoomsLoaded,
 }: PublicRoomListProps) {
   const router = useRouter();
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -75,11 +79,19 @@ export function PublicRoomList({
           lat: location?.latitude,
           lon: location?.longitude,
           page,
-          limit: 12,
+          limit: 18,
         });
         if (isCurrent) {
-          setRooms(res.rooms);
+          let filtered = res.rooms;
+          if (filterMode === "live") {
+            filtered = filtered.filter((r) => r.participantCount > 0);
+          } else if (filterMode === "near") {
+            filtered = filtered.filter((r) => r.distanceKm !== undefined);
+            filtered.sort((a, b) => (a.distanceKm ?? 9999) - (b.distanceKm ?? 9999));
+          }
+          setRooms(filtered);
           setTotalPages(res.totalPages);
+          onRoomsLoaded?.(res.rooms);
         }
       } catch (err) {
         if (isCurrent) {
@@ -96,7 +108,7 @@ export function PublicRoomList({
       isCurrent = false;
       clearTimeout(timer);
     };
-  }, [selectedCategory, page, location, searchQuery]);
+  }, [selectedCategory, page, location, searchQuery, filterMode, onRoomsLoaded]);
 
   const getInitials = (name: string) => name.slice(0, 2).toUpperCase();
 
@@ -214,19 +226,30 @@ export function PublicRoomList({
                     style={
                       isFull
                         ? { background: "var(--clay-danger)", color: "#fff" }
+                        : room.participantCount > 0
+                        ? { background: "rgba(34, 197, 94, 0.15)", color: "#16a34a", border: "1px solid rgba(34, 197, 94, 0.25)" }
                         : {}
                     }
                   >
-                    <span
-                      style={{
-                        width: "6px",
-                        height: "6px",
-                        borderRadius: "50%",
-                        background: isFull ? "#fff" : "#10b981",
-                        display: "inline-block",
-                      }}
-                    />
-                    {room.participantCount}/{room.maxParticipants || 16}
+                    {room.participantCount > 0 ? (
+                      <div className="soundwave-bars" title="Live audio active">
+                        <span className="soundwave-bar" />
+                        <span className="soundwave-bar" />
+                        <span className="soundwave-bar" />
+                        <span className="soundwave-bar" />
+                      </div>
+                    ) : (
+                      <span
+                        style={{
+                          width: "6px",
+                          height: "6px",
+                          borderRadius: "50%",
+                          background: isFull ? "#fff" : "var(--clay-muted)",
+                          display: "inline-block",
+                        }}
+                      />
+                    )}
+                    <span>{room.participantCount}/{room.maxParticipants || 16}</span>
                   </span>
                 </div>
 
@@ -253,20 +276,11 @@ export function PublicRoomList({
                       )}
                     </div>
 
-                    {/* Distance */}
+                    {/* Distance Pill */}
                     {room.distanceKm !== undefined && room.distanceKm > 0 && (
-                      <span
-                        style={{
-                          fontSize: "0.72rem",
-                          color: "var(--clay-muted)",
-                          fontWeight: 700,
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: "3px",
-                        }}
-                      >
-                        <IconMapPin size={11} color="var(--clay-primary)" />
-                        ~{Math.round(room.distanceKm)}km
+                      <span className="distance-pill" title={`Roughly ${Math.round(room.distanceKm)}km away`}>
+                        <IconMapPin size={11} />
+                        <span>~{Math.round(room.distanceKm)}km</span>
                       </span>
                     )}
                   </div>
