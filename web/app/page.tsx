@@ -7,8 +7,9 @@ import { OnboardingModal } from "@/components/identity/OnboardingModal";
 import { SettingsModal } from "@/components/identity/SettingsModal";
 import { CreateRoomModal } from "@/components/room/CreateRoomModal";
 import { PublicRoomList } from "@/components/room/PublicRoomList";
+import { useTheme } from "@/lib/theme";
 import {
-  IconSofa,
+  RoomieAppIcon,
   IconHome,
   IconCompass,
   IconPlus,
@@ -16,6 +17,8 @@ import {
   IconSearch,
   IconArrowRight,
   IconLink,
+  IconSun,
+  IconMoon,
 } from "@/components/icons/Icons";
 
 export default function HomePage() {
@@ -27,6 +30,7 @@ export default function HomePage() {
   const [joinCodeInput, setJoinCodeInput] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const { theme, resolvedTheme, setTheme } = useTheme();
 
   useEffect(() => {
     const existing = loadUserSession();
@@ -36,6 +40,16 @@ export default function HomePage() {
       setShowOnboarding(true);
     }
   }, []);
+
+  const toggleTheme = () => {
+    if (theme === "system") {
+      setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    } else if (theme === "light") {
+      setTheme("dark");
+    } else {
+      setTheme("system");
+    }
+  };
 
   const handleJoinWithCode = (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,8 +68,8 @@ export default function HomePage() {
       {/* Desktop Navigation Rail */}
       <nav className="nav-rail">
         <div className="nav-rail-top">
-          <div className="rail-logo">
-            <IconSofa size={20} color="var(--clay-primary-dark)" />
+          <div className="rail-logo" style={{ background: "transparent", boxShadow: "none" }} title="Roomie">
+            <RoomieAppIcon size={38} />
           </div>
           <button type="button" className="rail-btn active" title="Home">
             <IconHome size={22} />
@@ -73,6 +87,14 @@ export default function HomePage() {
           </button>
         </div>
         <div className="nav-rail-bottom">
+          <button
+            type="button"
+            className="rail-btn"
+            onClick={toggleTheme}
+            title={`Theme: ${theme} (${resolvedTheme}) · Click to toggle`}
+          >
+            {resolvedTheme === "dark" ? <IconSun size={20} /> : <IconMoon size={20} />}
+          </button>
           {session ? (
             <div
               className="avatar-sm"
@@ -98,7 +120,10 @@ export default function HomePage() {
       <main className="app-canvas">
         {/* Clean Header */}
         <header className="app-header">
-          <span className="brand-text">Roomie</span>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <RoomieAppIcon size={32} />
+            <span className="brand-text">Roomie</span>
+          </div>
 
           <div className="search-bar">
             <IconSearch size={16} color="var(--clay-muted)" />
@@ -111,6 +136,15 @@ export default function HomePage() {
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <button
+              type="button"
+              className="theme-toggle-btn"
+              onClick={toggleTheme}
+              title={`Theme: ${theme} (${resolvedTheme}) · Click to toggle`}
+            >
+              {resolvedTheme === "dark" ? <IconSun size={18} /> : <IconMoon size={18} />}
+            </button>
+
             {session ? (
               <div
                 className="avatar-sm"

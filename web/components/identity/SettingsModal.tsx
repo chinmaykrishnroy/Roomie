@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { UserSession, saveUserSession, clearUserSession } from "@/lib/storage";
-import { IconClose, IconTrash } from "@/components/icons/Icons";
+import { IconClose, IconTrash, IconSun, IconMoon, IconMonitor } from "@/components/icons/Icons";
+import { useTheme } from "@/lib/theme";
 
 interface Props {
   isOpen: boolean;
@@ -15,6 +16,7 @@ interface Props {
 export function SettingsModal({ isOpen, session, onClose, onUpdate, onReset }: Props) {
   const [username, setUsername] = useState("");
   const [mirrored, setMirrored] = useState(true);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     if (session) {
@@ -54,6 +56,45 @@ export function SettingsModal({ isOpen, session, onClose, onUpdate, onReset }: P
           <button type="button" onClick={onClose} className="secondary icon-btn">
             <IconClose size={18} />
           </button>
+        </div>
+
+        {/* Appearance / Theme */}
+        <div style={{ marginBottom: "22px" }}>
+          <label style={{ display: "block", fontSize: "0.9rem", fontWeight: 700, marginBottom: "8px" }}>
+            Appearance
+          </label>
+          <div className="theme-segmented" style={{ width: "100%", justifyContent: "space-between" }}>
+            <button
+              type="button"
+              className={`theme-segment-btn ${theme === "system" ? "active" : ""}`}
+              onClick={() => setTheme("system")}
+              style={{ flex: 1, justifyContent: "center" }}
+            >
+              <IconMonitor size={16} />
+              <span>System</span>
+            </button>
+            <button
+              type="button"
+              className={`theme-segment-btn ${theme === "light" ? "active" : ""}`}
+              onClick={() => setTheme("light")}
+              style={{ flex: 1, justifyContent: "center" }}
+            >
+              <IconSun size={16} />
+              <span>Light</span>
+            </button>
+            <button
+              type="button"
+              className={`theme-segment-btn ${theme === "dark" ? "active" : ""}`}
+              onClick={() => setTheme("dark")}
+              style={{ flex: 1, justifyContent: "center" }}
+            >
+              <IconMoon size={16} />
+              <span>Dark</span>
+            </button>
+          </div>
+          <div style={{ fontSize: "0.75rem", color: "var(--clay-muted)", marginTop: "6px" }}>
+            {theme === "system" ? "Syncs automatically with your device theme" : theme === "dark" ? "Dark obsidian theme" : "Warm peach light theme"}
+          </div>
         </div>
 
         <div style={{ marginBottom: "20px" }}>

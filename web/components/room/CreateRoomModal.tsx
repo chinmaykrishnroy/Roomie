@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { fetchGeneratedRoomName, fetchGeneratedRoomCode, createRoom } from "@/lib/api";
 import { getBrowserLocation } from "@/lib/geo";
 import {
+  RoomieAppIcon,
   IconClose,
   IconDice,
   IconGlobe,
@@ -113,7 +114,10 @@ export function CreateRoomModal({ isOpen, onClose }: Props) {
     <div className="modal-overlay">
       <div className="modal-content" style={{ maxWidth: "540px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "18px" }}>
-          <h2 style={{ fontSize: "1.45rem", color: "var(--clay-ink)" }}>Create Sound Stage</h2>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <RoomieAppIcon size={28} />
+            <h2 style={{ fontSize: "1.45rem", color: "var(--clay-ink)" }}>Create Room</h2>
+          </div>
           <button type="button" onClick={onClose} className="secondary icon-btn" title="Close modal">
             <IconClose size={18} />
           </button>

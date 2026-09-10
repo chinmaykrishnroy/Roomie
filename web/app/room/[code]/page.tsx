@@ -11,6 +11,7 @@ import { ChatDrawer } from "@/components/call/ChatDrawer";
 import { OnboardingModal } from "@/components/identity/OnboardingModal";
 import { getBrowserLocation } from "@/lib/geo";
 import {
+  RoomieAppIcon,
   IconArrowLeft,
   IconCopy,
   IconCheck,
@@ -205,6 +206,8 @@ export default function RoomCallPage({ params }: PageProps) {
             <IconArrowLeft size={16} />
             <span className="call-dock-label">Back</span>
           </button>
+
+          <RoomieAppIcon size={28} />
 
           <div style={{ minWidth: 0 }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>

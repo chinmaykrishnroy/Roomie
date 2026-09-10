@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { UserSession, saveUserSession } from "@/lib/storage";
 import { fetchGeneratedUsername } from "@/lib/api";
-import { IconDice, IconArrowRight, IconSparkles } from "@/components/icons/Icons";
+import { RoomieAppIcon, IconDice, IconArrowRight, IconSparkles } from "@/components/icons/Icons";
 
 interface Props {
   isOpen: boolean;
@@ -54,12 +54,13 @@ export function OnboardingModal({ isOpen, onComplete }: Props) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+          <RoomieAppIcon size={36} />
           <span
             className="badge"
             style={{ background: "var(--clay-peach-soft)", color: "var(--clay-peach-soft-dark)", padding: "5px 12px", fontSize: "0.8rem" }}
           >
-            <IconSparkles size={14} /> Roomie
+            <IconSparkles size={14} /> Welcome to Roomie
           </span>
         </div>
 

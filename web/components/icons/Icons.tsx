@@ -384,3 +384,93 @@ export function IconUser({ size = 18, color = "currentColor" }: IconProps) {
     </svg>
   );
 }
+
+export function IconSun({ size = 18, color = "currentColor" }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2" />
+      <path d="M12 20v2" />
+      <path d="m4.93 4.93 1.41 1.41" />
+      <path d="m17.66 17.66 1.41 1.41" />
+      <path d="M2 12h2" />
+      <path d="M20 12h2" />
+      <path d="m6.34 17.66-1.41 1.41" />
+      <path d="m19.07 4.93-1.41 1.41" />
+    </svg>
+  );
+}
+
+export function IconMoon({ size = 18, color = "currentColor" }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    </svg>
+  );
+}
+
+export function IconMonitor({ size = 18, color = "currentColor" }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect width="20" height="14" x="2" y="3" rx="2" />
+      <line x1="8" x2="16" y1="21" y2="21" />
+      <line x1="12" x2="12" y1="17" y2="21" />
+    </svg>
+  );
+}
+
+export function RoomieAppIcon({ size = 32, className = "" }: { size?: number; className?: string }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 128 128"
+      fill="none"
+      className={className}
+      style={{ display: "inline-block", verticalAlign: "middle", flexShrink: 0 }}
+    >
+      <defs>
+        <linearGradient id="roomieBgGrad" x1="16" y1="12" x2="112" y2="116" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#ffaf94" />
+          <stop offset="50%" stopColor="#ff8e68" />
+          <stop offset="100%" stopColor="#ea5830" />
+        </linearGradient>
+        <linearGradient id="roomieBubbleGrad" x1="30" y1="30" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#ffffff" />
+          <stop offset="100%" stopColor="#fff5f0" />
+        </linearGradient>
+        <filter id="roomieShadow" x="14" y="24" width="100" height="84" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+          <feDropShadow dx="0" dy="6" stdDeviation="5" floodColor="#8a2a0a" floodOpacity="0.32" />
+        </filter>
+      </defs>
+
+      {/* Squircle Base */}
+      <rect x="8" y="8" width="112" height="112" rx="28" fill="url(#roomieBgGrad)" />
+
+      {/* Inner Soft Bevel Highlight */}
+      <rect x="9.5" y="9.5" width="109" height="109" rx="26.5" stroke="#ffffff" strokeWidth="2" strokeOpacity="0.4" />
+
+      {/* Multi-Party Speech & Video Camera Icon */}
+      <g filter="url(#roomieShadow)">
+        {/* Back Chat Bubble (Sage Green accent) */}
+        <path d="M72 40H88C95.732 40 102 46.268 102 54V66C102 73.732 95.732 80 88 80H85L80 87V80H72C64.268 80 58 73.732 58 66V54C58 46.268 64.268 40 72 40Z" fill="#a7d7c5" />
+
+        {/* Main Front Video Camera Bubble */}
+        <rect x="26" y="44" width="48" height="38" rx="13" fill="url(#roomieBubbleGrad)" />
+        <path d="M38 81L32 90V81H38Z" fill="url(#roomieBubbleGrad)" />
+
+        {/* Camera Lens Triangle */}
+        <path d="M74 54.5L88 46V79.5L74 71V54.5Z" fill="#ffffff" />
+
+        {/* Central Camera Lens */}
+        <circle cx="50" cy="63" r="8.5" fill="#ff7f54" />
+        <circle cx="50" cy="63" r="4.5" fill="#381c14" />
+        <circle cx="52" cy="61" r="1.5" fill="#ffffff" />
+      </g>
+
+      {/* Live Sparkle / Connected Indicator */}
+      <circle cx="94" cy="34" r="5" fill="#ffffff" />
+      <circle cx="94" cy="34" r="3.5" fill="#22c55e" />
+    </svg>
+  );
+}
