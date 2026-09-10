@@ -419,7 +419,15 @@ export function IconMonitor({ size = 18, color = "currentColor" }: IconProps) {
   );
 }
 
-export function RoomieAppIcon({ size = 32, className = "" }: { size?: number; className?: string }) {
+export function RoomieAppIcon({
+  size = 32,
+  className = "",
+  color,
+}: {
+  size?: number;
+  className?: string;
+  color?: string;
+}) {
   return (
     <svg
       width={size}
@@ -429,53 +437,26 @@ export function RoomieAppIcon({ size = 32, className = "" }: { size?: number; cl
       className={className}
       style={{ display: "inline-block", verticalAlign: "middle", flexShrink: 0 }}
     >
-      <defs>
-        <linearGradient id="cyberBg" x1="12" y1="12" x2="116" y2="116" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#121622" />
-          <stop offset="100%" stopColor="#07080b" />
-        </linearGradient>
-        <linearGradient id="neonCyanGrad" x1="20" y1="20" x2="108" y2="108" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#00f0ff" />
-          <stop offset="100%" stopColor="#00a3ff" />
-        </linearGradient>
-        <linearGradient id="neonPinkGrad" x1="60" y1="30" x2="110" y2="90" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#ff0055" />
-          <stop offset="100%" stopColor="#b026ff" />
-        </linearGradient>
-        <filter id="neonGlow" x="0" y="0" width="128" height="128" filterUnits="userSpaceOnUse">
-          <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#00f0ff" floodOpacity="0.5" />
-        </filter>
-      </defs>
+      {/* Main Camera Talk Bubble Body */}
+      <path
+        d="M30 34H68C74.6274 34 80 39.3726 80 46V74C80 80.6274 74.6274 86 68 86H42L24 100V86C20.6863 86 18 83.3137 18 80V46C18 39.3726 23.3726 34 30 34Z"
+        fill={color || "var(--app-icon-main, currentColor)"}
+      />
 
-      {/* Cyberpunk Obsidian Base */}
-      <rect x="8" y="8" width="112" height="112" rx="22" fill="url(#cyberBg)" stroke="#00f0ff" strokeWidth="1.8" />
+      {/* Camera Lens Cone */}
+      <path
+        d="M84 48L106 34C108.5 32.5 112 34.3 112 37.3V80.7C112 83.7 108.5 85.5 106 84L84 70V48Z"
+        fill={color || "var(--app-icon-main, currentColor)"}
+      />
 
-      {/* Tech HUD Corner Brackets */}
-      <path d="M14 26V14H26" stroke="#00f0ff" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M114 26V14H102" stroke="#00f0ff" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M14 102V114H26" stroke="#00f0ff" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M114 102V114H102" stroke="#00f0ff" strokeWidth="2.5" strokeLinecap="round" />
+      {/* Center Aperture Cutout */}
+      <circle cx="49" cy="60" r="13" fill="var(--app-icon-cutout, var(--clay-bg, #07080b))" />
 
-      {/* Back Holographic Peer Bubble (Laser Magenta) */}
-      <path d="M70 38H88C95.732 38 102 44.268 102 52V64C102 71.732 95.732 78 88 78H85L80 85V78H70C62.268 78 56 71.732 56 64V52C56 44.268 62.268 38 70 38Z" fill="url(#neonPinkGrad)" opacity="0.85" />
+      {/* Inner Iris Accent */}
+      <circle cx="49" cy="60" r="6.5" fill="var(--app-icon-accent, #ff0055)" />
 
-      {/* Main Cyber Video Camera Bubble */}
-      <g filter="url(#neonGlow)">
-        <rect x="24" y="44" width="50" height="40" rx="10" fill="#0f131c" stroke="#00f0ff" strokeWidth="2" />
-        <path d="M36 84L30 92V84H36Z" fill="#0f131c" stroke="#00f0ff" strokeWidth="1.5" />
-
-        {/* Camera Projection Cone (Neon Cyan) */}
-        <path d="M74 54L90 44V84L74 74V54Z" fill="url(#neonCyanGrad)" />
-
-        {/* Central Cybernetic Aperture / Shutter Core */}
-        <circle cx="49" cy="64" r="10" fill="#001824" stroke="#00f0ff" strokeWidth="2" />
-        <circle cx="49" cy="64" r="5" fill="#ff0055" />
-        <circle cx="51" cy="62" r="1.5" fill="#ffffff" />
-      </g>
-
-      {/* Live Pulse Beacon (Matrix Toxic Green) */}
-      <circle cx="96" cy="32" r="6" fill="rgba(0, 255, 102, 0.3)" />
-      <circle cx="96" cy="32" r="3.5" fill="#00ff66" />
+      {/* Live Broadcast Beacon */}
+      <circle cx="106" cy="22" r="5" fill="var(--app-icon-beacon, #00ff66)" />
     </svg>
   );
 }

@@ -101,7 +101,7 @@ export function ChatDrawer({
                     background: isSelf ? "var(--clay-primary)" : "var(--clay-bg-subtle)",
                     color: isSelf ? "var(--clay-primary-dark)" : "var(--clay-ink)",
                     boxShadow: isSelf
-                      ? "3px 4px 12px rgba(217, 130, 99, 0.3)"
+                      ? "var(--clay-shadow-button)"
                       : "var(--clay-shadow-card)",
                     fontSize: "0.9rem",
                     wordBreak: "break-word",
