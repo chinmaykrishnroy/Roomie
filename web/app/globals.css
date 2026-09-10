@@ -106,102 +106,102 @@
 :root[data-theme="light"] {
   color-scheme: light;
 
-  /* App Icon Colors (Dark obsidian on light) */
-  --app-icon-main: #0d1117;
+  /* App Icon Colors (High-Contrast Cyberpunk Light) */
+  --app-icon-main: #050811;
   --app-icon-cutout: #ffffff;
-  --app-icon-accent: #0066ee;
-  --app-icon-beacon: #00b341;
+  --app-icon-accent: #ff0055;
+  --app-icon-beacon: #00e5ff;
 
-  /* High-Tech Clean Cyber Light Palette */
-  --clay-bg: #f3f5f9;
-  --clay-bg-subtle: #ffffff;
+  /* Daytime Cyberpunk / Industrial Arasaka Palette */
+  --clay-bg: #e8edf5;
+  --clay-bg-subtle: #f2f5fa;
   --clay-card: #ffffff;
-  --clay-card-peach: #f8fafc;
-  --clay-ink: #0d1117;
-  --clay-muted: #57606a;
-  --clay-line: rgba(15, 23, 42, 0.12);
+  --clay-card-peach: #fffdf5;
+  --clay-ink: #050811;
+  --clay-muted: #4a5568;
+  --clay-line: #050811;
 
-  /* High-Contrast Cyber Accents */
-  --clay-primary: #0066ee;
-  --clay-primary-hover: #0052cc;
-  --clay-primary-dark: #ffffff;
+  /* High-Voltage Cyber Accents */
+  --clay-primary: #ffe600;              /* Cyberpunk Industrial Safety Yellow */
+  --clay-primary-hover: #ffd000;
+  --clay-primary-dark: #000000;         /* Jet black text on cyber yellow */
 
-  --clay-peach-soft: rgba(235, 0, 75, 0.08);
-  --clay-peach-soft-dark: #d90048;
+  --clay-cyan: #00e5ff;
+  --clay-cyan-dark: #000000;
 
-  --clay-sage: rgba(0, 168, 80, 0.09);
-  --clay-sage-dark: #008a3e;
+  --clay-peach-soft: rgba(255, 0, 85, 0.12);
+  --clay-peach-soft-dark: #ff0055;
 
-  --clay-yellow: rgba(217, 140, 0, 0.1);
-  --clay-yellow-dark: #b36b00;
+  --clay-sage: rgba(0, 230, 118, 0.14);
+  --clay-sage-dark: #00b853;
 
-  --clay-danger: #dc2626;
+  --clay-yellow: rgba(255, 230, 0, 0.25);
+  --clay-yellow-dark: #b38600;
+
+  --clay-danger: #ff0055;
   --clay-danger-dark: #ffffff;
 
   /* Surfaces */
   --clay-surface-modal: #ffffff;
-  --clay-surface-input: #f6f8fa;
-  --clay-surface-input-focus: #ffffff;
-  --clay-surface-subtle-hover: #eaedf3;
+  --clay-surface-input: #ffffff;
+  --clay-surface-input-focus: #fffef0;
+  --clay-surface-subtle-hover: #e0e6f0;
 
   /* Action Cards in Light Mode */
-  --action-card-create-bg: linear-gradient(135deg, rgba(235, 0, 75, 0.08) 0%, rgba(121, 40, 202, 0.08) 100%), #ffffff;
-  --action-card-create-border: rgba(235, 0, 75, 0.35);
-  --action-card-create-title: #d90048;
+  --action-card-create-bg: #ffffff;
+  --action-card-create-border: #050811;
+  --action-card-create-title: #ff0055;
 
-  --action-card-join-bg: linear-gradient(135deg, rgba(0, 102, 238, 0.08) 0%, rgba(0, 168, 80, 0.08) 100%), #ffffff;
-  --action-card-join-border: rgba(0, 102, 238, 0.35);
-  --action-card-join-title: #0066ee;
+  --action-card-join-bg: #ffffff;
+  --action-card-join-border: #050811;
+  --action-card-join-title: #0099cc;
 
-  --action-card-icon-bg: rgba(0, 102, 238, 0.1);
-  --join-input-bg: #f6f8fa;
-  --join-input-border: rgba(0, 102, 238, 0.3);
-  --join-input-focus-bg: #ffffff;
-  --join-btn-bg: #0066ee;
-  --join-btn-text: #ffffff;
+  --action-card-icon-bg: #ffe600;
+  --join-input-bg: #ffffff;
+  --join-input-border: #050811;
+  --join-input-focus-bg: #fffef0;
+  --join-btn-bg: #ffe600;
+  --join-btn-text: #000000;
 
-  /* Clean Crisp Shadows */
+  /* Brutalist Neo-Cyber Offset Shadows */
   --clay-shadow-card:
-    0 4px 16px -2px rgba(15, 23, 42, 0.08),
-    0 0 1px 1px rgba(15, 23, 42, 0.06);
+    3.5px 3.5px 0px #050811;
 
   --clay-shadow-card-hover:
-    0 8px 24px -4px rgba(15, 23, 42, 0.14),
-    0 0 12px rgba(0, 102, 238, 0.25);
+    6px 6px 0px #00e5ff,
+    0 0 0 1.5px #050811;
 
   --clay-shadow-button:
-    0 2px 8px rgba(0, 102, 238, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    2.5px 2.5px 0px #050811;
 
   --clay-shadow-button-hover:
-    0 4px 14px rgba(0, 102, 238, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    4px 4px 0px #050811;
 
   --clay-shadow-button-sec:
-    0 1px 4px rgba(15, 23, 42, 0.08);
+    2px 2px 0px #050811;
 
   --clay-shadow-button-pressed:
-    inset 0 2px 4px rgba(15, 23, 42, 0.15);
+    inset 2px 2px 0px #050811;
 
   --clay-shadow-inset:
-    inset 1px 1px 3px rgba(15, 23, 42, 0.08);
+    inset 2px 2px 0px rgba(5, 8, 17, 0.12);
 
   --clay-shadow-floating:
-    0 20px 48px -8px rgba(15, 23, 42, 0.22),
-    0 0 1px 1px rgba(15, 23, 42, 0.08);
+    8px 8px 0px #050811,
+    0 0 0 2px #050811;
 
-  --modal-overlay-bg: rgba(15, 23, 42, 0.45);
-  --cyber-grid-dot: rgba(15, 23, 42, 0.07);
-  --brand-text-color: #0d1117;
+  --modal-overlay-bg: rgba(5, 8, 17, 0.65);
+  --cyber-grid-dot: rgba(5, 8, 17, 0.16);
+  --brand-text-color: #050811;
   --brand-text-shadow: none;
   --create-title-glow: none;
   --join-title-glow: none;
-  --join-input-text: #0d1117;
+  --join-input-text: #050811;
 
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 10px;
-  --radius-xl: 12px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
   --radius-pill: 999px;
 }
 
@@ -1147,23 +1147,6 @@ input:focus, select:focus, textarea:focus {
   color: var(--clay-primary-dark);
 }
 
-:root[data-theme="light"] .call-dock {
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.15), 0 0 1px 1px rgba(15, 23, 42, 0.08);
-}
-
-:root[data-theme="light"] .call-dock button {
-  background: rgba(15, 23, 42, 0.05);
-  color: #0d1117;
-}
-
-:root[data-theme="light"] .call-dock button:hover:not(:disabled) {
-  background: rgba(0, 102, 238, 0.1);
-  border-color: rgba(0, 102, 238, 0.3);
-  color: #0066ee;
-  box-shadow: 0 0 10px rgba(0, 102, 238, 0.2);
-}
-
 /* Cyber Avatar */
 .avatar-placeholder {
   width: 72px;
@@ -1655,15 +1638,6 @@ input:focus, select:focus, textarea:focus {
   pointer-events: none;
 }
 
-:root[data-theme="light"] .explore-hero {
-  background: linear-gradient(135deg, rgba(0, 102, 238, 0.06) 0%, rgba(217, 0, 72, 0.05) 100%), #ffffff;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(15, 23, 42, 0.08);
-}
-
-:root[data-theme="light"] .explore-hero-glow {
-  background: radial-gradient(circle, rgba(0, 102, 238, 0.15) 0%, transparent 70%);
-}
-
 .surprise-btn {
   display: inline-flex;
   align-items: center;
@@ -1684,19 +1658,9 @@ input:focus, select:focus, textarea:focus {
   white-space: nowrap;
 }
 
-:root[data-theme="light"] .surprise-btn {
-  background: linear-gradient(135deg, #0066ee 0%, #0052cc 100%);
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(0, 102, 238, 0.35);
-}
-
 .surprise-btn:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 0 26px rgba(0, 240, 255, 0.85);
-}
-
-:root[data-theme="light"] .surprise-btn:hover {
-  box-shadow: 0 6px 20px rgba(0, 102, 238, 0.5);
 }
 
 .surprise-btn:hover .dice-icon {
@@ -1774,8 +1738,372 @@ input:focus, select:focus, textarea:focus {
   border-color: rgba(0, 255, 102, 0.4);
 }
 
+/* ========================================================
+   LIGHT THEME: DAYTIME CYBERPUNK (ARASAKA / INDUSTRIAL TECH)
+   ======================================================== */
+
+:root[data-theme="light"] .app-shell {
+  background-color: var(--clay-bg);
+  background-image:
+    linear-gradient(to right, rgba(0, 102, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 102, 255, 0.08) 1px, transparent 1px),
+    radial-gradient(rgba(5, 8, 17, 0.16) 1.2px, transparent 1.2px);
+  background-size: 32px 32px, 32px 32px, 32px 32px;
+}
+
+:root[data-theme="light"] .nav-rail {
+  background: #f0f3f8;
+  border-right: 2px solid #050811;
+}
+
+:root[data-theme="light"] .rail-logo {
+  background: #ffe600;
+  border: 2px solid #050811;
+  box-shadow: 2.5px 2.5px 0px #050811;
+}
+
+:root[data-theme="light"] .rail-btn {
+  background: #ffffff;
+  border: 1.5px solid #050811;
+  box-shadow: 2px 2px 0px #050811;
+  color: #050811;
+}
+
+:root[data-theme="light"] .rail-btn:hover {
+  background: #00e5ff;
+  color: #000000;
+  border-color: #050811;
+  box-shadow: 3px 3px 0px #050811;
+  transform: translate(-1px, -1px);
+}
+
+:root[data-theme="light"] .rail-btn.active {
+  background: #ffe600;
+  color: #000000;
+  border-color: #050811;
+  box-shadow: 3px 3px 0px #050811;
+}
+
+:root[data-theme="light"] .rail-btn.create-btn {
+  background: #ff0055;
+  color: #ffffff;
+  border: 1.5px solid #050811;
+  box-shadow: 3px 3px 0px #050811;
+}
+
+:root[data-theme="light"] .rail-btn.create-btn:hover {
+  background: #ff1a66;
+  box-shadow: 4px 4px 0px #050811;
+  transform: translate(-1px, -1px);
+}
+
+:root[data-theme="light"] .app-header {
+  background: #f4f7fb;
+  border-bottom: 2px solid #050811;
+}
+
+:root[data-theme="light"] .app-header .brand-text {
+  color: #050811;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+:root[data-theme="light"] .search-bar {
+  background: #ffffff;
+  border: 1.5px solid #050811;
+  box-shadow: 2px 2px 0px #050811;
+}
+
+:root[data-theme="light"] .search-bar:focus-within {
+  background: #fffef0;
+  border-color: #050811;
+  box-shadow: 3.5px 3.5px 0px #050811;
+}
+
+:root[data-theme="light"] .theme-toggle-btn {
+  background: #ffffff;
+  border: 1.5px solid #050811;
+  box-shadow: 2px 2px 0px #050811;
+}
+
+:root[data-theme="light"] .theme-toggle-btn:hover {
+  background: #ffe600;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px #050811;
+}
+
+:root[data-theme="light"] .avatar-sm {
+  background: #ffe600;
+  color: #000000;
+  border: 1.5px solid #050811;
+  box-shadow: 2px 2px 0px #050811;
+}
+
+:root[data-theme="light"] .avatar-sm:hover {
+  box-shadow: 3px 3px 0px #050811;
+  transform: translate(-1px, -1px);
+}
+
+:root[data-theme="light"] .action-card {
+  border: 2px solid #050811;
+}
+
+:root[data-theme="light"] .action-card.create {
+  background: #ffffff;
+  box-shadow: 4px 4px 0px #ff0055, 0 0 0 1px #050811;
+}
+
+:root[data-theme="light"] .action-card.create:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px #ff0055, 0 0 0 1.5px #050811;
+}
+
+:root[data-theme="light"] .action-card.create::before {
+  height: 6px;
+  background: repeating-linear-gradient(-45deg, #ff0055, #ff0055 8px, #050811 8px, #050811 16px);
+  opacity: 1;
+}
+
+:root[data-theme="light"] .action-card.create .card-icon {
+  background: #ff0055;
+  color: #ffffff;
+  border: 2px solid #050811;
+  box-shadow: 2.5px 2.5px 0px #050811;
+}
+
+:root[data-theme="light"] .action-card.create .card-icon svg {
+  stroke: #ffffff;
+}
+
+:root[data-theme="light"] .action-card.create .card-title {
+  color: #050811;
+}
+
+:root[data-theme="light"] .action-card.create .card-sub {
+  color: #c90040;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 700;
+}
+
+:root[data-theme="light"] .action-card.join {
+  background: #ffffff;
+  box-shadow: 4px 4px 0px #00e5ff, 0 0 0 1px #050811;
+}
+
+:root[data-theme="light"] .action-card.join:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px #00e5ff, 0 0 0 1.5px #050811;
+}
+
+:root[data-theme="light"] .action-card.join::before {
+  height: 6px;
+  background: repeating-linear-gradient(-45deg, #00e5ff, #00e5ff 8px, #050811 8px, #050811 16px);
+  opacity: 1;
+}
+
+:root[data-theme="light"] .action-card.join .card-icon {
+  background: #00e5ff;
+  border: 2px solid #050811;
+  box-shadow: 2.5px 2.5px 0px #050811;
+}
+
+:root[data-theme="light"] .action-card.join .card-icon svg {
+  stroke: #050811;
+}
+
+:root[data-theme="light"] .action-card.join .card-title {
+  color: #050811;
+}
+
+:root[data-theme="light"] .action-card.join .card-sub {
+  color: #007399;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 700;
+}
+
+:root[data-theme="light"] .join-input-row input {
+  background: #ffffff;
+  border: 2px solid #050811;
+  color: #050811;
+  box-shadow: inset 2px 2px 0px rgba(5, 8, 17, 0.08);
+}
+
+:root[data-theme="light"] .join-input-row input:focus {
+  background: #fffef0;
+  border-color: #050811;
+  box-shadow: 2.5px 2.5px 0px #050811;
+}
+
+:root[data-theme="light"] .join-input-row button {
+  background: #ffe600;
+  color: #000000;
+  border: 2px solid #050811;
+  box-shadow: 2px 2px 0px #050811;
+}
+
+:root[data-theme="light"] .join-input-row button:hover:not(:disabled) {
+  background: #ffd000;
+  transform: translate(-1px, -1px);
+  box-shadow: 3.5px 3.5px 0px #050811;
+}
+
+:root[data-theme="light"] .section-title {
+  color: #050811;
+  letter-spacing: -0.01em;
+}
+
+:root[data-theme="light"] .chip {
+  background: #ffffff;
+  color: #050811;
+  border: 1.5px solid #050811;
+  box-shadow: 2px 2px 0px #050811;
+}
+
+:root[data-theme="light"] .chip:hover {
+  background: #00e5ff;
+  color: #000000;
+  border-color: #050811;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px #050811;
+}
+
+:root[data-theme="light"] .chip.active {
+  background: #ffe600;
+  color: #000000;
+  border-color: #050811;
+  box-shadow: 3px 3px 0px #050811;
+}
+
+:root[data-theme="light"] .badge {
+  background: #f0f3f8;
+  color: #050811;
+  border: 1.5px solid #050811;
+}
+
+:root[data-theme="light"] .room-tile {
+  background: #ffffff;
+  border: 2px solid #050811;
+  box-shadow: 4px 4px 0px #050811;
+}
+
+:root[data-theme="light"] .room-tile:hover {
+  background: #fffef7;
+  border-color: #050811;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #00e5ff, 0 0 0 1.5px #050811;
+}
+
+:root[data-theme="light"] .room-tile .tile-name {
+  color: #050811;
+}
+
+:root[data-theme="light"] .tile-join-btn {
+  background: #ffe600;
+  color: #000000;
+  border: 1.5px solid #050811;
+  box-shadow: 2px 2px 0px #050811;
+}
+
+:root[data-theme="light"] .tile-join-btn:hover:not(:disabled) {
+  background: #ffd000;
+  transform: translate(-1px, -1px);
+  box-shadow: 3.5px 3.5px 0px #050811;
+}
+
+:root[data-theme="light"] .explore-hero {
+  background: #ffffff;
+  border: 2px solid #050811;
+  box-shadow: 6px 6px 0px #ffe600, 0 0 0 1.5px #050811;
+}
+
+:root[data-theme="light"] .explore-hero-glow {
+  background: radial-gradient(circle, rgba(255, 230, 0, 0.25) 0%, transparent 70%);
+}
+
+:root[data-theme="light"] .surprise-btn {
+  background: #ffe600;
+  color: #000000;
+  border: 2px solid #050811;
+  box-shadow: 3px 3px 0px #050811;
+}
+
+:root[data-theme="light"] .surprise-btn:hover {
+  background: #ffd000;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px #050811;
+}
+
+:root[data-theme="light"] .vibe-chip {
+  background: #ffffff;
+  color: #050811;
+  border: 1.5px solid #050811;
+  box-shadow: 2px 2px 0px #050811;
+}
+
+:root[data-theme="light"] .vibe-chip:hover {
+  background: #00e5ff;
+  color: #000000;
+  border-color: #050811;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px #050811;
+}
+
+:root[data-theme="light"] .vibe-chip.active {
+  background: #ffe600;
+  color: #000000;
+  border-color: #050811;
+  box-shadow: 3px 3px 0px #050811;
+}
+
 :root[data-theme="light"] .distance-pill {
-  background: rgba(0, 138, 62, 0.1);
+  background: #e8f9ee;
   color: #008a3e;
-  border-color: rgba(0, 138, 62, 0.3);
+  border: 1.5px solid #050811;
+  box-shadow: 1.5px 1.5px 0px #050811;
+}
+
+:root[data-theme="light"] .modal-content {
+  background: #ffffff;
+  border: 2.5px solid #050811;
+  box-shadow: 8px 8px 0px #050811;
+}
+
+:root[data-theme="light"] .call-dock {
+  background: #ffffff;
+  border: 2px solid #050811;
+  box-shadow: 4px 4px 0px #050811;
+}
+
+:root[data-theme="light"] .call-dock button {
+  background: #f0f3f8;
+  color: #050811;
+  border: 1.5px solid #050811;
+  box-shadow: 1.5px 1.5px 0px #050811;
+}
+
+:root[data-theme="light"] .call-dock button:hover:not(:disabled) {
+  background: #ffe600;
+  color: #000000;
+  border-color: #050811;
+  transform: translate(-1px, -1px);
+  box-shadow: 2.5px 2.5px 0px #050811;
+}
+
+:root[data-theme="light"] .call-dock button.danger {
+  background: #ff0055;
+  color: #ffffff;
+  border: 1.5px solid #050811;
+}
+
+:root[data-theme="light"] button.secondary {
+  background: #ffffff;
+  color: #050811;
+  border: 1.5px solid #050811;
+  box-shadow: 2px 2px 0px #050811;
+}
+
+:root[data-theme="light"] button.secondary:hover:not(:disabled) {
+  background: #f0f3f8;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px #050811;
 }
