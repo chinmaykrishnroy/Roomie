@@ -216,7 +216,8 @@ export function CreateRoomModal({ isOpen, onClose }: Props) {
             style={{
               padding: "16px",
               background: "var(--clay-bg-subtle)",
-              borderRadius: "20px",
+              border: "1px solid var(--clay-line)",
+              borderRadius: "var(--radius-md)",
               boxShadow: "var(--clay-shadow-inset)",
             }}
           >
@@ -254,7 +255,7 @@ export function CreateRoomModal({ isOpen, onClose }: Props) {
                     type="text"
                     value={privateCode}
                     onChange={(e) => setPrivateCode(e.target.value)}
-                    style={{ flex: 1, fontWeight: 700, fontFamily: "monospace", minWidth: 0 }}
+                    style={{ flex: 1, fontWeight: 700, fontFamily: "ui-monospace, SFMono-Regular, monospace", color: "#00f0ff", minWidth: 0 }}
                   />
                   <button type="button" onClick={rollCode} className="secondary icon-btn" title="Roll another code">
                     <IconDice size={18} />

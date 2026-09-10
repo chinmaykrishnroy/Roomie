@@ -249,7 +249,7 @@ export default function HomePage() {
                   onClick={() => setShowCreateRoom(true)}
                 >
                   <div className="card-icon">
-                    <IconPlus size={24} color="var(--clay-primary-dark)" />
+                    <IconPlus size={24} color="#ff3377" />
                   </div>
                   <div className="card-title">Create a Room</div>
                   <div className="card-sub">Host a sound stage for up to 16 people</div>
@@ -257,7 +257,7 @@ export default function HomePage() {
 
                 <div className="action-card join">
                   <div className="card-icon">
-                    <IconLink size={24} color="var(--clay-sage-dark)" />
+                    <IconLink size={24} color="#00f0ff" />
                   </div>
                   <div className="card-title">Join with Code</div>
                   <form
@@ -318,7 +318,9 @@ export default function HomePage() {
                         fontWeight: 800,
                         textTransform: "uppercase",
                         letterSpacing: "0.08em",
-                        color: "var(--clay-primary-dark)",
+                        fontFamily: "ui-monospace, SFMono-Regular, monospace",
+                        color: "#00f0ff",
+                        textShadow: "0 0 10px rgba(0, 240, 255, 0.5)",
                       }}
                     >
                       Stage Discovery Radar

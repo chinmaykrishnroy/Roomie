@@ -170,16 +170,16 @@ export default function RoomCallPage({ params }: PageProps) {
         height: "100dvh",
         maxHeight: "100dvh",
         overflow: "hidden",
-        background: "#140f0d",
-        color: "#f8fafc",
+        background: "#07080b",
+        color: "#f0f6fc",
       }}
     >
-      {/* Top Header with Dark Studio Theme */}
+      {/* Top Header with Cyber Studio Theme */}
       <header
         style={{
-          background: "rgba(22, 17, 15, 0.95)",
+          background: "rgba(13, 16, 23, 0.95)",
           backdropFilter: "blur(16px)",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+          borderBottom: "1px solid var(--clay-line)",
           padding: "10px 20px",
           display: "flex",
           justifyContent: "space-between",
@@ -195,10 +195,10 @@ export default function RoomCallPage({ params }: PageProps) {
             style={{
               padding: "7px 14px",
               fontSize: "0.82rem",
-              borderRadius: "999px",
+              borderRadius: "var(--radius-sm)",
               background: "rgba(255, 255, 255, 0.08)",
-              color: "#f8fafc",
-              border: "1px solid rgba(255, 255, 255, 0.12)",
+              color: "#f0f6fc",
+              border: "1px solid var(--clay-line)",
               boxShadow: "none",
             }}
             title="Leave Room"
@@ -230,9 +230,9 @@ export default function RoomCallPage({ params }: PageProps) {
                   style={{
                     padding: "2px 8px",
                     fontSize: "0.72rem",
-                    background: "rgba(255, 158, 125, 0.15)",
-                    color: "#ff9e7d",
-                    border: "1px solid rgba(255, 158, 125, 0.25)",
+                    background: "rgba(255, 0, 85, 0.16)",
+                    color: "#ff3377",
+                    border: "1px solid rgba(255, 0, 85, 0.4)",
                     flexShrink: 0,
                     boxShadow: "none",
                   }}
@@ -241,8 +241,8 @@ export default function RoomCallPage({ params }: PageProps) {
                 </span>
               )}
             </div>
-            <div style={{ fontSize: "0.72rem", color: "#a89b94", fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-              Code: <span style={{ fontFamily: "monospace", color: "#ffe6db" }}>{roomCode}</span>
+            <div style={{ fontSize: "0.72rem", color: "var(--clay-muted)", fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              Code: <span style={{ fontFamily: "ui-monospace, SFMono-Regular, monospace", color: "#00f0ff" }}>{roomCode}</span>
             </div>
           </div>
         </div>
@@ -251,9 +251,9 @@ export default function RoomCallPage({ params }: PageProps) {
           <span
             className="badge"
             style={{
-              background: participants.length >= 16 ? "var(--clay-danger)" : "rgba(16, 185, 129, 0.15)",
-              color: participants.length >= 16 ? "#ffffff" : "#34d399",
-              border: "1px solid rgba(255, 255, 255, 0.1)",
+              background: participants.length >= 16 ? "var(--clay-danger)" : "rgba(0, 255, 102, 0.15)",
+              color: participants.length >= 16 ? "#ffffff" : "#00ff66",
+              border: participants.length >= 16 ? "1px solid var(--clay-danger)" : "1px solid rgba(0, 255, 102, 0.35)",
               padding: "5px 12px",
               fontSize: "0.76rem",
               boxShadow: "none",

@@ -93,7 +93,7 @@ export function SettingsModal({ isOpen, session, onClose, onUpdate, onReset }: P
             </button>
           </div>
           <div style={{ fontSize: "0.75rem", color: "var(--clay-muted)", marginTop: "6px" }}>
-            {theme === "system" ? "Syncs automatically with your device theme" : theme === "dark" ? "Dark obsidian theme" : "Warm peach light theme"}
+            {theme === "system" ? "Syncs automatically with your device theme" : theme === "dark" ? "Cyberpunk void obsidian theme" : "High-contrast Cyber theme"}
           </div>
         </div>
 
@@ -105,7 +105,7 @@ export function SettingsModal({ isOpen, session, onClose, onUpdate, onReset }: P
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            style={{ width: "100%", fontSize: "1rem" }}
+            style={{ width: "100%", fontSize: "1rem", fontFamily: "ui-monospace, SFMono-Regular, monospace" }}
           />
         </div>
 
@@ -115,7 +115,7 @@ export function SettingsModal({ isOpen, session, onClose, onUpdate, onReset }: P
               type="checkbox"
               checked={mirrored}
               onChange={(e) => setMirrored(e.target.checked)}
-              style={{ width: "20px", height: "20px", accentColor: "var(--clay-primary-dark)" }}
+              style={{ width: "20px", height: "20px", accentColor: "var(--clay-primary)" }}
             />
             Mirror my camera (selfie mode)
           </label>

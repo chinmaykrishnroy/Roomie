@@ -217,6 +217,7 @@ export function PublicRoomList({
                     style={{
                       background: "var(--clay-peach-soft)",
                       color: "var(--clay-peach-soft-dark)",
+                      border: "1px solid rgba(255, 0, 85, 0.35)",
                     }}
                   >
                     #{room.category}
@@ -225,9 +226,9 @@ export function PublicRoomList({
                     className="badge"
                     style={
                       isFull
-                        ? { background: "var(--clay-danger)", color: "#fff" }
+                        ? { background: "var(--clay-danger)", color: "#fff", border: "1px solid var(--clay-danger)" }
                         : room.participantCount > 0
-                        ? { background: "rgba(34, 197, 94, 0.15)", color: "#16a34a", border: "1px solid rgba(34, 197, 94, 0.25)" }
+                        ? { background: "rgba(0, 255, 102, 0.14)", color: "#00ff66", border: "1px solid rgba(0, 255, 102, 0.35)" }
                         : {}
                     }
                   >

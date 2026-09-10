@@ -1,46 +1,49 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
   <defs>
-    <linearGradient id="bgGrad" x1="16" y1="12" x2="112" y2="116" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#ffaf94" />
-      <stop offset="50%" stop-color="#ff8e68" />
-      <stop offset="100%" stop-color="#ea5830" />
+    <linearGradient id="cyberBg" x1="12" y1="12" x2="116" y2="116" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#121622" />
+      <stop offset="100%" stop-color="#07080b" />
     </linearGradient>
-    <linearGradient id="bubbleGrad" x1="30" y1="30" x2="90" y2="90" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#ffffff" />
-      <stop offset="100%" stop-color="#fff5f0" />
+    <linearGradient id="neonCyanGrad" x1="20" y1="20" x2="108" y2="108" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00f0ff" />
+      <stop offset="100%" stop-color="#00a3ff" />
     </linearGradient>
-    <filter id="shadow" x="14" y="24" width="100" height="84" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#8a2a0a" flood-opacity="0.32" />
+    <linearGradient id="neonPinkGrad" x1="60" y1="30" x2="110" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff0055" />
+      <stop offset="100%" stop-color="#b026ff" />
+    </linearGradient>
+    <filter id="neonGlow" x="0" y="0" width="128" height="128" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00f0ff" flood-opacity="0.5" />
     </filter>
   </defs>
 
-  <!-- Squircle Base -->
-  <rect x="8" y="8" width="112" height="112" rx="28" fill="url(#bgGrad)" />
+  <!-- Cyberpunk Obsidian Base -->
+  <rect x="8" y="8" width="112" height="112" rx="22" fill="url(#cyberBg)" stroke="#00f0ff" stroke-width="1.8" />
 
-  <!-- Inner Soft Bevel Highlight -->
-  <rect x="9.5" y="9.5" width="109" height="109" rx="26.5" stroke="#ffffff" stroke-width="2" stroke-opacity="0.4" />
+  <!-- Tech HUD Corner Brackets -->
+  <path d="M14 26V14H26" stroke="#00f0ff" stroke-width="2.5" stroke-linecap="round" />
+  <path d="M114 26V14H102" stroke="#00f0ff" stroke-width="2.5" stroke-linecap="round" />
+  <path d="M14 102V114H26" stroke="#00f0ff" stroke-width="2.5" stroke-linecap="round" />
+  <path d="M114 102V114H102" stroke="#00f0ff" stroke-width="2.5" stroke-linecap="round" />
 
-  <!-- Friendly Multi-Party Speech & Video Camera Icon -->
-  <g filter="url(#shadow)">
-    <!-- Back Chat Bubble (Sage Green accent representing peers) -->
-    <path d="M72 40H88C95.732 40 102 46.268 102 54V66C102 73.732 95.732 80 88 80H85L80 87V80H72C64.268 80 58 73.732 58 66V54C58 46.268 64.268 40 72 40Z" fill="#a7d7c5" />
+  <!-- Back Holographic Peer Bubble (Laser Magenta) -->
+  <path d="M70 38H88C95.732 38 102 44.268 102 52V64C102 71.732 95.732 78 88 78H85L80 85V78H70C62.268 78 56 71.732 56 64V52C56 44.268 62.268 38 70 38Z" fill="url(#neonPinkGrad)" opacity="0.85" />
 
-    <!-- Main Front Video Camera Bubble -->
-    <rect x="26" y="44" width="48" height="38" rx="13" fill="url(#bubbleGrad)" />
-    <!-- Speech bubble pointer -->
-    <path d="M38 81L32 90V81H38Z" fill="url(#bubbleGrad)" />
+  <!-- Main Cyber Video Camera Bubble -->
+  <g filter="url(#neonGlow)">
+    <rect x="24" y="44" width="50" height="40" rx="10" fill="#0f131c" stroke="#00f0ff" stroke-width="2" />
+    <path d="M36 84L30 92V84H36Z" fill="#0f131c" stroke="#00f0ff" stroke-width="1.5" />
 
-    <!-- Camera Lens Triangle (Pointing right) -->
-    <path d="M74 54.5L88 46V79.5L74 71V54.5Z" fill="#ffffff" />
+    <!-- Camera Projection Cone (Neon Cyan) -->
+    <path d="M74 54L90 44V84L74 74V54Z" fill="url(#neonCyanGrad)" />
 
-    <!-- Central Camera Lens / Shutter Dot in Dark Warm Clay -->
-    <circle cx="50" cy="63" r="8.5" fill="#ff7f54" />
-    <circle cx="50" cy="63" r="4.5" fill="#381c14" />
-    <!-- White Glint -->
-    <circle cx="52" cy="61" r="1.5" fill="#ffffff" />
+    <!-- Central Cybernetic Aperture / Shutter Core -->
+    <circle cx="49" cy="64" r="10" fill="#001824" stroke="#00f0ff" stroke-width="2" />
+    <circle cx="49" cy="64" r="5" fill="#ff0055" />
+    <circle cx="51" cy="62" r="1.5" fill="#ffffff" />
   </g>
 
-  <!-- Live Sparkle / Connected Indicator -->
-  <circle cx="94" cy="34" r="5" fill="#ffffff" />
-  <circle cx="94" cy="34" r="3.5" fill="#22c55e" />
+  <!-- Live Pulse Beacon (Matrix Toxic Green) -->
+  <circle cx="96" cy="32" r="6" fill="rgba(0, 255, 102, 0.3)" />
+  <circle cx="96" cy="32" r="3.5" fill="#00ff66" />
 </svg>
