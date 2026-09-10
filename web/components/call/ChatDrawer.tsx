@@ -47,8 +47,8 @@ export function ChatDrawer({
         width: "340px",
         maxWidth: "100vw",
         background: "var(--clay-card)",
-        borderLeft: "1px solid rgba(255, 255, 255, 0.8)",
-        boxShadow: "-12px 0 35px rgba(51, 35, 30, 0.25)",
+        borderLeft: "1px solid var(--clay-line)",
+        boxShadow: "-12px 0 35px rgba(0, 0, 0, 0.4)",
         zIndex: 60,
         display: "flex",
         flexDirection: "column",
@@ -58,14 +58,14 @@ export function ChatDrawer({
       <div
         style={{
           padding: "16px 20px",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.8)",
+          borderBottom: "1px solid var(--clay-line)",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          background: "linear-gradient(135deg, #fff3eb, #ffe6d8)",
+          background: "var(--clay-bg-subtle)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 800, color: "var(--clay-primary-dark)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", fontWeight: 800, color: "var(--clay-ink)" }}>
           <IconMessage size={18} />
           <span>Stage Chat</span>
         </div>
@@ -98,14 +98,14 @@ export function ChatDrawer({
                   style={{
                     padding: "9px 14px",
                     borderRadius: "18px",
-                    background: isSelf ? "var(--clay-primary)" : "#ffffff",
+                    background: isSelf ? "var(--clay-primary)" : "var(--clay-bg-subtle)",
                     color: isSelf ? "var(--clay-primary-dark)" : "var(--clay-ink)",
                     boxShadow: isSelf
                       ? "3px 4px 12px rgba(217, 130, 99, 0.3)"
-                      : "3px 4px 10px rgba(210, 155, 135, 0.18)",
+                      : "var(--clay-shadow-card)",
                     fontSize: "0.9rem",
                     wordBreak: "break-word",
-                    border: "1px solid rgba(255, 255, 255, 0.85)",
+                    border: "1px solid var(--clay-line)",
                   }}
                 >
                   {m.text}
@@ -122,7 +122,7 @@ export function ChatDrawer({
         onSubmit={handleSubmit}
         style={{
           padding: "14px 16px",
-          borderTop: "1px solid rgba(255, 255, 255, 0.8)",
+          borderTop: "1px solid var(--clay-line)",
           display: "flex",
           gap: "8px",
           background: "var(--clay-bg)",
@@ -133,7 +133,7 @@ export function ChatDrawer({
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Send a chat message..."
-          style={{ flex: 1, padding: "9px 16px", fontSize: "0.88rem", background: "#ffffff", minWidth: 0 }}
+          style={{ flex: 1, padding: "9px 16px", fontSize: "0.88rem", background: "var(--clay-surface-input)", color: "var(--clay-ink)", border: "1.5px solid var(--clay-line)", minWidth: 0 }}
         />
         <button type="submit" style={{ padding: "9px 16px" }}>
           <IconArrowRight size={16} />

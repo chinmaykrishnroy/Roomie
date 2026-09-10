@@ -89,15 +89,15 @@ export function VideoTile({
         <div className="tile-top-bar">
           <div style={{ display: "flex", gap: "6px" }}>
             {quality === "off" ? (
-              <span className="badge" style={{ background: "var(--clay-danger)", color: "var(--clay-danger-dark)" }}>
+              <span className="tile-status-badge danger">
                 Video Paused
               </span>
             ) : quality === "low" ? (
-              <span className="badge" style={{ background: "rgba(255,255,255,0.85)", color: "var(--clay-ink)", fontSize: "0.72rem" }}>
+              <span className="tile-status-badge" style={{ color: "#fed7aa" }}>
                 144p
               </span>
             ) : (
-              <span className="badge" style={{ background: "rgba(35, 25, 20, 0.75)", color: "#ffffff", fontSize: "0.72rem" }}>
+              <span className="tile-status-badge">
                 HD
               </span>
             )}
@@ -105,36 +105,30 @@ export function VideoTile({
 
           <button
             type="button"
+            className={`tile-pin-btn ${isPinned ? "pinned" : ""}`}
             onClick={() => onTogglePin(participant.userId)}
-            style={{
-              padding: "4px 10px",
-              minHeight: "30px",
-              background: isPinned ? "var(--clay-primary)" : "rgba(255, 255, 255, 0.9)",
-              color: isPinned ? "var(--clay-primary-dark)" : "var(--clay-ink)",
-              fontSize: "0.75rem",
-              borderRadius: "999px",
-            }}
             title={isPinned ? "Unpin participant" : "Pin participant"}
           >
-            <IconPin size={13} />
+            <IconPin size={13} color={isPinned ? "#381c14" : "#ffffff"} />
             <span>{isPinned ? "Pinned" : "Pin"}</span>
           </button>
         </div>
 
         {/* Bottom Bar */}
         <div className="tile-bottom-bar">
-          <span className="badge" style={{ background: "rgba(255, 255, 255, 0.9)", color: "var(--clay-ink)" }}>
-            {participant.username} {participant.isLocal && "(You)"}
+          <span className="tile-user-badge">
+            <span>{participant.username}</span>
+            {participant.isLocal && <span style={{ opacity: 0.7, fontWeight: 500 }}>(You)</span>}
           </span>
 
           <div style={{ display: "flex", gap: "6px" }}>
             {!participant.audioEnabled && (
-              <span className="badge" style={{ background: "var(--clay-danger)", color: "var(--clay-danger-dark)" }} title="Microphone muted">
+              <span className="tile-status-badge danger" title="Microphone muted">
                 <IconMicOff size={13} />
               </span>
             )}
             {!participant.videoEnabled && (
-              <span className="badge" style={{ background: "var(--clay-danger)", color: "var(--clay-danger-dark)" }} title="Camera turned off">
+              <span className="tile-status-badge danger" title="Camera turned off">
                 <IconVideoOff size={13} />
               </span>
             )}

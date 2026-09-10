@@ -1063,6 +1063,77 @@ input:focus, select:focus, textarea:focus {
   pointer-events: auto;
 }
 
+/* Video Tile Overlays: Frosted dark glass with crisp white text for 100% legibility over any video */
+.tile-pin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  min-height: 28px;
+  border-radius: var(--radius-pill);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(20, 15, 13, 0.75);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  transition: all 140ms ease;
+}
+
+.tile-pin-btn:hover {
+  background: rgba(45, 34, 30, 0.9);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.tile-pin-btn.pinned {
+  background: var(--clay-primary);
+  color: #381c14;
+  border-color: var(--clay-primary);
+  box-shadow: 0 4px 14px rgba(255, 158, 125, 0.4);
+}
+
+.tile-user-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 700;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(20, 15, 13, 0.75);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.tile-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 700;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(20, 15, 13, 0.75);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.tile-status-badge.danger {
+  background: rgba(239, 68, 68, 0.35);
+  color: #fee2e2;
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
 /* Dark Studio Call Dock */
 .call-dock {
   position: fixed;

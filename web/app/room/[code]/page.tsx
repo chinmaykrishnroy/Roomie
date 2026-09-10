@@ -349,8 +349,9 @@ export default function RoomCallPage({ params }: PageProps) {
         ) : connState === "error" ? (
           <div
             style={{
-              background: "#ffffff",
+              background: "var(--clay-card)",
               color: "var(--clay-ink)",
+              border: "1px solid var(--clay-line)",
               maxWidth: "420px",
               textAlign: "center",
               padding: "32px 24px",
