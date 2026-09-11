@@ -1,0 +1,53 @@
+name: roomie-test
+
+services:
+  test-server:
+    profiles: [test]
+    image: golang:1.26.5-alpine
+    working_dir: /src
+    volumes:
+      - ./server:/src:ro
+      - go-mod-cache:/go/pkg/mod
+      - go-build-cache:/root/.cache/go-build
+    environment:
+      - CGO_ENABLED=0
+    command: ["sh", "-ec", "go vet ./... && go test -v ./..."]
+
+  test-turn:
+    profiles: [test]
+    image: golang:1.26.5-alpine
+    working_dir: /src
+    volumes:
+      - ./turn:/src:ro
+      - go-mod-cache:/go/pkg/mod
+      - go-build-cache:/root/.cache/go-build
+    environment:
+      - CGO_ENABLED=0
+    command: ["sh", "-ec", "go vet ./... && go test -v ./..."]
+
+  test-web:
+    profiles: [test]
+    image: node:24-alpine
+    working_dir: /app
+    volumes:
+      - ./web:/src:ro
+      - npm-cache:/root/.npm
+    environment:
+      - NEXT_TELEMETRY_DISABLED=1
+      - NODE_ENV=production
+    command: ["sh", "-ec", "cp -a /src/. /app/ && npm install && npm run typecheck && npm run build"]
+
+  test-embed:
+    profiles: [test]
+    image: python:3.11-slim
+    working_dir: /workspace
+    volumes:
+      - ./embed:/src:ro
+      - pip-cache:/root/.cache/pip
+    command: ["sh", "-ec", "cp -a /src/. /workspace/ && pip install -q -r /workspace/requirements.txt pytest httpx && pytest /workspace/test_app.py -v"]
+
+volumes:
+  go-mod-cache:
+  go-build-cache:
+  npm-cache:
+  pip-cache:

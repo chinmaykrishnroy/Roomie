@@ -1,0 +1,139 @@
+name: Docker Release Pipeline
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Image tag (defaults to branch/sha if blank)'
+        required: false
+        type: string
+        default: 'manual'
+      push:
+        description: 'Push images to container registry'
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  build-and-push:
+    name: Build & Push (${{ matrix.service.name }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        service:
+          - name: server
+            image: roomie-server
+            context: ./server
+            dockerfile: ./infra/docker/go.Dockerfile
+            build-args: TARGET=./cmd/server
+          - name: web
+            image: roomie-web
+            context: ./web
+            dockerfile: ./infra/docker/web.Dockerfile
+            build-args: ""
+          - name: turn
+            image: roomie-turn
+            context: ./turn
+            dockerfile: ./infra/docker/go.Dockerfile
+            build-args: TARGET=./cmd/main.go
+          - name: migrate
+            image: roomie-migrate
+            context: ./server
+            dockerfile: ./infra/docker/go.Dockerfile
+            build-args: TARGET=./cmd/migrate
+          - name: embed
+            image: roomie-embed
+            context: ./embed
+            dockerfile: ./embed/Dockerfile
+            build-args: ""
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.service.image }}
+          flavor: |
+            latest=auto
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=ref,event=branch
+            type=sha,format=short
+            type=raw,value=${{ inputs.tag }},enable=${{ inputs.tag != '' && inputs.tag != 'manual' }}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v') }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.service.context }}
+          file: ${{ matrix.service.dockerfile }}
+          build-args: ${{ matrix.service.build-args }}
+          push: ${{ github.event_name != 'pull_request' && (inputs.push != false) }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  create-github-release:
+    name: Create GitHub Release
+    needs: [build-and-push]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Package production deployment bundle
+        run: |
+          mkdir -p dist
+          tar -czvf "dist/roomie-release-${{ github.ref_name }}.tar.gz" \
+            compose.release.yaml \
+            .env.example \
+            LICENSE \
+            README.md \
+            infra/proxy/Caddyfile
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "Roomie Release ${{ github.ref_name }}"
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            dist/roomie-release-${{ github.ref_name }}.tar.gz
+            compose.release.yaml
+            .env.example

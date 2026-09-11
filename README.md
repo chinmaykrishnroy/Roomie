@@ -193,6 +193,74 @@ To stop containers and clean up local temporary logs:
 
 ---
 
+## Testing & CI Pipeline
+
+Roomie features a complete automated test pipeline running on GitHub Actions (`.github/workflows/test.yml`) as well as local test harnesses:
+
+1. **Backend Tests (Go)**: Runs `go vet` and `go test -race -v ./...` across both the signaling server (`server/`) and the STUN/TURN server (`turn/`).
+2. **Frontend Verification (TypeScript & Next.js)**: Runs `npm run typecheck` and `npm run build` in `web/` to enforce strict type safety and verify production static compilation.
+3. **Embed Service Validation (Python)**: Executes `pytest` against FastAPI mock endpoints and vector encoding tests in `embed/`.
+4. **Docker Validation**: Synthesizes and checks `compose.yaml`, `compose.test.yaml`, and `compose.release.yaml`, and verifies core service image builds.
+
+### Running Tests Locally
+
+You can run the test suite natively or inside isolated Docker containers (without installing Go, Node, or Python on your workstation):
+
+```powershell
+# Windows PowerShell
+.\scripts\win\test.ps1            # Native toolchains
+.\scripts\win\test.ps1 -Docker    # Isolated Docker containers
+```
+
+```bash
+# Unix / Linux / macOS
+./scripts/unix/test.sh            # Native toolchains
+./scripts/unix/test.sh --docker   # Isolated Docker containers
+```
+
+---
+
+## Docker Release Pipeline & Pre-Built Images
+
+Roomie publishes container images to the **GitHub Container Registry (GHCR)** via `.github/workflows/release.yml`:
+
+| Image | Description | Base / Toolchain |
+| :--- | :--- | :--- |
+| `ghcr.io/chinmaykrishnroy/roomie-server` | Go WebRTC SFU / Mesh & REST API | Alpine 3.21 |
+| `ghcr.io/chinmaykrishnroy/roomie-web` | Next.js 16 Cyberpunk Web Application | Node 24 Alpine |
+| `ghcr.io/chinmaykrishnroy/roomie-turn` | Pion STUN/TURN Media Relay | Alpine 3.21 |
+| `ghcr.io/chinmaykrishnroy/roomie-migrate` | Database Schema & pgvector Migrations | Alpine 3.21 |
+| `ghcr.io/chinmaykrishnroy/roomie-embed` | Qwen2 Vector Embedding Microservice | Python 3.11 Slim |
+
+### Production Deployment with Pre-Built Images
+
+To deploy Roomie without needing source code compilers or local builds:
+
+```bash
+# Download production compose and environment
+curl -sSL https://raw.githubusercontent.com/chinmaykrishnroy/Roomie/main/compose.release.yaml -o compose.yaml
+curl -sSL https://raw.githubusercontent.com/chinmaykrishnroy/Roomie/main/.env.example -o .env
+
+# Start all services with pre-built GHCR images
+docker compose up -d
+```
+
+### Local Docker Image Builds
+
+To build and tag all Docker images locally or push them to a registry:
+
+```powershell
+# Windows PowerShell
+.\scripts\win\build.ps1 -Tag "v0.1.0" [-Registry "ghcr.io/yourusername"] [-Push]
+```
+
+```bash
+# Unix / Linux / macOS
+./scripts/unix/build.sh -t "v0.1.0" [-r "ghcr.io/yourusername"] [-p]
+```
+
+---
+
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
