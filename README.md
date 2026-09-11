@@ -193,14 +193,16 @@ To stop containers and clean up local temporary logs:
 
 ---
 
-## Testing & CI Pipeline
+## Testing & CI/CD Pipelines
 
-Roomie features a complete automated test pipeline running on GitHub Actions (`.github/workflows/test.yml`) as well as local test harnesses:
+Roomie features complete, automated pipelines for both **GitLab CI/CD** (`.gitlab-ci.yml`) and **GitHub Actions** (`.github/workflows/test.yml` & `.github/workflows/release.yml`):
 
 1. **Backend Tests (Go)**: Runs `go vet` and `go test -race -v ./...` across both the signaling server (`server/`) and the STUN/TURN server (`turn/`).
 2. **Frontend Verification (TypeScript & Next.js)**: Runs `npm run typecheck` and `npm run build` in `web/` to enforce strict type safety and verify production static compilation.
 3. **Embed Service Validation (Python)**: Executes `pytest` against FastAPI mock endpoints and vector encoding tests in `embed/`.
-4. **Docker Validation**: Synthesizes and checks `compose.yaml`, `compose.test.yaml`, and `compose.release.yaml`, and verifies core service image builds.
+4. **Docker Configuration & Build Verification**: Validates `compose.yaml`, `compose.test.yaml`, and `compose.release.yaml`, and builds core service images.
+5. **Multi-Service Docker Container Registry Publishing**: Automatically builds, tags, and publishes all 5 microservices to the container registry (GitLab Container Registry `$CI_REGISTRY` or GitHub Container Registry `ghcr.io`).
+6. **Automated Releases**: Automatically generates release archives (`roomie-release-v*.tar.gz`) containing production compose configurations and publishes formal releases upon git tag push.
 
 ### Running Tests Locally
 
