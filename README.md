@@ -1,4 +1,4 @@
-﻿# Roomie ⚡
+# Roomie ⚡
 
 > **Meet the person before you judge the profile.**  
 > Casual multi-party video & voice rooms with adaptive mesh streaming, semantic discovery, and a dual Cyberpunk aesthetic.
@@ -81,11 +81,12 @@ The application is built for low latency, high resilience, and cross-platform fi
 ```
 Roomie/
 ├── compose.yaml          # Multi-service Docker Compose specification
-├── deploy.ps1            # Remote PowerShell deployment automation
-├── deploy.sh             # Linux/macOS deployment script
 ├── .env.example          # Environment variable template
 ├── .gitignore            # Git exclusion rules
 ├── LICENSE               # MIT Open Source License
+├── scripts/              # Automation and developer workflows
+│   ├── win/              # Windows PowerShell scripts (deploy.ps1, dev.ps1, clean.ps1)
+│   └── unix/             # Unix/Linux/macOS Bash scripts (deploy.sh, dev.sh, clean.sh)
 ├── embed/                # Semantic embedding microservice (Python / FastAPI)
 │   ├── app.py
 │   ├── Dockerfile
@@ -127,19 +128,24 @@ git clone https://github.com/chinmaykrishnroy/Roomie.git
 cd Roomie
 ```
 
-### 2. Configure Environment
+### 2. Configure Environment & Start
 
-Copy the example environment file and customize secrets if needed:
+You can use the platform-specific development scripts to initialize `.env` and start the stack:
+
+```powershell
+# Windows PowerShell
+.\scripts\win\dev.ps1
+```
+
+```bash
+# Unix / Linux / macOS
+./scripts/unix/dev.sh
+```
+
+Or start manually with Docker Compose:
 
 ```bash
 cp .env.example .env
-```
-
-### 3. Launch with Docker Compose
-
-Start the entire distributed stack with a single command:
-
-```bash
 docker compose up --build
 ```
 
@@ -157,16 +163,32 @@ Open your browser to `http://localhost:3000`, pick a username, and start or join
 
 ## Remote Deployment
 
-Automated deployment scripts (`deploy.ps1` for Windows / `deploy.sh` for Linux/macOS) package source changes, transfer them to your production host via SSH, and trigger zero-downtime container builds:
+Automated deployment scripts package source changes (excluding local artifacts and node modules), transfer them to your production host via SSH, and trigger zero-downtime container builds:
 
 ```powershell
 # Windows PowerShell
-.\deploy.ps1 -TargetHost "your-server-alias-or-ip" -RemoteDir "/home/user/roomie"
+.\scripts\win\deploy.ps1 -TargetHost "your-server-alias-or-ip" -RemoteDir "/home/user/roomie"
 ```
 
 ```bash
-# Bash
-./deploy.sh your-server-alias-or-ip /home/user/roomie
+# Unix / Linux / macOS
+./scripts/unix/deploy.sh your-server-alias-or-ip /home/user/roomie
+```
+
+---
+
+## Maintenance & Cleanup
+
+To stop containers and clean up local temporary logs:
+
+```powershell
+# Windows PowerShell
+.\scripts\win\clean.ps1 [-Volumes]
+```
+
+```bash
+# Unix / Linux / macOS
+./scripts/unix/clean.sh [-v|--volumes]
 ```
 
 ---
